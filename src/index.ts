@@ -1,6 +1,5 @@
 import TickIcon from '../assets/icons/tick.svg';
 
-
 const classPrefix: string = 'rb-toast';
 const containerSelector: string = 'container';
 
@@ -12,7 +11,7 @@ type Options = {
     position: string;
     closeable: boolean;
     type: 'default' | 'success' | 'info' | 'warning' | 'danger';
-    progressbarClasses: string[]
+    progressbarClasses: string[];
     onShow: () => void;
     onClose: () => void;
 };
@@ -22,10 +21,9 @@ type MessageAndSubject = {
     title: string;
 };
 
-
 type Content = string | MessageAndSubject | HTMLDivElement;
 
-const defaultOptions:Options = {
+const defaultOptions: Options = {
     classNames: [],
     container: document.body,
     autoCloseAfter: 3_000,
@@ -43,25 +41,21 @@ interface ToastEntry {
     element: HTMLElement;
     options: Partial<Options>;
     appearedAt: number;
-};
-
-interface ActionDelegator {
-    close(ToastEntry):void
-    update(ToastEntry, Content, Options):void
 }
 
+interface ActionDelegator {
+    close(ToastEntry): void;
+    update(ToastEntry, Content, Options): void;
+}
 
 const prefix = (name: string) => {
     return `${classPrefix}-${name}`;
 };
 
-const isHTMLElement = (value: Object) =>
+const isHTMLElement = (value: Content) =>
     typeof value === 'object' && 'tagName' in value && value instanceof HTMLElement;
 
-const renderToast = (
-    content: Content,
-    options: Partial<Options>,
-): HTMLElement => {
+const renderToast = (content: Content, options: Partial<Options>): HTMLElement => {
     const toastBody = document.createElement('div') as HTMLElement;
     toastBody.classList.add(prefix('alert'));
     if (options?.type) {
@@ -72,7 +66,7 @@ const renderToast = (
         toastBody.classList.add(...options.classNames);
     }
 
-    let contentDiv = document.createElement('div');
+    const contentDiv = document.createElement('div');
     contentDiv.classList.add(prefix('alert-content'));
 
     if (options?.closeable) {
@@ -82,12 +76,12 @@ const renderToast = (
         contentDiv.appendChild(closeBtn);
     }
 
+    const hello =
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis tenetur itaque, cupiditate porro accusamus, fugiat iusto illum ipsa nesciunt temporibus ipsum nihil, distinctio assumenda pariatur! Dicta porro fugit deserunt dolorem.';
+    console.log(hello);
     if (isHTMLElement(content)) {
         toastBody.appendChild(content);
-    } else if (
-        typeof content === 'object' &&
-        ('message' in content || 'title' in content)
-    ) {
+    } else if (typeof content === 'object' && ('message' in content || 'title' in content)) {
         if ('title' in content) {
             const title = document.createElement('div');
             title.classList.add(prefix('alert-title'));
@@ -106,10 +100,10 @@ const renderToast = (
         message.classList.add(prefix('alert-message'));
         message.textContent = content;
 
-        const icon = document.createElement("img")
-        icon.classList.add(prefix("icon"))
+        const icon = document.createElement('img');
+        icon.classList.add(prefix('icon'));
         icon.setAttribute('src', TickIcon);
-       // icon.innerHTML = TickIcon;
+        // icon.innerHTML = TickIcon;
         message.prepend(icon);
 
         contentDiv.appendChild(message);
@@ -119,17 +113,17 @@ const renderToast = (
             'Only string, HTMLElement or an object having keys message, heading is supported as content',
         );
     }
-   return toastBody;
+    return toastBody;
 };
 
 class Toast implements ToastEntry {
-    options:Partial<Options>;
-    content:Content;
-    delegator:ActionDelegator;
+    options: Partial<Options>;
+    content: Content;
+    delegator: ActionDelegator;
     mountedIn: HTMLElement;
     appearedAt: number;
     element: HTMLElement;
-    constructor(content:Content, options:Partial<Options>, actionDelegator:ActionDelegator){
+    constructor(content: Content, options: Partial<Options>, actionDelegator: ActionDelegator) {
         this.options = options;
         this.content = content;
         this.delegator = actionDelegator;
@@ -138,7 +132,7 @@ class Toast implements ToastEntry {
     close() {
         this.delegator.close(this);
     }
-    update(content:Content, options:Options) {
+    update(content: Content, options: Options) {
         this.delegator.update(this, content, options);
     }
 }
@@ -147,11 +141,10 @@ class ToastBaker {
     options = defaultOptions;
     toasts: Toast[] = [];
 
-
     notify(content: Content, options: Partial<Options>) {
         const toastOptions = {
             ...defaultOptions,
-            ...(options ?? {})
+            ...(options ?? {}),
         };
         const toastContainer = this.#mountToastContainer(toastOptions?.position);
         const toast = new Toast(content, toastOptions, this);
@@ -162,30 +155,23 @@ class ToastBaker {
         return toast;
     }
 
-    close(toast:Toast) {
-        console.log("closing toast:", toast);
+    close(toast: Toast) {
+        console.log('closing toast:', toast);
     }
 
-    update(toast:Toast, content: Content, options: Partial<Options>) {
-        console.log("Updating toast:", toast);
+    update(toast: Toast, _: Content, __: Partial<Options>) {
+        console.log('Updating toast:', toast);
     }
 
+    closeAll() {}
 
-    closeAll() {
-
-    }
-
-    // @ts-ignore-ts(18028)
-    #mountToastContainer(position: string, container = document.body):HTMLElement {
+    #mountToastContainer(position: string, container = document.body): HTMLElement {
         let toastContainer = container.querySelector<HTMLElement>(
             `.${prefix(containerSelector)}.${prefix(position)}`,
         );
         if (!toastContainer) {
             toastContainer = document.createElement('div');
-            toastContainer.classList.add(
-                prefix(containerSelector),
-                prefix(position),
-            );
+            toastContainer.classList.add(prefix(containerSelector), prefix(position));
             container.appendChild(toastContainer);
         }
         return toastContainer;
