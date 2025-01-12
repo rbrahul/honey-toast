@@ -11,7 +11,7 @@ export default tseslint.config(
       prettierConfig
     ],
     files: ["**/*.ts"],
-    ignores: ["dist", "node_modules"],
+    ignores: ["dist/*", "node_modules/*"],
     settings: {
       "import/parsers": {
         "@typescript-eslint/parser": [".ts"],
