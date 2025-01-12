@@ -1,0 +1,85 @@
+.rb-toast-container {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 300px;
+    box-sizing: border-box;
+}
+
+.rb-toast-top-left {
+    top: 30px;
+    left: 30px;
+    align-items: flex-start;
+}
+
+.rb-toast-top-right {
+    top:30px;
+    right: 30px;
+    align-items: flex-end;
+}
+
+.rb-toast-bottom-left {
+    left: 30px;
+    bottom: 30px;
+    align-items: flex-start;
+}
+
+.rb-toast-bottom-right {
+    bottom: 30px;
+    right: 30px;
+    align-items: flex-end;
+}
+
+.rb-toast-top-center {
+    left: 50%;
+    top: 30px;
+    transform: translateX(-50%);
+    align-items: flex-start;
+}
+
+.rb-toast-center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    align-items: flex-start;
+}
+
+.rb-toast-alert {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #fff;
+    color:#333;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.2);
+    box-shadow: 0px 5px 9px 1px rgba(0,0,0,0.4);
+    margin-bottom: 10px;
+}
+
+.rb-toast-alert-close-btn {
+    width:20px;
+    height:20px;
+    content: "\2715";
+    position: absolute;
+    top:0px;
+    right: 0px;
+    display: block;
+}
+
+.rb-toast-success .rb-toast-alert-close-btn, .rb-toast-danger .rb-toast-alert-close-btn, .rb-toast-warning .rb-toast-alert-close-btn{
+    color: #fff;
+}
+
+.rb-toast-icon{
+    width: 24px;
+    height: 24px;
+    background-color: green;
+}
+
