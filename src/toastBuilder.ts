@@ -84,7 +84,7 @@ class ToastAlert {
     }
 
     addClasses() {
-        let toastContainerClass = prefix('alert');
+        const toastContainerClass = prefix('alert');
         const typeClass = this.#options?.type ? prefix(this.#options?.type) : prefix('default');
         const designClass = this.#options?.design
             ? prefix(this.#options?.design)
@@ -106,7 +106,8 @@ class ToastAlert {
     }
 
     addTitle() {
-        let title: Title = (this.#options?.content as StructuredContent)?.title;
+        const title: Title = (this.#options?.content as StructuredContent)?.title;
+        console.log("writing title:", title);
         if (!title) {
             return this;
         }
@@ -144,7 +145,7 @@ class ToastAlert {
         if ((this.#alertHtmlSpec.children as DomSpec[]).length === 0) {
             this.#alertHtmlSpec.children = [element];
         } else {
-            this.#alertHtmlSpec.children[0] = element;
+            this.#alertHtmlSpec.children.unshift(element);
         }
         return this;
     }
@@ -164,7 +165,7 @@ class ToastAlert {
             this.#alertHtmlSpec.children.push(toastBody);
             return this;
         }
-        if (this.#options.hasIcon !== false) {
+        if (this.#options.hasIcon) {
             const iconElement = {
                 tag: 'img',
                 attrs: {
@@ -184,11 +185,12 @@ class ToastAlert {
             }
             toastBody.children.push(iconElement);
         }
-        console.log("Message:",this.#options.content)
         if (
             typeof this.#options.content === 'object' &&
             (this.#options.content as StructuredContent)?.message
         ) {
+        console.log("Message:",this.#options.content, 'is Objectk:', 'message:', this.#options.content?.message)
+
             toastBody.children.push({
                 tag: 'div',
                 html: (this.#options.content as StructuredContent)?.message as string,
@@ -202,6 +204,7 @@ class ToastAlert {
             });
         }
         this.#alertHtmlSpec.children.push(toastBody);
+        console.log("this.#alertHtmlSpec.children:", this.#alertHtmlSpec.children)
         return this;
     }
 
@@ -280,7 +283,7 @@ export const createToast = (options: ToastBuilderProps) => {
         );
     }
 
-    let toast = new ToastAlert(options);
+    const toast = new ToastAlert(options);
     toast.addClasses().addBody();
 
     if (typeof options.content === 'object' && 'title' in options.content) {

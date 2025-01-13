@@ -56,7 +56,7 @@ const allowedTagNames = [
     'button'
 ];
 
-const pick = <T>(record: Object, keys: string[]): Record<string, T> => {
+const pick = <T>(record: object, keys: string[]): Record<string, T> => {
     const recordsWithPickedEntries: Record<string, T> = {};
     keys.forEach(key => {
         if (key in record) {
