@@ -1,4 +1,6 @@
-import TickIcon from '../assets/icons/tick.svg';
+import TickIcon from '../assets/icons/close.svg';
+import { createToast, DEFAULT_TOAST_OPTIONS, isHTMLElement, prefix } from './toastBuilder';
+import { ToastBuilderProps, ToastOptions, ToastContent } from './type';
 
 const classPrefix: string = 'rb-toast';
 const containerSelector: string = 'container';
@@ -47,14 +49,7 @@ interface ActionDelegator {
     close(ToastEntry): void;
     update(ToastEntry, Content, Options): void;
 }
-
-const prefix = (name: string) => {
-    return `${classPrefix}-${name}`;
-};
-
-const isHTMLElement = (value: Content) =>
-    typeof value === 'object' && 'tagName' in value && value instanceof HTMLElement;
-
+/*
 const renderToast = (content: Content, options: Partial<Options>): HTMLElement => {
     const toastBody = document.createElement('div') as HTMLElement;
     toastBody.classList.add(prefix('alert'));
@@ -76,9 +71,6 @@ const renderToast = (content: Content, options: Partial<Options>): HTMLElement =
         contentDiv.appendChild(closeBtn);
     }
 
-    const hello =
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis tenetur itaque, cupiditate porro accusamus, fugiat iusto illum ipsa nesciunt temporibus ipsum nihil, distinctio assumenda pariatur! Dicta porro fugit deserunt dolorem.';
-    console.log(hello);
     if (isHTMLElement(content)) {
         toastBody.appendChild(content);
     } else if (typeof content === 'object' && ('message' in content || 'title' in content)) {
@@ -114,20 +106,23 @@ const renderToast = (content: Content, options: Partial<Options>): HTMLElement =
         );
     }
     return toastBody;
-};
+};*/
 
 class Toast implements ToastEntry {
-    options: Partial<Options>;
-    content: Content;
+    options: ToastOptions;
+    content: ToastContent;
     delegator: ActionDelegator;
     mountedIn: HTMLElement;
     appearedAt: number;
     element: HTMLElement;
-    constructor(content: Content, options: Partial<Options>, actionDelegator: ActionDelegator) {
+    constructor(content: ToastContent, options: ToastOptions, actionDelegator: ActionDelegator) {
         this.options = options;
         this.content = content;
         this.delegator = actionDelegator;
-        this.element = renderToast(content, options);
+        this.element = createToast({
+            ...options,
+            content,
+        });
     }
     close() {
         this.delegator.close(this);
@@ -141,9 +136,9 @@ class ToastBaker {
     options = defaultOptions;
     toasts: Toast[] = [];
 
-    notify(content: Content, options: Partial<Options>) {
+    notify(content: ToastContent, options: ToastOptions) {
         const toastOptions = {
-            ...defaultOptions,
+            ...DEFAULT_TOAST_OPTIONS,
             ...(options ?? {}),
         };
         const toastContainer = this.#mountToastContainer(toastOptions?.position);
@@ -179,5 +174,57 @@ class ToastBaker {
 }
 
 const toast = new ToastBaker();
+
+function testToastAlerts() {
+    const t = toast.notify('Hello', {
+        duration: 1000,
+        type: 'default',
+        position: 'top-left',
+    });
+
+    const t2 = toast.notify('Hello World', {
+        duration: 1000,
+        position: 'top-left',
+        type: 'success',
+    });
+
+    const t3 = toast.notify('Hello World 3', {
+        duration: 1000,
+        position: 'top-left',
+        type: 'success',
+    });
+
+    const t4 = toast.notify('Hello World 4', {
+        duration: 1000,
+        position: 'top-right',
+        type: 'info',
+
+    });
+    const centeredToast = toast.notify('I am aligned center', {
+        duration: 1000,
+        position: 'center',
+        type: 'danger',
+    });
+
+    const centeredTopToast = toast.notify('I am top center aligned', {
+        duration: 1000,
+        position: 'top-center',
+        type: 'warning',
+    });
+
+    const t5 = toast.notify('Hello World 5', {
+        duration: 1000,
+        position: 'bottom-right',
+    });
+    const t6 = toast.notify({
+        title: 'Hi, there!',
+        message: "Thank you for subscribing our service. For any help feel free to write us."
+    },{
+        duration: 1000,
+        position: 'bottom-right',
+    });
+}
+
+testToastAlerts();
 
 export default toast;

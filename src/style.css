@@ -80,6 +80,63 @@
 .rb-toast-icon{
     width: 24px;
     height: 24px;
-    background-color: green;
 }
 
+.rb-toast-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.alert-content {
+    padding-left: 10px;
+    font-size: 15px;
+}
+/* new  */
+.rb-toast-minimal .rb-toast-light {}
+
+.rb-toast-default {
+    background-color: #fff;
+    color: #333;
+}
+
+.rb-toast-alert-icon-small {
+    width: 24px;
+    height: 24px;
+    padding: 5px;
+}
+
+.rb-toast-alert-icon-medium {
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+}
+
+
+.rb-toast-alert-icon-large {
+    width: 42px;
+    height: 42px;
+    padding: 12px;
+}
+
+.rb-toast-default img.rb-toast-alert-icon {
+    background-color: transparent;
+    filter: invert(1);
+}
+
+.rb-toast-success img.rb-toast-alert-icon {
+    background-color: rgb(25, 175, 25);
+}
+
+.rb-toast-info img.rb-toast-alert-icon {
+    background-color: rgb(20, 118, 209);
+}
+
+.rb-toast-warning img.rb-toast-alert-icon {
+    background-color: rgb(209, 121, 20);
+}
+
+.rb-toast-danger img.rb-toast-alert-icon {
+    background-color: rgb(211, 56, 56);
+}

@@ -1,6 +1,7 @@
 import { resolve } from 'path'
 import {defineConfig} from 'vite';
 import dts from 'vite-plugin-dts'
+import svgr from "vite-plugin-svgr";
 export default defineConfig({
     build: {
         lib: {
@@ -11,5 +12,6 @@ export default defineConfig({
     },
     plugins: [
         dts(),
+        svgr()
       ]
   })
