@@ -80,13 +80,12 @@ const bindEvents = (element: HTMLElement, eventMap: Record<string, EventHanlder>
     }
 };
 
-const createFragment = () => {
-    const fragment = document.createElement('div');
-    fragment.setAttribute('data-root-element', 'true');
-    return fragment;
+const createFragment = ():HTMLElement => {
+    const fragment:unknown = new DocumentFragment();
+    return fragment as HTMLElement;
 };
 
-const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement) => {
+const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement):HTMLElement => {
     parent = parent ?? createFragment();
 
     if (Array.isArray(spec)) {
@@ -145,9 +144,9 @@ const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement) => {
     return parent;
 };
 
-export const toDom = (specs: DomSpec | DomSpec[]) => {
+export const toDom = (specs: DomSpec | DomSpec[]):HTMLElement => {
     console.log("Specs:", specs)
-    return buildDom(specs)?.children?.[0];// excluding temporary root
+    return buildDom(specs)// excluding temporary root
 };
 
 /*

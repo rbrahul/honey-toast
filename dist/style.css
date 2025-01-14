@@ -73,7 +73,7 @@
     display: block;
 }
 
-.rb-toast-success .rb-toast-alert-close-btn, .rb-toast-danger .rb-toast-alert-close-btn, .rb-toast-warning .rb-toast-alert-close-btn{
+.rb-toast-success .rb-toast-alert-close-btn, .rb-toast-error .rb-toast-alert-close-btn, .rb-toast-warning .rb-toast-alert-close-btn{
     color: #fff;
 }
 

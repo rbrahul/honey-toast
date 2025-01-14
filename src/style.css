@@ -1,3 +1,43 @@
+
+:root {
+    --toast-primary-default: white;
+    --toast-primary-success: rgb(77,176,80);
+    --toast-primary-info: rgb(31,152,241);
+    --toast-primary-warning: rgb(255,193,6);
+    --toast-primary-error: rgb(245,67,53);
+
+    --toast-bg-default: white;
+    --toast-bg-success: rgb(235,252,238);
+    --toast-bg-info: rgb(231,245,255);
+    --toast-bg-warning: rgb(252, 248, 225);
+    --toast-bg-error: rgb(255,245,245);
+    --toast-text-color: #666;
+    --toast-close-btn-color: rgb(136 135 135);
+    --toast-btn-border-color: #dfdfdf;
+    --toast-default-color: #ddd;
+}
+
+.rb-toast-dark {
+    --toast-btn-border-color: #fefefe;
+}
+
+.rb-toast-default{
+}
+
+.rb-toast-success{
+}
+.rb-toast-info {
+}
+.rb-toast-warning {
+}
+
+.rb-toast-error {
+}
+
+.rb-toast-alert-icon{
+    border-radius: 50%;
+}
+
 .rb-toast-container {
     position: fixed;
     width: 100%;
@@ -6,6 +46,17 @@
     align-items: flex-start;
     justify-content: flex-start;
     width: 300px;
+    box-sizing: border-box;
+}
+
+.rb-toast-content-wrapper{
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-right: 30px;
     box-sizing: border-box;
 }
 
@@ -51,73 +102,113 @@
     box-sizing: border-box;
     position: relative;
     width: 100%;
-    padding: 15px;
-    border-radius: 15px;
+    padding: 20px;
+    border-radius: 10px;
     background-color: #fff;
-    color:#333;
+    color: var(--toast-text-color);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     border-radius: 6px;
-    border: 1px solid rgba(0,0,0,0.2);
-    box-shadow: 0px 5px 9px 1px rgba(0,0,0,0.4);
+ /*   border: 1px solid rgba(0,0,0,0.2);*/
+    box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.15);
     margin-bottom: 10px;
 }
 
-.rb-toast-alert-close-btn {
+.rb-toast-alert-btn-group{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.rb-toast-btn{
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid var(--toast-btn-border-color);
+    margin-left: 8px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    color: var(--toast-text-color);
+    border-radius: 4px;
+}
+
+.rb-toast-btn-default{
+    border-color: var(--toast-btn-border-color);
+    background-color: var(--toast-default-color);
+}
+
+.rb-toast-btn-success{
+    border-color: var(--toast-primary-success);
+    background-color: var(--toast-primary-success);
+    color: white;
+}
+
+.rb-toast-btn-error{
+    background-color: #fefefe;
+}
+
+.rb-toast-btn-icon-small {
+    width: 20px;
+    height: 20px;
+}
+
+.rb-toast-btn-label{
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.rb-toast-btn-icon-small:has(+ .rb-toast-btn-label) {
+    margin-right: 5px;
+}
+
+.rb-toast-close-btn {
     width:20px;
     height:20px;
     content: "\2715";
     position: absolute;
-    top:0px;
-    right: 0px;
+    top:14px;
+    right: 10px;
     display: block;
+    color: var(--toast-close-btn-color);
+    cursor: pointer;
+    opacity: 0.8;
 }
 
-.rb-toast-success .rb-toast-alert-close-btn, .rb-toast-danger .rb-toast-alert-close-btn, .rb-toast-warning .rb-toast-alert-close-btn{
-    color: #fff;
+.rb-toast-close-btn:hover{
+    opacity: 1;
+}
+.rb-toast-success .rb-toast-alert-close-btn, .rb-toast-error .rb-toast-alert-close-btn, .rb-toast-warning .rb-toast-alert-close-btn{
+    --toast-text-color: #fff;
 }
 
 .rb-toast-icon{
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
 
 .rb-toast-body {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
-}
-
-.alert-content {
-    padding-left: 10px;
+    align-items: flex-start;
+    padding-left: 15px;
     font-size: 15px;
 }
-/* new  */
-.rb-toast-minimal .rb-toast-light {}
+
+.rb-toast-title{
+    font-weight: bold;
+}
+
+.rb-toast-title:has(+ .rb-toast-message) {
+    margin-bottom: 5px;
+}
 
 .rb-toast-default {
-    background-color: #fff;
-    color: #333;
-}
-
-.rb-toast-alert-icon-small {
-    width: 24px;
-    height: 24px;
-    padding: 5px;
-}
-
-.rb-toast-alert-icon-medium {
-    width: 32px;
-    height: 32px;
-    padding: 8px;
-}
-
-
-.rb-toast-alert-icon-large {
-    width: 42px;
-    height: 42px;
-    padding: 12px;
+    background-color: var(--toast-bg-default);
+    color: var(--toast-text-color);
 }
 
 .rb-toast-default img.rb-toast-alert-icon {
@@ -125,18 +216,82 @@
     filter: invert(1);
 }
 
+.rb-toast-default.rb-toast-standard {
+    border: 1px solid var(--toast-default-color);
+}
+
+.rb-toast-success {
+}
+
+.rb-toast-success.rb-toast-standard {
+    background-color: var(--toast-bg-success);
+    border: 1px solid var(--toast-primary-success);
+}
+
 .rb-toast-success img.rb-toast-alert-icon {
-    background-color: rgb(25, 175, 25);
+    background-color: var(--toast-primary-success);
+}
+
+.rb-toast-info{}
+
+.rb-toast-info.rb-toast-standard{
+    background-color: var(--toast-bg-info);
+    border: 1px solid var(--toast-primary-info);
 }
 
 .rb-toast-info img.rb-toast-alert-icon {
-    background-color: rgb(20, 118, 209);
+    background-color: var(--toast-primary-info);
+}
+
+
+.rb-toast-warning{}
+
+.rb-toast-warning.rb-toast-standard{
+    background-color: var(--toast-bg-warning);
+    border: 1px solid var(--toast-primary-warning);
 }
 
 .rb-toast-warning img.rb-toast-alert-icon {
-    background-color: rgb(209, 121, 20);
+    background-color: var(--toast-primary-warning);
 }
 
-.rb-toast-danger img.rb-toast-alert-icon {
-    background-color: rgb(211, 56, 56);
+.rb-toast-error{}
+
+.rb-toast-error.rb-toast-standard{
+    background-color: var(--toast-bg-error);
+    border: 1px solid var(--toast-primary-error);
+}
+
+.rb-toast-error img.rb-toast-alert-icon {
+    background-color: var(--toast-primary-error);
+}
+
+.rb-toast-alert-icon-small {
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+}
+
+.rb-toast-alert-icon-medium {
+    width: 28px;
+    height: 28px;
+    padding: 8px;
+}
+
+
+.rb-toast-alert-icon-large {
+    width: 36px;
+    height: 36px;
+    padding: 10px;
+}
+
+
+
+
+.rb-toast-warning img.rb-toast-alert-icon {
+    background-color: var(--toast-primary-warning);
+}
+
+.rb-toast-error img.rb-toast-alert-icon {
+    background-color: var(--toast-primary-error);
 }

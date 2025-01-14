@@ -12,7 +12,7 @@ type Options = {
     showProgress: boolean;
     position: string;
     closeable: boolean;
-    type: 'default' | 'success' | 'info' | 'warning' | 'danger';
+    type: 'default' | 'success' | 'info' | 'warning' | 'error';
     progressbarClasses: string[];
     onShow: () => void;
     onClose: () => void;
@@ -49,64 +49,6 @@ interface ActionDelegator {
     close(ToastEntry): void;
     update(ToastEntry, Content, Options): void;
 }
-/*
-const renderToast = (content: Content, options: Partial<Options>): HTMLElement => {
-    const toastBody = document.createElement('div') as HTMLElement;
-    toastBody.classList.add(prefix('alert'));
-    if (options?.type) {
-        toastBody.classList.add(prefix(options.type));
-    }
-
-    if (options?.classNames && options.classNames.length > 0) {
-        toastBody.classList.add(...options.classNames);
-    }
-
-    const contentDiv = document.createElement('div');
-    contentDiv.classList.add(prefix('alert-content'));
-
-    if (options?.closeable) {
-        const closeBtn = document.createElement('div');
-        closeBtn.classList.add(prefix('alert-close-btn'));
-        closeBtn.textContent = 'x';
-        contentDiv.appendChild(closeBtn);
-    }
-
-    if (isHTMLElement(content)) {
-        toastBody.appendChild(content);
-    } else if (typeof content === 'object' && ('message' in content || 'title' in content)) {
-        if ('title' in content) {
-            const title = document.createElement('div');
-            title.classList.add(prefix('alert-title'));
-            title.textContent = content.title;
-            contentDiv.appendChild(title);
-            toastBody.appendChild(contentDiv);
-        }
-        if ('message' in content) {
-            const message = document.createElement('div');
-            message.classList.add(prefix('alert-message'));
-            message.textContent = content.message;
-            toastBody.appendChild(contentDiv);
-        }
-    } else if (typeof content === 'string') {
-        const message = document.createElement('div');
-        message.classList.add(prefix('alert-message'));
-        message.textContent = content;
-
-        const icon = document.createElement('img');
-        icon.classList.add(prefix('icon'));
-        icon.setAttribute('src', TickIcon);
-        // icon.innerHTML = TickIcon;
-        message.prepend(icon);
-
-        contentDiv.appendChild(message);
-        toastBody.appendChild(contentDiv);
-    } else {
-        throw new Error(
-            'Only string, HTMLElement or an object having keys message, heading is supported as content',
-        );
-    }
-    return toastBody;
-};*/
 
 class Toast implements ToastEntry {
     options: ToastOptions;
@@ -175,56 +117,181 @@ class ToastBaker {
 
 const toast = new ToastBaker();
 
-function testToastAlerts() {
-    const t = toast.notify('Hello', {
+function minimalTestToastAlerts() {
+    const t = toast.notify('Hi There!', {
         duration: 1000,
         type: 'default',
-        position: 'top-left',
+        position: 'top-right',
     });
-
-    const t2 = toast.notify('Hello World', {
+    const t2 = toast.notify({
+        title: 'Hi There!',
+        message: 'I hope you are having a greate day.'
+    }, {
         duration: 1000,
-        position: 'top-left',
         type: 'success',
+        position: 'top-right',
     });
 
-    const t3 = toast.notify('Hello World 3', {
-        duration: 1000,
-        position: 'top-left',
-        type: 'success',
-    });
-
-    const t4 = toast.notify('Hello World 4', {
+    const t3 = toast.notify('Hi There!', {
         duration: 1000,
         position: 'top-right',
         type: 'info',
-
-    });
-    const centeredToast = toast.notify('I am aligned center', {
-        duration: 1000,
-        position: 'center',
-        type: 'danger',
     });
 
-    const centeredTopToast = toast.notify('I am top center aligned', {
+    const t4 = toast.notify('Hi There!', {
         duration: 1000,
-        position: 'top-center',
+        position: 'top-right',
         type: 'warning',
     });
 
-    const t5 = toast.notify('Hello World 5', {
+    const t5 = toast.notify('Hi There!', {
         duration: 1000,
-        position: 'bottom-right',
+        position: 'top-right',
+        type: 'error',
     });
+   
     const t6 = toast.notify({
         title: 'Hi, there!',
-        message: "Thank you for subscribing our service. For any help feel free to write us."
+        message: "Thank you for subscribing our service. For any help feel free to write us.",
+        buttons:[{
+            iconUrl: '../assets/icons/close.svg',
+            label: 'Close',
+            onClick:() => {
+                console.log("Closing  the item");
+            }
+        },{
+            iconUrl: '../assets/icons/tick.svg',
+            label: 'Confirm',
+            onClick:() => {
+                console.log("Confirming the item");
+            }
+        }
+    ]
     },{
         duration: 1000,
-        position: 'bottom-right',
+        position: 'top-right',
+        'type': 'success',
+        classNames: ['border-left-5']
+    });
+
+    const t7 = toast.notify({
+        title: 'Hi, there!',
+        message: "Thank you for subscribing our service. For any help feel free to write us.",
+        buttons:[{
+            iconUrl: '../assets/icons/close.svg',
+            label: 'Close',
+            onClick:() => {
+                console.log("Closing  the item");
+            },
+            type: 'default',
+        },{
+            label: 'Confirm',
+            classes: [],
+            onClick:() => {
+                console.log("Confirming the item");
+            },
+            type: 'success'
+        }
+    ]
+    },{
+        duration: 1000,
+        position: 'top-right',
+        'type': 'error',
     });
 }
 
-testToastAlerts();
+minimalTestToastAlerts();
 
+
+function standardTestToastAlerts() {
+    const t = toast.notify('Hi There!', {
+        duration: 1000,
+        type: 'default',
+        design: 'standard',
+        position: 'top-center',
+    });
+    const t2 = toast.notify({
+        title: 'Hi There!',
+        message: 'I hope you are having a greate day.'
+    }, {
+        duration: 1000,
+        type: 'success',
+        design: 'standard',
+        position: 'top-center',
+    });
+
+    const t3 = toast.notify('Hi There!', {
+        duration: 1000,
+        position: 'top-center',
+        design: 'standard',
+        type: 'info',
+    });
+
+    const t4 = toast.notify('Hi There!', {
+        duration: 1000,
+        position: 'top-center',
+        design: 'standard',
+        type: 'warning',
+    });
+
+    const t5 = toast.notify('Hi There!', {
+        duration: 1000,
+        position: 'top-center',
+        design: 'standard',
+        type: 'error',
+    });
+   
+    const t6 = toast.notify({
+        title: 'Hi, there!',
+        message: "Thank you for subscribing our service. For any help feel free to write us.",
+        buttons:[{
+            iconUrl: '../assets/icons/close.svg',
+            label: 'Close',
+            onClick:() => {
+                console.log("Closing  the item");
+            }
+        },{
+            iconUrl: '../assets/icons/tick.svg',
+            label: 'Confirm',
+            onClick:() => {
+                console.log("Confirming the item");
+            }
+        }
+    ]
+    },{
+        duration: 1000,
+        position: 'top-center',
+        design: 'standard',
+        type: 'success',
+        classNames: ['border-left-5']
+    });
+
+    const t7 = toast.notify({
+        title: 'Hi, there!',
+        message: "Thank you for subscribing our service. For any help feel free to write us.",
+        buttons:[{
+            iconUrl: '../assets/icons/close.svg',
+            label: 'Close',
+            onClick:() => {
+                console.log("Closing  the item");
+            },
+            type: 'default',
+        },{
+            label: 'Confirm',
+            classes: [],
+            onClick:() => {
+                console.log("Confirming the item");
+            },
+            type: 'success'
+        }
+    ]
+    },{
+        duration: 1000,
+        position: 'top-center',
+        design: 'standard',
+        'type': 'error',
+    });
+}
+
+standardTestToastAlerts();
 export default toast;

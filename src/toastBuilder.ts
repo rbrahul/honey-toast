@@ -18,7 +18,7 @@ const ICON_TYPE = {
     success: TickIcon,
     info: InfoIcon,
     warining: WarningIcon,
-    danger: CloseIcon,
+    error: CloseIcon,
 };
 
 const classPrefix: string = 'rb-toast';
@@ -90,14 +90,16 @@ class ToastAlert {
             ? prefix(this.#options?.design)
             : prefix('standard');
         const themeClass = this.#options?.theme ? prefix(this.#options?.theme) : prefix('light');
-
+        this.#alertHtmlSpec.classes = [
+            toastContainerClass,
+                    typeClass,
+                    designClass,
+                    themeClass
+        ];
         if (this.#options.classNames) {
             this.#alertHtmlSpec.classes = [
                 ...new Set([
-                    toastContainerClass,
-                    typeClass,
-                    designClass,
-                    themeClass,
+                    ...this.#alertHtmlSpec.classes,
                     ...this.#options.classNames,
                 ]),
             ];
@@ -105,11 +107,10 @@ class ToastAlert {
         return this;
     }
 
-    addTitle() {
+    createTitle():DomSpec {
         const title: Title = (this.#options?.content as StructuredContent)?.title;
-        console.log("writing title:", title);
         if (!title) {
-            return this;
+            return;
         }
         const element: DomSpec = {
             tag: 'div',
@@ -142,15 +143,20 @@ class ToastAlert {
             });
         }
 
-        if ((this.#alertHtmlSpec.children as DomSpec[]).length === 0) {
-            this.#alertHtmlSpec.children = [element];
-        } else {
-            this.#alertHtmlSpec.children.unshift(element);
-        }
-        return this;
+        // if ((this.#alertHtmlSpec.children as DomSpec[]).length === 0) {
+        //     this.#alertHtmlSpec.children = [element];
+        // } else {
+        //     this.#alertHtmlSpec.children.unshift(element);
+        // }
+        return element;
     }
 
     addBody() {
+        const contentContainer:DomSpec = {
+            tag: 'div',
+            classes: [prefix('content-wrapper')],
+            children: []
+        };
         const toastBody: DomSpec = {
             tag: 'div',
             classes: [prefix('body')],
@@ -183,27 +189,38 @@ class ToastAlert {
             if (this.#options?.icon?.classes) {
                 iconElement.classes.push(...this.#options?.icon?.classes);
             }
-            toastBody.children.push(iconElement);
+            //toastBody.children.push(iconElement);
+            contentContainer.children.push(iconElement);
         }
         if (
             typeof this.#options.content === 'object' &&
             (this.#options.content as StructuredContent)?.message
         ) {
-        console.log("Message:",this.#options.content, 'is Objectk:', 'message:', this.#options.content?.message)
+            console.log("Message:",this.#options.content, 'is Objectk:', 'message:', this.#options.content?.message)
 
             toastBody.children.push({
                 tag: 'div',
                 html: (this.#options.content as StructuredContent)?.message as string,
-                classes: ['alert-content'],
+                classes: [prefix('message')],
             });
         } else if (typeof this.#options.content === 'string') {
             toastBody.children.push({
                 tag: 'span',
                 html: this.#options.content as string,
-                classes: ['alert-content'],
+                classes: [prefix('message')],
             });
         }
-        this.#alertHtmlSpec.children.push(toastBody);
+        
+
+        const title = this.createTitle();
+        if (title) {
+            if (toastBody.children) {
+                toastBody.children.unshift(title)
+            }
+        }
+
+        contentContainer.children.push(toastBody);
+        this.#alertHtmlSpec.children.push(contentContainer);
         console.log("this.#alertHtmlSpec.children:", this.#alertHtmlSpec.children)
         return this;
     }
@@ -213,8 +230,12 @@ class ToastAlert {
             tag: 'button',
             children: [],
             classes: [],
+            events: {
+                click: btn.onClick ?? (() => {})
+            }
         };
-        btnElement.classes = [prefix(`btn-${btn?.type ?? 'default'}`), ...(btn.classes ?? [])];
+
+        btnElement.classes = [prefix('btn'), prefix(`btn-${btn?.type ?? 'default'}`), ...(btn.classes ?? [])];
         if (btn.iconUrl) {
             const btnIcon: DomSpec = {
                 tag: 'img',
@@ -222,19 +243,16 @@ class ToastAlert {
                     src: btn.iconUrl,
                 },
                 classes: [prefix('btn-icon-small')],
-                events: {
-                    onclick: btn.onClick ?? (() => {})
-                }
             };
             btnElement.children.push(btnIcon);
         }
         if (btn.label !== undefined) {
-            const btnElement: DomSpec = {
+            const label: DomSpec = {
                 tag: 'span',
                 html: btn.label,
                 classes: [prefix('btn-label')],
             };
-            btnElement.children.push(btnElement);
+            btnElement.children.push(label);
         }
         return btnElement;
     }
@@ -247,13 +265,25 @@ class ToastAlert {
         if (content?.buttons.length > 0) {
             const buttonContainer: DomSpec = {
                 tag: 'div',
-                classes: ['alert-btn-group'],
+                classes: [prefix('alert-btn-group')],
                 children: [],
             };
             buttonContainer.children = content?.buttons.map(this.#cleateBtn);
             this.#alertHtmlSpec.children.push(buttonContainer);
         }
 
+        return this;
+    }
+
+    addCloseBtn(){
+        if (this.#options.isCloseable) {
+           const closeBtn:DomSpec = {
+                tag: 'span',
+                html: '&#10005;',
+               classes: [prefix('close-btn')]
+           }
+           this.#alertHtmlSpec.children.push(closeBtn);
+        }
         return this;
     }
 
@@ -275,7 +305,7 @@ class ToastAlert {
 
 const isValidContent = (content: ToastContent) => (content && (typeof content === 'string' || (content as StructuredContent).title !== undefined || (content as StructuredContent)?.message !== undefined || isHTMLElement(content)))
 
-export const createToast = (options: ToastBuilderProps) => {
+export const createToast = (options: ToastBuilderProps): HTMLElement => {
     console.log("OPTIONS:", options)
     if(!isValidContent(options?.content)) {
         throw new Error(
@@ -284,12 +314,7 @@ export const createToast = (options: ToastBuilderProps) => {
     }
 
     const toast = new ToastAlert(options);
-    toast.addClasses().addBody();
-
-    if (typeof options.content === 'object' && 'title' in options.content) {
-        toast.addTitle();
-    }
-    return toast.addActionButtons().addProgressBar().toHtml();
+    return toast.addClasses().addBody().addActionButtons().addCloseBtn().addProgressBar().toHtml();
 };
 
 /*
@@ -311,4 +336,4 @@ console.log(isHTMLElement(element))
 console.log("Success Toast", createToast({...DEFAULT_TOAST_OPTIONS, type: 'success'}))
 console.log("Info Toast", createToast({...DEFAULT_TOAST_OPTIONS, type: 'info'}))
 console.log("Warning Toast", createToast({...DEFAULT_TOAST_OPTIONS, type: 'warning'}))
-console.log("Danger Toast", createToast({...DEFAULT_TOAST_OPTIONS, type: 'danger'}))*/
+console.log("error Toast", createToast({...DEFAULT_TOAST_OPTIONS, type: 'error'}))*/

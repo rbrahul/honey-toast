@@ -5,7 +5,7 @@ type Options = {
     showProgress: boolean;
     position: string;
     closeable: boolean;
-    type: 'default' | 'success' | 'info' | 'warning' | 'danger';
+    type: 'default' | 'success' | 'info' | 'warning' | 'error';
     progressbarClasses: string[];
     onShow: () => void;
     onClose: () => void;

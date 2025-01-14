@@ -15,7 +15,7 @@ export type ToastMessage = string | HTMLElement;
 export type Button = {
     iconUrl?: string;
     label?: string;
-    type?: 'default' | 'success' | 'info' | 'warning' | 'danger';
+    type?: 'default' | 'success' | 'info' | 'warning' | 'error';
     classes?: string[];
     onClick: () => void;
 };
@@ -33,7 +33,7 @@ export type ToastOptions = {
     hasProgressBar: boolean;
     hasIcon: boolean;
     classNames: string[];
-    type: 'default' | 'success' | 'info' | 'warning' | 'danger';
+    type: 'default' | 'success' | 'info' | 'warning' | 'error';
     theme: 'light' | 'dark' | 'system';
     design: 'minimal' | 'standard' | 'colorful';
     animation: 'slideInOut' | 'fadeInFadeOut';
