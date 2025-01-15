@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 330px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            box-shadow: 3px 10px 4px 0 rgba(0,0,0,0.2);
+        }
+
+        .slide {
+            position: absolute;
+            top: 50px;
+            right: -380px;
+        }
+
+        .slide-enter {
+            right: 50px;
+            transition: right .3s ease-in;
+            background-color: red;
+        }
+
+        .slide-entered {
+            right: 50px;
+            background-color: blue;
+        }
+
+        .slide-exit {
+            right: -380px;
+            transition: right .3s ease-out;
+            background-color: yellow;
+
+        }
+
+        .bounce {
+            position: absolute;
+            top: 50px;
+            right: -380px;
+        }
+
+        .bounce-enter {
+            animation: bounceIn .5s ease;
+        }
+
+        .bounce-entered {
+            right: 50px;
+        }
+
+        .bounce-exit {
+            animation: slideOut .5s ease;
+        }
+
+        @keyframes bounceIn {
+            0%{
+
+            }
+
+           50% {
+                right: 80px;
+            }
+
+            70% {
+                right: 20px;
+            }
+
+            100% {
+                right: 50px;
+            }
+        }
+
+        @keyframes slideOut {
+            from {};
+            to {
+                right: -380px;
+            }
+        }
+
+        .btn {
+            padding: 20px;
+            background-color: blue;
+            color: white;
+            border-radius: 5px;
+            border: 1px solid blue;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button id="slideInToast" type="button" class="btn">Slide In Toast</button>
+        <button id="fadeInToast" type="button" class="btn">Faded In Toast</button>
+    </div>
+    <script src="/src/utils/ui-transtion.js"></script>
+
+    <script>
+        function createAnimatingToast(animationType){
+            const box = document.createElement('div');
+            box.classList.add('box', animationType);
+
+            const p = document.createElement('p');
+            p.textContent = 'Hello World, I am '+animationType;
+
+            box.appendChild(p);
+
+            const animator = new DomAnimator(box, {
+                animationClassPrefix: animationType,
+                animationKind: animationType == 'slide' ? 'transition' : 'animation'
+            });
+
+            box.addEventListener("click", () => {
+                console.log("Clicked and animator is:", animator);
+                animator.remove();
+            });
+
+            animator.appendChildTo(document.body);
+        }
+
+        document.querySelector("#slideInToast").addEventListener("click", () => {
+            createAnimatingToast('slide');
+        });
+        document.querySelector("#fadeInToast").addEventListener("click", () => {
+            createAnimatingToast('bounce');
+        });
+    </script>
+</body>
+</html>

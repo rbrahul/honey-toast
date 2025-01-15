@@ -137,7 +137,7 @@
 
 .rb-toast-btn-default{
     border-color: var(--toast-btn-border-color);
-    background-color: var(--toast-default-color);
+    background-color: var(--toast-primary-default);
 }
 
 .rb-toast-btn-success{
