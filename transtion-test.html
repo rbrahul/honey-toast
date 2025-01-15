@@ -11,60 +11,220 @@
             border-radius: 4px;
             padding: 15px;
             box-shadow: 3px 10px 4px 0 rgba(0,0,0,0.2);
+            background-color: #fff;
         }
 
-        .slide {
+        .row {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            padding: 15px;
+        }
+
+        .direction {
+            margin-left: 40px;;
+        }
+
+         /*Top Left Slide In Out*/
+         .top-left.slide {
+            position: absolute;
+            top: 50px;
+            left: -380px;
+        }
+
+        .top-left.slide-enter {
+            left: 50px;
+            transition: left .3s ease-in;
+        }
+
+        .top-left.slide-entered {
+            left: 50px;
+        }
+
+        .top-left.slide-exit {
+            left: -380px;
+            transition: left .3s ease-out;
+        }
+
+        /*Top Right Slide In Out*/
+        .top-right.slide {
             position: absolute;
             top: 50px;
             right: -380px;
         }
 
-        .slide-enter {
+        .top-right.slide-enter {
             right: 50px;
             transition: right .3s ease-in;
-            background-color: red;
         }
 
-        .slide-entered {
+        .top-right.slide-entered {
             right: 50px;
-            background-color: blue;
         }
 
-        .slide-exit {
+        .top-right.slide-exit {
             right: -380px;
             transition: right .3s ease-out;
-            background-color: yellow;
-
         }
 
-        .bounce {
+        /*Top Center Slide In Out*/
+        .top-center.slide {
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        .top-center.slide-enter {
+            top: 50px;
+            transition: top .3s ease-in;
+        }
+
+        .top-center.slide-entered {
+            top: 50px;
+        }
+
+        .top-center.slide-exit {
+            top: -150px;
+            transition: top .3s ease-out;
+        }
+
+        /*Center Slide In Out*/
+        .center.slide {
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .center.slide-enter {
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: top .3s ease-in;
+        }
+
+        .center.slide-entered {
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .center.slide-exit {
+            top: -150px;
+            transform: translateX(-50%);
+            transition: top .3s ease-out;
+        }
+
+        /*Bottom Left Slide In Out*/
+        .bottom-left.slide {
+            position: absolute;
+            bottom: 50px;
+            left: -380px;
+        }
+
+        .bottom-left.slide-enter {
+            left: 50px;
+            transition: left .3s ease-in;
+        }
+
+        .bottom-left.slide-entered {
+            left: 50px;
+        }
+
+        .bottom-left.slide-exit {
+            left: -380px;
+            transition: left .3s ease-out;
+        }
+
+        /*Bottom Right Slide In Out*/
+        .bottom-right.slide {
+            position: absolute;
+            bottom: 50px;
+            right: -380px;
+        }
+
+        .bottom-right.slide-enter {
+            right: 50px;
+            transition: right .3s ease-in;
+        }
+
+        .bottom-right.slide-entered {
+            right: 50px;
+        }
+
+        .bottom-right.slide-exit {
+            right: -380px;
+            transition: right .3s ease-out;
+        }
+
+
+        /*Top Left Bounce In Out*/
+        .top-left.bounce {
+            position: absolute;
+            top: 50px;
+            left: -380px;
+        }
+    
+        .top-left.bounce-enter {
+            animation: bounceInFromLeft .3s ease;
+        }
+
+        .top-left.bounce-entered {
+            left: 50px;
+        }
+
+        .top-left.bounce-exit {
+            animation: slideOutToLeft .3s ease-in forwards;
+        }
+
+        @keyframes bounceInFromLeft {
+           60% {
+                left: 80px;
+            }
+
+            80% {
+                left: 20px;
+            }
+
+            100% {
+                left: 50px;
+            }
+        }
+
+        @keyframes slideOutToLeft {
+            from {
+               left: 50px;
+            }
+            to {
+                left: -380px;
+            }
+        }
+
+
+        /*Top Right Bounce In Out*/
+        .top-right.bounce {
             position: absolute;
             top: 50px;
             right: -380px;
         }
-
-        .bounce-enter {
-            animation: bounceIn .5s ease;
+        .top-right.bounce-enter {
+            animation: bounceInFromRight .3s ease;
         }
 
-        .bounce-entered {
+        .top-right.bounce-entered {
             right: 50px;
         }
 
-        .bounce-exit {
-            animation: slideOut .5s ease;
+        .top-right.bounce-exit {
+            animation: slideOutToRight .3s ease-in forwards;
         }
 
-        @keyframes bounceIn {
-            0%{
 
-            }
-
-           50% {
+        @keyframes bounceInFromRight {
+            60% {
                 right: 80px;
             }
 
-            70% {
+            80% {
                 right: 20px;
             }
 
@@ -73,8 +233,10 @@
             }
         }
 
-        @keyframes slideOut {
-            from {};
+        @keyframes slideOutToRight {
+            from {
+               right: 50px;
+            }
             to {
                 right: -380px;
             }
@@ -89,19 +251,37 @@
             margin-right: 20px;
             cursor: pointer;
         }
+        .btn-group{
+            position: fixed;
+            bottom: 40px;
+            right: auto;
+            left: auto;
+        }
     </style>
 </head>
 <body>
-    <div>
-        <button id="slideInToast" type="button" class="btn">Slide In Toast</button>
-        <button id="fadeInToast" type="button" class="btn">Faded In Toast</button>
+    <div class="btn-group">
+        <div class="row">
+            <button id="slideInToast" type="button" class="btn">Slide In Toast</button>
+        <button id="bounceInToast" type="button" class="btn">Bounce In</button>
+        <button id="fadeInToast" type="button" class="btn">Fade In Fadeout</button>
+        </div>
+
+        <div class="row">
+          <label> <input type="radio" class="direction" name="direction" value="top-left"> <strong>top-left</strong> </label> 
+          <label> <input type="radio" class="direction" name="direction" value="top-right" checked> <strong>top-right</strong> </label> 
+          <label> <input type="radio" class="direction" name="direction" value="top-center"> <strong>top-center</strong> </label> 
+          <label> <input type="radio" class="direction" name="direction" value="bottom-left"> <strong>bottom-left</strong> </label> 
+          <label> <input type="radio" class="direction" name="direction" value="bottom-right"> <strong>bottom-right</strong> </label> 
+          <label> <input type="radio" class="direction" name="direction" value="center"> <strong>center</strong> </label> 
+        </div>
     </div>
     <script src="/src/utils/ui-transtion.js"></script>
 
     <script>
-        function createAnimatingToast(animationType){
+        function createAnimatingToast(animationType, direction){
             const box = document.createElement('div');
-            box.classList.add('box', animationType);
+            box.classList.add('box', animationType, direction ?? 'top-right');
 
             const p = document.createElement('p');
             p.textContent = 'Hello World, I am '+animationType;
@@ -122,10 +302,21 @@
         }
 
         document.querySelector("#slideInToast").addEventListener("click", () => {
-            createAnimatingToast('slide');
+            const direction = document.querySelector(`input[name="direction"]:checked`)?.value;
+            console.log("direction:", direction)
+            createAnimatingToast('slide', direction);
         });
+
+        document.querySelector("#bounceInToast").addEventListener("click", () => {
+            const direction = document.querySelector(`input[name="direction"]:checked`)?.value;
+            console.log("direction:", direction)
+            createAnimatingToast('bounce', direction);
+        });
+
         document.querySelector("#fadeInToast").addEventListener("click", () => {
-            createAnimatingToast('bounce');
+            const direction = document.querySelector(`input[name="direction"]:checked`)?.value;
+            console.log("direction:", direction)
+            createAnimatingToast('fadeInOut', direction);
         });
     </script>
 </body>

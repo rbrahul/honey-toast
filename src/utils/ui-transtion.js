@@ -182,18 +182,22 @@ class DomAnimator {
 
 
     _setToEntered = () => {
-        console.log("setting to entered:")
-        this.node.classList.remove(`${this.options.animationClassPrefix}-enter`);
-        this.node.classList.add(`${this.options.animationClassPrefix}-entered`);
-        this.cleanupAnimationEventListners('enter');
+        if(this.node?.classList?.contains(`${this.options.animationClassPrefix}-enter`)) {
+            console.log("setting to entered:")
+            this.node.classList.remove(`${this.options.animationClassPrefix}-enter`);
+            this.node.classList.add(`${this.options.animationClassPrefix}-entered`);
+            this.cleanupAnimationEventListners('enter');
+        }
     }
 
     _setToExited = () => {
         console.log("setting to exited:")
-        this.node.classList.remove(`${this.options.animationClassPrefix}-exit`);
-        this.node.classList.add(`${this.options.animationClassPrefix}-exited`);
-        this.cleanupAnimationEventListners('exit');
-        this.node?.remove();
+        if (this.node?.classList?.contains(`${this.options.animationClassPrefix}-exit`)) {
+            this.node.classList.remove(`${this.options.animationClassPrefix}-exit`);
+            this.node.classList.add(`${this.options.animationClassPrefix}-exited`);
+            this.cleanupAnimationEventListners('exit');
+            this.node?.remove();
+        }
     }
 
 
