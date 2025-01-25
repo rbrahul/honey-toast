@@ -12,6 +12,13 @@ export type Title =
 
 export type ToastMessage = string | HTMLElement;
 
+export type CustomAnimation = {
+    enter: string; // css class that will be applied to the toast when it enters
+    exit: string;  // css class that will be applied to the toast when it exists
+}
+
+export type Animation = 'slide' | 'fade' | 'zoom' | 'bounce';
+
 export type Button = {
     iconUrl?: string;
     label?: string;
@@ -29,26 +36,28 @@ export type StructuredContent = {
 export type ToastContent = string | StructuredContent | HTMLElement
 
 export type ToastOptions = {
-    isCloseable: boolean;
-    hasProgressBar: boolean;
-    hasIcon: boolean;
-    classNames: string[];
-    type: 'default' | 'success' | 'info' | 'warning' | 'error';
-    theme: 'light' | 'dark' | 'system';
-    design: 'minimal' | 'standard' | 'colorful';
-    animation: 'slideInOut' | 'fadeInFadeOut';
+    isCloseable?: boolean;
+    hasProgressBar?: boolean;
+    hasIcon?: boolean;
+    classNames?: string[];
+    type?: 'default' | 'success' | 'info' | 'warning' | 'error';
+    theme?: 'light' | 'dark' | 'system';
+    design?: 'minimal' | 'standard' | 'colorful';
+    animation?: Animation | CustomAnimation;
     position?: 'top-left' | 'top-right' | 'top-center' | 'center' | 'bottom-left' | 'bottom-right',
     cordinates?: { // ignores the stack position
         x: number,
         y: number
     }
-    icon: {
+    icon?: {
         url: string;
         size: 'small' | 'medium' | 'large';
         classes: string[];
     };
-    duration: number,
-    container?: HTMLElement
+    duration?: number,
+    container?: HTMLElement,
+    onClose?: () => void;
+    onShow?: () => void;
 };
 
 export type ToastBuilderProps = {

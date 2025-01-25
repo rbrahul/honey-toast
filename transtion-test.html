@@ -5,13 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <style>
+
             body {
-                background-color: #333;
                 font-family: Arial, Helvetica, sans-serif;
+                background-color: #fefefe;
+                color:#333;
+                font-size: 16px;
+
             }
             label {
-                color: white;
             }
+
             .box {
                 width: 330px;
                 border: 1px solid #ddd;
@@ -34,542 +38,11 @@
 
             
 
-            /* Fade */
-            .fade{
-                position: absolute;
-                opacity: 0;
-            }
-
-            .top-left.fade {
-                top: 50px;
-                left: 50px;
-            }
-
-            .top-right.fade {
-                top: 50px;
-                right: 50px;
-            }
-
-            .top-left.fade {
-                bottom: 50px;
-                left: 50px;
-            }
-
-            .bottom-right.fade {
-                bottom: 50px;
-                right: 50px;
-            }
-
-            .fade-enter{
-                opacity: 1;
-                transition: opacity .3s ease-in;
-            }
-
-            .fade-entered{
-                opacity: 1;
-            }
-
-            .fade-exit{
-                opacity: 0;
-                transition: opacity .3s ease-in;
-            }
-
-            /* Zoom */
-            .zoom{ 
-                position: absolute;
-                transform: scale(0);
-            }
-            
-            .top-left.zoom {
-                top: 50px;
-                left: 50px;
-            }
-
-            .top-right.zoom {
-                top: 50px;
-                right: 50px;
-            }
-
-            .top-left.zoom {
-                top: 50px;
-                left: 50px;
-            }
-
-            .bottom-right.zoom {
-                bottom: 50px;
-                right: 50px;
-            }
-
-            .top-center.zoom {
-                top: 50px;
-                left: 50%;
-                transform: translateX(-50%) scale(0)
-            }
-
-            .center.zoom {
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%) scale(0)
-            }
-
-            .zoom-enter {
-                transform: scale(1);
-                transition: transform .3s ease-in;
-            }
-
-            .center.zoom-enter {
-                transform: translate(-50%, -50%) scale(1)
-            }
-
-            .top-center.zoom-enter {
-                transform: translateX(-50%) scale(1)
-            }
-
-            .zoom-entered{
-                transform: scale(1);
-            }
-            
-            .top-center.zoom-entered{
-                transform: translateX(-50%) scale(1);
-            }
-
-            .zoom-exit{
-                transform: scale(0);
-                transition: transform .3s ease-in;
-            }
-
-            .top-center.zoom-exit{
-                transform: translateX(-50%) scale(0);
-            }
-
-            .center.zoom-exit {
-                transform: translate(-50%, -50%) scale(0)
-            }
-
-
-            .top-left.slide-enter {
-                left: 50px;
-                transition: left 0.3s ease-in;
-            }
-
-            .top-left.slide-entered {
-                left: 50px;
-            }
-
-            .top-left.slide-exit {
-                left: -380px;
-                transition: left 0.3s ease-out;
-            }
-
-            /*Top Left Slide In Out*/
-            .top-left.slide {
-                position: absolute;
-                top: 50px;
-                left: -380px;
-            }
-
-            .top-left.slide-enter {
-                left: 50px;
-                transition: left 0.3s ease-in;
-            }
-
-            .top-left.slide-entered {
-                left: 50px;
-            }
-
-            .top-left.slide-exit {
-                left: -380px;
-                transition: left 0.3s ease-out;
-            }
-
-            /*Top Right Slide In Out*/
-            .top-right.slide {
-                position: absolute;
-                top: 50px;
-                right: -380px;
-            }
-
-            .top-right.slide-enter {
-                right: 50px;
-                transition: right 0.3s ease-in;
-            }
-
-            .top-right.slide-entered {
-                right: 50px;
-            }
-
-            .top-right.slide-exit {
-                right: -380px;
-                transition: right 0.3s ease-out;
-            }
-
-            /*Top Center Slide In Out*/
-            .top-center.slide {
-                position: absolute;
-                top: -150px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            .top-center.slide-enter {
-                top: 50px;
-                transition: top 0.3s ease-in;
-            }
-
-            .top-center.slide-entered {
-                top: 50px;
-            }
-
-            .top-center.slide-exit {
-                top: -150px;
-                transition: top 0.3s ease-out;
-            }
-
-            /*Center Slide In Out*/
-            .center.slide {
-                position: absolute;
-                top: -150px;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-
-            .center.slide-enter {
-                top: 50%;
-                transform: translate(-50%, -50%);
-                transition: top 0.3s ease-in;
-            }
-
-            .center.slide-entered {
-                top: 50%;
-                transform: translate(-50%, -50%);
-            }
-
-            .center.slide-exit {
-                top: -150px;
-                transform: translateX(-50%);
-                transition: top 0.3s ease-out;
-            }
-
-            /*Bottom Left Slide In Out*/
-            .bottom-left.slide {
-                position: absolute;
-                bottom: 50px;
-                left: -380px;
-            }
-
-            .bottom-left.slide-enter {
-                left: 50px;
-                transition: left 0.3s ease-in;
-            }
-
-            .bottom-left.slide-entered {
-                left: 50px;
-            }
-
-            .bottom-left.slide-exit {
-                left: -380px;
-                transition: left 0.3s ease-out;
-            }
-
-            /*Bottom Right Slide In Out*/
-            .bottom-right.slide {
-                position: absolute;
-                bottom: 50px;
-                right: -380px;
-            }
-
-            .bottom-right.slide-enter {
-                right: 50px;
-                transition: right 0.3s ease-in;
-            }
-
-            .bottom-right.slide-entered {
-                right: 50px;
-            }
-
-            .bottom-right.slide-exit {
-                right: -380px;
-                transition: right 0.3s ease-out;
-            }
-
-            /*Top Left Bounce In Out*/
-            .top-left.bounce {
-                position: absolute;
-                top: 50px;
-                left: -380px;
-            }
-
-            .top-left.bounce-enter {
-                animation: bounceInFromLeft 0.3s ease;
-            }
-
-            .top-left.bounce-entered {
-                left: 50px;
-            }
-
-            .top-left.bounce-exit {
-                animation: slideOutToLeft 0.3s ease-in forwards;
-            }
-
-            @keyframes bounceInFromLeft {
-                60% {
-                    left: 80px;
-                }
-
-                80% {
-                    left: 20px;
-                }
-
-                100% {
-                    left: 50px;
-                }
-            }
-
-            @keyframes slideOutToLeft {
-                from {
-                    left: 50px;
-                }
-                to {
-                    left: -380px;
-                }
-            }
-
-            /*Top Right Bounce In Out*/
-            .top-right.bounce {
-                position: absolute;
-                top: 50px;
-                right: -380px;
-            }
-            .top-right.bounce-enter {
-                animation: bounceInFromRight 0.3s ease;
-            }
-
-            .top-right.bounce-entered {
-                right: 50px;
-            }
-
-            .top-right.bounce-exit {
-                animation: slideOutToRight 0.3s ease-in forwards;
-            }
-
-            @keyframes bounceInFromRight {
-                60% {
-                    right: 80px;
-                }
-
-                80% {
-                    right: 20px;
-                }
-
-                100% {
-                    right: 50px;
-                }
-            }
-
-            @keyframes slideOutToRight {
-                from {
-                    right: 50px;
-                }
-                to {
-                    right: -380px;
-                }
-            }
-
-            /*Bottom Left Bounce In Out*/
-            .bottom-left.bounce {
-                position: absolute;
-                bottom: 50px;
-                left: -380px;
-            }
-
-            .bottom-left.bounce-enter {
-                animation: bounceInFromLeft 0.3s ease;
-            }
-
-            .bottom-left.bounce-entered {
-                left: 50px;
-            }
-
-            .bottom-left.bounce-exit {
-                animation: slideOutToLeft 0.3s ease-in forwards;
-            }
-
-            @keyframes bounceInFromLeft {
-                60% {
-                    left: 80px;
-                }
-
-                80% {
-                    left: 20px;
-                }
-
-                100% {
-                    left: 50px;
-                }
-            }
-
-            @keyframes slideOutToLeft {
-                from {
-                    left: 50px;
-                }
-                to {
-                    left: -380px;
-                }
-            }
-
-            /*Bottom Right Bounce In Out*/
-            .bottom-right.bounce {
-                position: absolute;
-                bottom: 50px;
-                right: -380px;
-            }
-            .bottom-right.bounce-enter {
-                animation: bounceInFromRight 0.3s ease;
-            }
-
-            .bottom-right.bounce-entered {
-                right: 50px;
-            }
-
-            .bottom-right.bounce-exit {
-                animation: slideOutToRight 0.3s ease-in forwards;
-            }
-
-            @keyframes bounceInFromRight {
-                60% {
-                    right: 80px;
-                }
-
-                80% {
-                    right: 20px;
-                }
-
-                100% {
-                    right: 50px;
-                }
-            }
-
-            @keyframes slideOutToRight {
-                from {
-                    right: 50px;
-                }
-                to {
-                    right: -380px;
-                }
-            }
-
-            /*Top Center Bounce In Out*/
-            .top-center.bounce {
-                position: absolute;
-                top: 0px;
-                left: 50%;
-                transform: translate(-50%, -100%);
-            }
-
-            .top-center.bounce-enter {
-                transform: translateX(-50%);
-                animation: bounceInFromTop 0.3s ease;
-            }
-
-            .top-center.bounce-entered {
-                transform: translateX(-50%);
-                top: 50px;
-            }
-
-            .top-center.bounce-exit {
-                animation: slideOutToTop 0.3s ease-in forwards;
-            }
-
-            @keyframes bounceInFromTop {
-                60% {
-                    top: 60px;
-                }
-
-                80% {
-                    top: 40px;
-                }
-
-                100% {
-                    top: 50px;
-                }
-            }
-
-            @keyframes slideOutToTop {
-                from {
-                    transform: translateX(-50%);
-                    top: 50px;
-                }
-                to {
-                    transform: translate(-50%, -100%);
-                }
-            }
-
-            /*Center Bounce In Out*/
-            .center.bounce {
-                position: absolute;
-                top: 0px;
-                left: 50%;
-                transform: translate(-50%, -100%);
-            }
-
-            .center.bounce-enter {
-                transform: translate(-50%, -50%);
-                animation: bounceInFromTopToCenter 0.3s ease;
-            }
-
-            .center.bounce-entered {
-                top: 50%;
-                transform: translate(-50%, -50%);
-            }
-
-            .center.bounce-exit {
-                animation: slideOutToTopFromCenter 0.3s ease-in forwards;
-            }
-
-            @keyframes bounceInFromTopToCenter {
-                60% {
-                    top: calc(50% + 20px);
-                }
-
-                80% {
-                    top: calc(50% - 20px);
-                }
-
-                100% {
-                    top: 50%;
-                }
-            }
-
-            @keyframes slideOutToTopFromCenter {
-                from {
-                    top: 50%;
-                    transform: translate(-50%, -50%);
-                }
-                to {
-                    top: 0px;
-                    transform: translate(-50%, -100%);
-                }
-            }
-
-
-            /*Flip */
-
-            @keyframes flipAnim {
-                from {
-                    transform: rotateY(90deg);
-                    transform-style: preserve-3d;
-                }
-                to {
-                    transform: rotateY(0deg);
-                    transform-style: preserve-3d;
-                }
-            }
-
 
 
             .btn {
                 padding: 20px;
-                background-color: blue;
+                background-color: rgb(78, 78, 243);
                 color: white;
                 border-radius: 5px;
                 border: 1px solid blue;
@@ -585,48 +58,51 @@
         </style>
     </head>
     <body>
-        <div class="btn-group">
-            <div class="row">
-                <button id="slideInToast" type="button" class="btn">Slide In Toast</button>
-                <button id="bounceInToast" type="button" class="btn">Bounce In</button>
-                <button id="fadeInToast" type="button" class="btn">Fade In Fadeout</button>
-                <button id="zoom" type="button" class="btn">Zoom</button>
-                <button id="flip" type="button" class="btn">Flip</button>
-            </div>
 
-            <div class="row">
-                <label>
-                    <input type="radio" class="direction" name="direction" value="top-left" />
-                    <strong>top-left</strong>
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        class="direction"
-                        name="direction"
-                        value="top-right"
-                        checked
-                    />
-                    <strong>top-right</strong>
-                </label>
-                <label>
-                    <input type="radio" class="direction" name="direction" value="top-center" />
-                    <strong>top-center</strong>
-                </label>
-                <label>
-                    <input type="radio" class="direction" name="direction" value="bottom-left" />
-                    <strong>bottom-left</strong>
-                </label>
-                <label>
-                    <input type="radio" class="direction" name="direction" value="bottom-right" />
-                    <strong>bottom-right</strong>
-                </label>
-                <label>
-                    <input type="radio" class="direction" name="direction" value="center" />
-                    <strong>center</strong>
-                </label>
+        <div class="toast-editor">
+            <div class="btn-group">
+                <div class="row">
+                    <button id="slideInToast" type="button" class="btn">Slide In Toast</button>
+                    <button id="bounceInToast" type="button" class="btn">Bounce In</button>
+                    <button id="fadeInToast" type="button" class="btn">Fade In Fadeout</button>
+                    <button id="zoom" type="button" class="btn">Zoom</button>
+                </div>
+    
+                <div class="row">
+                    <label>
+                        <input type="radio" class="direction" name="direction" value="top-left" />
+                        <strong>top-left</strong>
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            class="direction"
+                            name="direction"
+                            value="top-right"
+                            checked
+                        />
+                        <strong>top-right</strong>
+                    </label>
+                    <label>
+                        <input type="radio" class="direction" name="direction" value="top-center" />
+                        <strong>top-center</strong>
+                    </label>
+                    <label>
+                        <input type="radio" class="direction" name="direction" value="bottom-left" />
+                        <strong>bottom-left</strong>
+                    </label>
+                    <label>
+                        <input type="radio" class="direction" name="direction" value="bottom-right" />
+                        <strong>bottom-right</strong>
+                    </label>
+                    <label>
+                        <input type="radio" class="direction" name="direction" value="center" />
+                        <strong>center</strong>
+                    </label>
+                </div>
             </div>
         </div>
+        
         <script src="/src/utils/ui-transtion.js"></script>
 
         <script>
@@ -649,7 +125,7 @@
                     animator.remove();
                 });
 
-                animator.appendChildTo(document.body);
+                animator.appendChild(document.body);
             }
 
             document.querySelector('#slideInToast').addEventListener('click', () => {

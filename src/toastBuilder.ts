@@ -11,6 +11,7 @@ import {
     StructuredContent,
     ToastContent,
     ToastBuilderProps,
+    Animation
 } from './type';
 
 const ICON_TYPE = {
@@ -22,6 +23,11 @@ const ICON_TYPE = {
 };
 
 const classPrefix: string = 'rb-toast';
+
+export const prefix = (name: string) => {
+    return `${classPrefix}-${name}`;
+};
+
 
 export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
     content: {
@@ -36,7 +42,7 @@ export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
     hasProgressBar: false,
     classNames: [],
     theme: 'light',
-    animation: 'fadeInFadeOut',
+    animation: prefix('slide') as Animation,
     icon: {
         url: undefined,
         size: 'small',
@@ -45,9 +51,6 @@ export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
     duration: 3_000
 };
 
-export const prefix = (name: string) => {
-    return `${classPrefix}-${name}`;
-};
 
 export const isHTMLElement = (value: unknown) =>
     typeof value === 'object' && 'tagName' in value && value instanceof HTMLElement;

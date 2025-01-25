@@ -1,8 +1,8 @@
 import TickIcon from '../assets/icons/close.svg';
 import { createToast, DEFAULT_TOAST_OPTIONS, isHTMLElement, prefix } from './toastBuilder';
-import { ToastBuilderProps, ToastOptions, ToastContent } from './type';
+import { Animation, ToastBuilderProps, ToastOptions, ToastContent } from './type';
+import { DomAnimator } from './utils/dom-animator.js';
 
-const classPrefix: string = 'rb-toast';
 const containerSelector: string = 'container';
 
 type Options = {
@@ -74,6 +74,17 @@ class Toast implements ToastEntry {
     }
 }
 
+const getAnimationClass = (animationName:Animation = 'slide') => {
+    return (
+        {
+            slide: prefix('slide'),
+            fade: prefix('fade'),
+            zoom: prefix('zoom'),
+            bounce: prefix('bounce'),
+        }[animationName] ?? animationName
+    ); // slide is default if
+};
+
 class ToastBaker {
     options = defaultOptions;
     toasts: Toast[] = [];
@@ -85,11 +96,52 @@ class ToastBaker {
         };
         const toastContainer = this.#mountToastContainer(toastOptions?.position);
         const toast = new Toast(content, toastOptions, this);
-        toastContainer.appendChild(toast.element);
+        this.mountToastIntoDom(toastContainer, toast.element, toastOptions);
+        // toastContainer.appendChild(toast.element);
         toast.mountedIn = toastContainer;
         toast.appearedAt = Date.now();
         this.toasts.push(toast);
         return toast;
+    }
+
+    mountToastIntoDom(container: HTMLElement, toastNode: HTMLElement, options: ToastOptions) {
+
+        // TODO: Add option to create custom transtion classes {enter:CUSTOM_CLASS_Enter, exit: CUSTOM_CLASS_Exit}
+        const animationType = options?.animation ? getAnimationClass(options?.animation as Animation) : 'rb-toast-slide';
+        const animator = new DomAnimator(toastNode, {
+            animationClassPrefix: animationType as string,
+            animationKind: ['rb-toast-slide'].includes(animationType) ? 'transition' : 'animation',
+            onEnter: () => {
+                console.log('Toast has entered');
+            },
+            onExit: () => {
+                console.log('Toast has exited');
+            },
+            onEntered: () => {
+                console.log('Toast has entered');
+            },
+            onExited: () => {
+                console.log('Toast has exited');
+            },
+            animationTimeout: 300,
+        });
+        const closeBtn = toastNode.querySelector(`.${prefix('close-btn')}`);
+        if (closeBtn) {
+            if (!options?.isCloseable) {
+                closeBtn.remove();
+            } else {
+                closeBtn.addEventListener('click', () => {
+                    animator?.remove?.();
+                    if (typeof options.onClose === 'function') {
+                        options.onClose();
+                    }
+                });
+            }
+        }
+
+        if (options?.isCloseable !== undefined) {
+        }
+        animator.prepend(container);
     }
 
     close(toast: Toast) {
@@ -117,181 +169,4 @@ class ToastBaker {
 
 const toast = new ToastBaker();
 
-function minimalTestToastAlerts() {
-    const t = toast.notify('Hi There!', {
-        duration: 1000,
-        type: 'default',
-        position: 'top-right',
-    });
-    const t2 = toast.notify({
-        title: 'Hi There!',
-        message: 'I hope you are having a greate day.'
-    }, {
-        duration: 1000,
-        type: 'success',
-        position: 'top-right',
-    });
-
-    const t3 = toast.notify('Hi There!', {
-        duration: 1000,
-        position: 'top-right',
-        type: 'info',
-    });
-
-    const t4 = toast.notify('Hi There!', {
-        duration: 1000,
-        position: 'top-right',
-        type: 'warning',
-    });
-
-    const t5 = toast.notify('Hi There!', {
-        duration: 1000,
-        position: 'top-right',
-        type: 'error',
-    });
-   
-    const t6 = toast.notify({
-        title: 'Hi, there!',
-        message: "Thank you for subscribing our service. For any help feel free to write us.",
-        buttons:[{
-            iconUrl: '../assets/icons/close.svg',
-            label: 'Close',
-            onClick:() => {
-                console.log("Closing  the item");
-            }
-        },{
-            iconUrl: '../assets/icons/tick.svg',
-            label: 'Confirm',
-            onClick:() => {
-                console.log("Confirming the item");
-            }
-        }
-    ]
-    },{
-        duration: 1000,
-        position: 'top-right',
-        'type': 'success',
-        classNames: ['border-left-5']
-    });
-
-    const t7 = toast.notify({
-        title: 'Hi, there!',
-        message: "Thank you for subscribing our service. For any help feel free to write us.",
-        buttons:[{
-            iconUrl: '../assets/icons/close.svg',
-            label: 'Close',
-            onClick:() => {
-                console.log("Closing  the item");
-            },
-            type: 'default',
-        },{
-            label: 'Confirm',
-            classes: [],
-            onClick:() => {
-                console.log("Confirming the item");
-            },
-            type: 'success'
-        }
-    ]
-    },{
-        duration: 1000,
-        position: 'top-right',
-        'type': 'error',
-    });
-}
-
-minimalTestToastAlerts();
-
-
-function standardTestToastAlerts() {
-    const t = toast.notify('Hi There!', {
-        duration: 1000,
-        type: 'default',
-        design: 'standard',
-        position: 'top-center',
-    });
-    const t2 = toast.notify({
-        title: 'Hi There!',
-        message: 'I hope you are having a greate day.'
-    }, {
-        duration: 1000,
-        type: 'success',
-        design: 'standard',
-        position: 'top-center',
-    });
-
-    const t3 = toast.notify('Hi There!', {
-        duration: 1000,
-        position: 'top-center',
-        design: 'standard',
-        type: 'info',
-    });
-
-    const t4 = toast.notify('Hi There!', {
-        duration: 1000,
-        position: 'top-center',
-        design: 'standard',
-        type: 'warning',
-    });
-
-    const t5 = toast.notify('Hi There!', {
-        duration: 1000,
-        position: 'top-center',
-        design: 'standard',
-        type: 'error',
-    });
-   
-    const t6 = toast.notify({
-        title: 'Hi, there!',
-        message: "Thank you for subscribing our service. For any help feel free to write us.",
-        buttons:[{
-            iconUrl: '../assets/icons/close.svg',
-            label: 'Close',
-            onClick:() => {
-                console.log("Closing  the item");
-            }
-        },{
-            iconUrl: '../assets/icons/tick.svg',
-            label: 'Confirm',
-            onClick:() => {
-                console.log("Confirming the item");
-            }
-        }
-    ]
-    },{
-        duration: 1000,
-        position: 'top-center',
-        design: 'standard',
-        type: 'success',
-        classNames: ['border-left-5']
-    });
-
-    const t7 = toast.notify({
-        title: 'Hi, there!',
-        message: "Thank you for subscribing our service. For any help feel free to write us.",
-        buttons:[{
-            iconUrl: '../assets/icons/close.svg',
-            label: 'Close',
-            onClick:() => {
-                console.log("Closing  the item");
-            },
-            type: 'default',
-        },{
-            label: 'Confirm',
-            classes: [],
-            onClick:() => {
-                console.log("Confirming the item");
-            },
-            type: 'success'
-        }
-    ]
-    },{
-        duration: 1000,
-        position: 'top-center',
-        design: 'standard',
-        'type': 'error',
-    });
-}
-
-standardTestToastAlerts();
-export default toast;
+export { toast };

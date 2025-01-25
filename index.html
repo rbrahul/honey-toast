@@ -1,23 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toast Baker</title>
     <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/animation.css">
+    <link rel="stylesheet" href="src/example.css">
+
     <style>
-
-        .my-custom-success-btn{
+        .my-custom-success-btn {
             background-color: greenyellow;
-
         }
-        .border-left-5{
-            border-left: 6px solid rgb(77,176,80);
+
+        .border-left-5 {
+            border-left: 6px solid rgb(77, 176, 80);
         }
     </style>
 </head>
+
 <body>
-    <h2>Hello Toaster</h2>
+    <div class="row toast-editor">
+        <div class="col action-panel">
+            <div class="row pt-0">
+                <label class="checkbox">
+                    <input type="radio" class="position" name="position" value="top-left" />
+                    <strong>top-left</strong>
+                </label>
+                <label class="checkbox">
+                    <input type="radio" class="position" name="position" value="top-right" checked />
+                    <strong>top-right</strong>
+                </label>
+                <label class="checkbox">
+                    <input type="radio" class="position" name="position" value="top-center" />
+                    <strong>top-center</strong>
+                </label>
+                <label class="checkbox">
+                    <input type="radio" class="position" name="position" value="bottom-left" />
+                    <strong>bottom-left</strong>
+                </label>
+                <label class="checkbox">
+                    <input type="radio" class="position" name="position" value="bottom-right" />
+                    <strong>bottom-right</strong>
+                </label>
+                <label class="checkbox">
+                    <input type="radio" class="position" name="position" value="center" />
+                    <strong>center</strong>
+                </label>
+            </div>
+    
+            <div class="row pt-0">Animations:</div>
+    
+            <div class="row pt-0">
+                <label class="checkbox">
+                    <input type="radio" class="position" name="animation" value="slide" checked/>
+                    <strong>Slide</strong>
+                </label>
+                <label class="checkbox">
+                    <input type="radio" class="position" name="animation" value="bounce"  />
+                    <strong>Bounce</strong>
+                </label>
+                <label class="checkbox">
+                    <input type="radio" class="position" name="animation" value="fade" />
+                    <strong>Fade</strong>
+                </label>
+                <label class="checkbox">
+                    <input type="radio" class="position" name="animation" value="zoom" />
+                    <strong>Zoom</strong>
+                </label>
+            </div>
+    
+            <div class="row pt-0">Theme:</div>
+            <div class="row pt-0">
+                <label class="checkbox">
+                    <input type="radio" class="theme" name="theme" value="light" checked/>
+                    <strong>Light</strong>
+                </label>
+                <label class="checkbox">
+                    <input type="radio" class="theme" name="theme" value="dark"  />
+                    <strong>Dark</strong>
+                </label>
+                <label class="checkbox">
+                    <input type="radio" class="theme" name="theme" value="system" />
+                    <strong>System</strong>
+                </label>
+            </div>
+    
+            <!-- <div class="row">
+                <button data-animation="slide" type="button" class="btn animation-type">Slide In Out</button>
+                <button data-animation="bounce" type="button" class="btn animation-type">Bounce In</button>
+                <button data-animation="fade" type="button" class="btn animation-type">Fade In Out</button>
+                <button data-animation="zoom" ype="button" class="btn animation-type">Zoom In Out</button>
+            </div> -->
+            <div class="row">
+                Show Toasts:
+            </div>
+            <div class="row">
+                <button data-animation="slide" type="button" class="btn btn-primary show-toast">Show Toast</button>
+                <button data-animation="bounce" type="button" class="btn btn-primary show-all-toast">Show All Toasts</button>
+                <button data-animation="bounce" type="button" class="btn btn-primary show-all-toast">Close All</button>
+                <button data-animation="bounce" type="button" class="btn btn-default show-all-toast">Reset</button>
+            </div>
+        </div>
+    </div>
     <script type="module" src="./src/index.ts"></script>
+    <script type="module" src="./src/example.ts"></script>
 </body>
+
 </html>

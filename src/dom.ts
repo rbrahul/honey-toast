@@ -146,7 +146,7 @@ const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement):HTMLElement =
 
 export const toDom = (specs: DomSpec | DomSpec[]):HTMLElement => {
     console.log("Specs:", specs)
-    return buildDom(specs)// excluding temporary root
+    return buildDom(specs)?.childNodes?.[0] as HTMLElement;// excluding temporary root
 };
 
 /*

@@ -1,0 +1,508 @@
+/* Fade */
+.rb-toast-fade {
+    position: absolute;
+    opacity: 0;
+}
+
+.rb-toast-top-left > .rb-toast-fade {
+    top: 50px;
+    left: 50px;
+}
+
+.rb-toast-top-right > .rb-toast-fade {
+    top: 50px;
+    right: 50px;
+}
+
+.rb-toast-top-left > .rb-toast-fade {
+    bottom: 50px;
+    left: 50px;
+}
+
+.rb-toast-bottom-right > .rb-toast-fade {
+    bottom: 50px;
+    right: 50px;
+}
+
+.rb-toast-fade-enter {
+    opacity: 1;
+    transition: opacity 0.3s ease-in;
+}
+
+.rb-toast-fade-entered {
+    opacity: 1;
+}
+
+.rb-toast-fade-exit {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+/* Zoom */
+.rb-toast-zoom {
+    position: fixed;
+    transform: scale(0);
+}
+
+.rb-toast-top-left > .rb-toast-zoom {
+    top: 50px;
+    left: 50px;
+}
+
+.rb-toast-top-right > .rb-toast-zoom {
+    top: 50px;
+    right: 50px;
+}
+
+.rb-toast-top-left > .rb-toast-zoom {
+    top: 50px;
+    left: 50px;
+}
+
+.rb-toast-bottom-right > .rb-toast-zoom {
+    bottom: 50px;
+    right: 50px;
+}
+
+.rb-toast-top-center > .rb-toast-zoom {
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+}
+
+.rb-toast-center > .rb-toast-zoom {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.rb-toast-zoom-enter {
+    transform: scale(1);
+    transition: transform 0.3s ease-in;
+}
+
+.rb-toast-center > .rb-toast-zoom-enter {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.rb-toast-top-center > .rb-toast-zoom-enter {
+    transform: translateX(-50%) scale(1);
+}
+
+.rb-toast-zoom-entered {
+    transform: scale(1);
+}
+
+.rb-toast-top-center > .rb-toast-zoom-entered {
+    transform: translateX(-50%) scale(1);
+}
+
+.rb-toast-zoom-exit {
+    transform: scale(0);
+    transition: transform 0.3s ease-in;
+}
+
+.rb-toast-top-center > .rb-toast-zoom-exit {
+    transform: translateX(-50%) scale(0);
+}
+
+.rb-toast-center > .rb-toast-zoom-exit {
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.rb-toast-top-left > .rb-toast-slide {
+    transform: translateX(-100%);
+}
+
+.rb-toast-top-left > .rb-toast-slide-enter {
+    transform: translateX(0%);
+    transition: transform 0.3s ease-in;
+}
+
+.rb-toast-top-left > .rb-toast-slide-entered {
+    transform: translateX(0%);
+}
+
+.rb-toast-top-left > .rb-toast-slide-exit {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+}
+
+/*Top Right Slide In Out*/
+.rb-toast-top-right > .rb-toast-slide {
+    transform: translateX(100%);
+    z-index: 9999;
+}
+
+.rb-toast-top-right > .rb-toast-slide-enter {
+    transform: translateX(0%);
+    transition: transform 0.3s ease-in;
+}
+
+.rb-toast-top-right > .rb-toast-slide-entered {
+    transform: translateX(0%);
+}
+
+.rb-toast-top-right > .rb-toast-slide-exit {
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+}
+
+/*Top Center Slide In Out*/
+.rb-toast-top-center > .rb-toast-slide {
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.rb-toast-top-center > .rb-toast-slide-enter {
+    top: 50px;
+    transition: top 0.3s ease-in;
+}
+
+.rb-toast-top-center > .rb-toast-slide-entered {
+    top: 50px;
+}
+
+.rb-toast-top-center > .rb-toast-slide-exit {
+    top: -150px;
+    transition: top 0.3s ease-out;
+}
+
+/*Center Slide In Out*/
+.rb-toast-center > .rb-toast-slide {
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.rb-toast-center > .rb-toast-slide-enter {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: top 0.3s ease-in;
+}
+
+.rb-toast-center > .rb-toast-slide-entered {
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.rb-toast-center > .rb-toast-slide-exit {
+    top: -150px;
+    transform: translateX(-50%);
+    transition: top 0.3s ease-out;
+}
+
+/*Bottom Left Slide In Out*/
+.rb-toast-bottom-left > .rb-toast-slide {
+    position: absolute;
+    bottom: 50px;
+    left: -380px;
+}
+
+.rb-toast-bottom-left > .rb-toast-slide-enter {
+    left: 50px;
+    transition: left 0.3s ease-in;
+}
+
+.rb-toast-bottom-left > .rb-toast-slide-entered {
+    left: 50px;
+}
+
+.rb-toast-bottom-left > .rb-toast-slide-exit {
+    left: -380px;
+    transition: left 0.3s ease-out;
+}
+
+/*Bottom Right Slide In Out*/
+.rb-toast-bottom-right > .rb-toast-slide {
+    position: absolute;
+    bottom: 50px;
+    right: -380px;
+}
+
+.rb-toast-bottom-right > .rb-toast-slide-enter {
+    right: 50px;
+    transition: right 0.3s ease-in;
+}
+
+.rb-toast-bottom-right > .rb-toast-slide-entered {
+    right: 50px;
+}
+
+.rb-toast-bottom-right > .rb-toast-slide-exit {
+    right: -380px;
+    transition: right 0.3s ease-out;
+}
+
+/*Top Left Bounce In Out*/
+.rb-toast-top-left > .rb-toast-bounce {
+    left: calc(-1 * (var(--toast-position-offset-x) + 100%));
+}
+
+.rb-toast-top-left > .rb-toast-bounce-enter {
+    animation: bounceInFromLeft 0.3s;
+}
+
+.rb-toast-top-left > .rb-toast-bounce-entered {
+    left: 0px;
+}
+
+.rb-toast-top-left > .rb-toast-bounce-exit {
+    animation: slideOutToLeft 0.3s ease-in forwards;
+}
+
+@keyframes bounceInFromLeft {
+    
+    60% {
+        left: 30px;
+    }
+
+    80% {
+        left: -30px;
+    }
+
+    100% {
+        left: 0px;
+    }
+}
+
+@keyframes slideOutToLeft {
+    from {
+        left: 0px;
+    }
+    to {
+        left: calc(-1 * (var(--toast-position-offset-x) + 100%));
+    }
+}
+
+/*Top Right Bounce In Out*/
+.rb-toast-top-right > .rb-toast-bounce {
+    right: calc(-1 * (var(--toast-position-offset-x) + 100%));
+}
+
+.rb-toast-top-right > .rb-toast-bounce-enter {
+    animation: bounceInFromRight 0.3s ease;
+}
+
+.rb-toast-top-right > .rb-toast-bounce-entered {
+    right: 0px;
+}
+
+.rb-toast-top-right > .rb-toast-bounce-exit {
+    animation: slideOutToRight 0.3s ease-in forwards;
+}
+
+@keyframes bounceInFromRight {
+    60% {
+        right: 30px;
+    }
+
+    80% {
+        right: -30px;
+    }
+
+    100% {
+        right: 0px;
+    }
+}
+
+@keyframes slideOutToRight {
+    from {
+        right: 0px;
+    }
+    to {
+        right: calc(-1 * (var(--toast-position-offset-x) + 100%));
+    }
+}
+
+/*Bottom Left Bounce In Out*/
+.rb-toast-bottom-left > .rb-toast-bounce {
+    position: absolute;
+    left: calc(-1 * (var(--toast-position-offset-x) + 100%));
+    bottom:0px
+}
+
+.rb-toast-bottom-left > .rb-toast-bounce-enter {
+    animation: bounceInFromLeft 0.3s ease;
+}
+
+.rb-toast-bottom-left > .rb-toast-bounce-entered {
+    left: 0px;
+}
+
+.rb-toast-bottom-left > .rb-toast-bounce-exit {
+    animation: slideOutToLeft 0.3s ease-in forwards;
+}
+
+@keyframes bounceInFromLeft {
+    60% {
+        left: 30px;
+    }
+
+    80% {
+        left: -30px;
+    }
+
+    100% {
+        left: 0px;
+    }
+}
+
+@keyframes slideOutToLeft {
+    from {
+        left: 0px;
+    }
+    to {
+        left: calc(-1 * (var(--toast-position-offset-x) + 100%));
+        bottom:0px
+    }
+}
+
+/*Bottom Right Bounce In Out*/
+.rb-toast-bottom-right > .rb-toast-bounce {
+    position: absolute;
+    bottom: 0px;
+    right: calc(-1 * (var(--toast-position-offset-x) + 100%));
+}
+.rb-toast-bottom-right > .rb-toast-bounce-enter {
+    animation: bounceInFromRight 0.3s ease;
+}
+
+.rb-toast-bottom-right > .rb-toast-bounce-entered {
+    right: 0px;
+}
+
+.rb-toast-bottom-right > .rb-toast-bounce-exit {
+    animation: slideOutToRight 0.3s ease-in forwards;
+}
+
+@keyframes bounceInFromRight {
+    60% {
+        right: 30px;
+    }
+
+    80% {
+        right: -30px;
+    }
+
+    100% {
+        right: 0px;
+    }
+}
+
+@keyframes slideOutToRight {
+    from {
+        right: 50px;
+    }
+    to {
+        right: calc(-1 * (var(--toast-position-offset-x) + 100%));
+    }
+}
+
+/*Top Center Bounce In Out*/
+.rb-toast-top-center > .rb-toast-bounce {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+}
+
+.rb-toast-top-center > .rb-toast-bounce-enter {
+    transform: translateX(-50%);
+    animation: bounceInFromTop 0.3s ease;
+}
+
+.rb-toast-top-center > .rb-toast-bounce-entered {
+    transform: translateX(-50%);
+    top: 0px;
+}
+
+.rb-toast-top-center > .rb-toast-bounce-exit {
+    animation: slideOutToTop 0.3s ease-in forwards;
+}
+
+@keyframes bounceInFromTop {
+    60% {
+        top: 20px;
+    }
+
+    80% {
+        top: -10px;
+    }
+
+    100% {
+        top: 0px;
+    }
+}
+
+@keyframes slideOutToTop {
+    from {
+        transform: translateX(-50%);
+        top: 0px;
+    }
+    to {
+        transform: translate(-50%, -100%);
+    }
+}
+
+/*Center Bounce In Out*/
+.rb-toast-center > .rb-toast-bounce {
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, -100%);
+}
+
+.rb-toast-center > .rb-toast-bounce-enter {
+    transform: translate(-50%, -50%);
+    animation: bounceInFromTopToCenter 0.3s ease;
+}
+
+.rb-toast-center > .rb-toast-bounce-entered {
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.rb-toast-center > .rb-toast-bounce-exit {
+    animation: slideOutToTopFromCenter 0.3s ease-in forwards;
+}
+
+@keyframes bounceInFromTopToCenter {
+    60% {
+        top: calc(50% + 20px);
+    }
+
+    80% {
+        top: calc(50% - 20px);
+    }
+
+    100% {
+        top: 50%;
+    }
+}
+
+@keyframes slideOutToTopFromCenter {
+    from {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    to {
+        top: 0px;
+        transform: translate(-50%, -100%);
+    }
+}
+
+/*Flip */
+
+@keyframes flipAnim {
+    from {
+        transform: rotateY(90deg);
+        transform-style: preserve-3d;
+    }
+    to {
+        transform: rotateY(0deg);
+        transform-style: preserve-3d;
+    }
+}

@@ -49,40 +49,10 @@ Once the 'transitionend' is dispatched the NodeElementX will be finally removed.
 
 */
 
-function testSlideAnimation(transitionName){
-    const box = document.querySelector(".box");
-    box.classList.add(transitionName,`${transitionName}-enter`);
-    setTimeout(() => {
-    
-        box.classList.remove(`${transitionName}-enter`);
-      //  box.classList.add(`${transitionName}-entered`);
-        box.classList.add(`${transitionName}-exit`);
-
-        setTimeout(() => {
-          //  box.remove();
-        box.classList.remove(`${transitionName}-exit`);
-    
-        }, 5000);
-
-    }, 2000);
-}
- /*  
-var i = 0;
-var intervalId = setInterval(() => {
-    if (intervalId >= 10) {
-        clearInterval(intervalId);
-        return;
-    }
-    testSlideAnimation('bounce');
-    i++;
-}, 8000)
-*/
-//testSlideAnimation('bounce');
-
 const noop = () => {}
 
 const defaultAnimationOptions = {
-    animationClassPrefix: undefined, 
+    animationClassPrefix: '', 
     animationKind: 'animation',
     // event is dispatched once *-enter class is added and dom is staring to appear
     onEnter: noop,
@@ -99,12 +69,12 @@ const defaultAnimationOptions = {
 const isObject = () => typeof value === 'object';
 
 const isHTMLElement = (value) => {
-    return typeof value === 'object' && (value || {}).tagName
+    return typeof value === 'object' && ((value || {}).tagName || value?.nodeName)
 }
 
-class DomAnimator {
+class Animator {
     constructor(node, options=defaultAnimationOptions) {
-
+        console.log('NODE:', node)
         this.options = {
             ...defaultAnimationOptions,
             ...(options || {})
@@ -216,27 +186,40 @@ class DomAnimator {
         this.node.addEventListener(`${this.options.animationKind}end`, this._setToExited);
     }
 
-    appendChildTo(parent) {
+    mount(direction='append', parent) {
         if(!isHTMLElement(parent)) {
             throw new Error('parent must be HTML Element')
         }
+        if (direction !== 'append' && direction !== 'prepend') {
+            throw new Error('direction must be either append or prepend');
+        }
+        if (direction === 'append') {
+            parent.appendChild(this.node);
+           
+        } else if (direction === 'prepend') {
+            parent.prepend(this.node);
+        }
+        this.node.classList.add(this.options.animationClassPrefix);
         setTimeout(this.startEnteringAnimation.bind(this), 100);
-        console.log(this.node.classList)
-        parent.appendChild(this.node);
     }
 
-    append(parent, target) {
-        
+    appendChild(parent) {
+        this.mount('append', parent);
     }
 
-    prepend() {
-        
+    prepend(parent) {
+        this.mount('prepend',parent);
+    }
+
+    append(parent) {
+        this.mount('append', parent);
     }
 
     remove() {
         this.startExitingAnimation();
-        
     }
 }
 
-window.DomAnimator = DomAnimator;
+window.DomAnimator = Animator;
+
+export const DomAnimator = Animator;

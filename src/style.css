@@ -15,7 +15,11 @@
     --toast-close-btn-color: rgb(136 135 135);
     --toast-btn-border-color: #dfdfdf;
     --toast-default-color: #ddd;
+    --toast-position-offset-x: 30px;
+    --toast-position-offset-y: 30px;
 }
+
+
 
 .rb-toast-dark {
     --toast-btn-border-color: #fefefe;
@@ -39,7 +43,7 @@
 }
 
 .rb-toast-container {
-    position: fixed;
+    position: absolute;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -47,6 +51,7 @@
     justify-content: flex-start;
     width: 300px;
     box-sizing: border-box;
+    border: 1px solid rgba(0,0,0,0.4);
 }
 
 .rb-toast-content-wrapper{
@@ -61,32 +66,32 @@
 }
 
 .rb-toast-top-left {
-    top: 30px;
-    left: 30px;
+    top: var(--toast-position-offset-y);
+    left: var(--toast-position-offset-x);
     align-items: flex-start;
 }
 
 .rb-toast-top-right {
-    top:30px;
-    right: 30px;
-    align-items: flex-end;
+    top: var(--toast-position-offset-y);
+    right: var(--toast-position-offset-x);
+    align-items: flex-start;
 }
 
 .rb-toast-bottom-left {
-    left: 30px;
-    bottom: 30px;
+    left: var(--toast-position-offset-x);
+    bottom: var(--toast-position-offset-y);
     align-items: flex-start;
 }
 
 .rb-toast-bottom-right {
-    bottom: 30px;
-    right: 30px;
+    bottom: var(--toast-position-offset-y);
+    right: var(--toast-position-offset-x);
     align-items: flex-end;
 }
 
 .rb-toast-top-center {
     left: 50%;
-    top: 30px;
+    top: var(--toast-position-offset-y);
     transform: translateX(-50%);
     align-items: flex-start;
 }
@@ -109,7 +114,6 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     border-radius: 6px;
- /*   border: 1px solid rgba(0,0,0,0.2);*/
     box-shadow: 0px 5px 10px 1px rgba(0,0,0,0.15);
     margin-bottom: 10px;
 }
