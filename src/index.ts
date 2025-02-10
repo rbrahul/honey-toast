@@ -105,7 +105,6 @@ class ToastBaker {
     }
 
     mountToastIntoDom(container: HTMLElement, toastNode: HTMLElement, options: ToastOptions) {
-
         // TODO: Add option to create custom transtion classes {enter:CUSTOM_CLASS_Enter, exit: CUSTOM_CLASS_Exit}
         const animationType = options?.animation ? getAnimationClass(options?.animation as Animation) : 'rb-toast-slide';
         const animator = new DomAnimator(toastNode, {
@@ -141,7 +140,11 @@ class ToastBaker {
 
         if (options?.isCloseable !== undefined) {
         }
-        animator.prepend(container);
+        if (options?.position === 'bottom-right' || options?.position === 'bottom-left') {
+            animator.append(container);
+        } else {
+            animator.prepend(container);
+        }
     }
 
     close(toast: Toast) {

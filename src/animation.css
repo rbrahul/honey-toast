@@ -7,7 +7,6 @@
 
 /* Fade */
 .rb-toast-fade {
-    position: absolute;
     opacity: 0;
 }
 
@@ -47,7 +46,6 @@
 
 /* Zoom */
 .rb-toast-zoom {
-    position: absolute;
     transform: scale(0);
 }
 

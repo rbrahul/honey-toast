@@ -208,7 +208,13 @@ setTimeout(() => {
 
 }, 3000);
 
-function createAnimatingToast(animationType, position = 'top-right') {
+function createAnimatingToast({
+    animationType,
+    position = 'top-right',
+    theme = 'light',
+    type = 'success',
+    design = 'standard',
+}) {
     const t7 = toast.notify(
         {
             title: 'Hi, Rahul!',
@@ -235,8 +241,9 @@ function createAnimatingToast(animationType, position = 'top-right') {
         {
             duration: 1000,
             position: position as ToastOptions['position'],
-            design: 'standard',
-            type: 'success',
+            type: type as ToastOptions['type'],
+            theme: theme as ToastOptions['theme'],
+            design: design as ToastOptions['design'],
             animation: animationType as Animation,
         },
     );
@@ -244,11 +251,15 @@ function createAnimatingToast(animationType, position = 'top-right') {
 
 const getProperties = () => {
     const animationType = document.querySelector(`input[name="animation"]:checked`)?.value;
-    const position = document.querySelector(`input[name="position"]:checked`)?.value;
-    return { animationType, position };
+    const position = document.querySelector(`select[name="position"]`)?.value;
+    const theme = document.querySelector(`input[name="theme"]:checked`)?.value;
+    const type = document.querySelector(`input[name="type"]:checked`)?.value;
+    const design = document.querySelector(`input[name="design"]:checked`)?.value;
+    return { animationType, design, position, theme, type };
 };
 
 document.querySelector('.show-toast').addEventListener('click', e => {
-    const { animationType, position } = getProperties();
-    createAnimatingToast(animationType, position);
+    const options = getProperties();
+    console.log("OPTIONS:", options)
+    createAnimatingToast(options);
 });

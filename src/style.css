@@ -51,8 +51,9 @@
     justify-content: flex-start;
     width: 300px;
     box-sizing: border-box;
-    border: 1px solid red; 
+    /* border: 1px solid red;  */
     min-height: 100px;
+    transition: height 0.2s ease-in;
 }
 
 .rb-toast-content-wrapper{
@@ -81,7 +82,7 @@
 .rb-toast-bottom-left {
     left: var(--toast-position-offset-x);
     bottom: var(--toast-position-offset-y);
-    align-items: flex-start;
+    align-items: flex-end;
 }
 
 .rb-toast-bottom-right {
