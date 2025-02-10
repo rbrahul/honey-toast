@@ -138,9 +138,10 @@ class ToastBaker {
             }
         }
 
-        if (options?.isCloseable !== undefined) {
+        if (options?.isCloseable !== undefined && !options?.isCloseable) {
+            closeBtn?.remove();
         }
-        if (options?.position === 'bottom-right' || options?.position === 'bottom-left') {
+        if (['bottom-right', 'bottom-left', 'center'].includes(options?.position)) {
             animator.append(container);
         } else {
             animator.prepend(container);

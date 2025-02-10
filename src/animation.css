@@ -323,7 +323,6 @@
 
 /*Bottom Left Bounce In Out*/
 .rb-toast-bottom-left > .rb-toast-bounce {
-    position: absolute;
     left: calc(-1 * (var(--toast-position-offset-x) + 100%));
     bottom:0px
 }
@@ -366,7 +365,6 @@
 
 /*Bottom Right Bounce In Out*/
 .rb-toast-bottom-right > .rb-toast-bounce {
-    position: absolute;
     bottom: 0px;
     right: calc(-1 * (var(--toast-position-offset-x) + 100%));
 }
@@ -407,7 +405,6 @@
 
 /*Top Center Bounce In Out*/
 .rb-toast-top-center > .rb-toast-bounce {
-    position: absolute;
     top: 0px;
     left: 50%;
     transform: translate(-50%, -100%);

@@ -272,6 +272,98 @@
     background-color: var(--toast-primary-error);
 }
 
+/* Colorful design*/
+
+.rb-toast-default.rb-toast-colorful {
+    border: 1px solid var(--toast-default-color);
+}
+
+
+.rb-toast-success.rb-toast-colorful {
+    background-color: var(--toast-primary-success);
+}
+
+.rb-toast-info.rb-toast-colorful {
+    background-color: var(--toast-primary-info);
+}
+
+.rb-toast-warning.rb-toast-colorful {
+    background-color: var(--toast-primary-warning);
+}
+
+.rb-toast-error.rb-toast-colorful {
+    background-color: var(--toast-primary-error);
+}
+
+.rb-toast-default.rb-toast-gradient {
+    background-image: linear-gradient(to right,rgb(233, 239, 255) 0%,  rgb(253,251,251) 100%);
+}
+
+.rb-toast-success.rb-toast-gradient {
+    background-image: linear-gradient(to right, rgb(77,176,80) 0%, rgb(0,227,174) 100%);
+}
+
+.rb-toast-info.rb-toast-gradient {
+    background-image: linear-gradient(to right, rgb(102,126,234) 0%, rgb(118,75,162) 100%);
+}
+
+.rb-toast-warning.rb-toast-gradient {
+    background-image: linear-gradient(to right, rgb(248, 126, 27) 0%, rgb(254, 191, 64) 100%);
+}
+
+.rb-toast-error.rb-toast-gradient {
+    background-image: linear-gradient(to right, rgb(135, 77, 162) 0%, rgb(245 67 54) 100%)
+}
+
+.rb-toast-success.rb-toast-colorful .rb-toast-title,
+.rb-toast-success.rb-toast-colorful .rb-toast-message,
+.rb-toast-info.rb-toast-colorful .rb-toast-title,
+.rb-toast-info.rb-toast-colorful .rb-toast-message,
+.rb-toast-warning.rb-toast-colorful .rb-toast-title,
+.rb-toast-warning.rb-toast-colorful .rb-toast-message,
+.rb-toast-error.rb-toast-colorful .rb-toast-title,
+.rb-toast-error.rb-toast-colorful .rb-toast-message,
+.rb-toast-success.rb-toast-gradient .rb-toast-title,
+.rb-toast-success.rb-toast-gradient .rb-toast-message,
+.rb-toast-info.rb-toast-gradient .rb-toast-title,
+.rb-toast-info.rb-toast-gradient .rb-toast-message,
+.rb-toast-warning.rb-toast-gradient .rb-toast-title,
+.rb-toast-warning.rb-toast-gradient .rb-toast-message,
+.rb-toast-error.rb-toast-gradient .rb-toast-title,
+.rb-toast-error.rb-toast-gradient .rb-toast-message
+{
+    color: white;
+}
+
+.rb-toast-success.rb-toast-colorful img.rb-toast-alert-icon,
+.rb-toast-info.rb-toast-colorful img.rb-toast-alert-icon,
+.rb-toast-warning.rb-toast-colorful img.rb-toast-alert-icon,
+.rb-toast-error.rb-toast-colorful img.rb-toast-alert-icon,
+.rb-toast-success.rb-toast-gradient img.rb-toast-alert-icon,
+.rb-toast-info.rb-toast-gradient img.rb-toast-alert-icon,
+.rb-toast-warning.rb-toast-gradient img.rb-toast-alert-icon,
+.rb-toast-error.rb-toast-gradient img.rb-toast-alert-icon
+{
+    background: transparent;
+    padding: 5px;
+    width: 20px;
+    height: 20px;
+    border:1px solid white;
+}
+
+.rb-toast-success.rb-toast-colorful .rb-toast-close-btn,
+.rb-toast-info.rb-toast-colorful .rb-toast-close-btn, 
+.rb-toast-warning.rb-toast-colorful .rb-toast-close-btn, 
+.rb-toast-error.rb-toast-colorful .rb-toast-close-btn, 
+.rb-toast-success.rb-toast-gradient .rb-toast-close-btn,
+.rb-toast-info.rb-toast-gradient .rb-toast-close-btn, 
+.rb-toast-warning.rb-toast-gradient .rb-toast-close-btn, 
+.rb-toast-error.rb-toast-gradient .rb-toast-close-btn 
+{
+    color: #fff;
+    opacity: 1;
+}
+
 .rb-toast-alert-icon-small {
     width: 20px;
     height: 20px;

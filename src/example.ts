@@ -75,6 +75,7 @@ function minimalTestToastAlerts() {
                 {
                     iconUrl: '../assets/icons/close.svg',
                     label: 'Close',
+                    classes: [],
                     onClick: () => {
                         console.log('Closing  the item');
                     },
@@ -208,6 +209,8 @@ setTimeout(() => {
 
 }, 3000);
 
+const ALL_ALERTS = [];
+
 function createAnimatingToast({
     animationType,
     position = 'top-right',
@@ -215,7 +218,7 @@ function createAnimatingToast({
     type = 'success',
     design = 'standard',
 }) {
-    const t7 = toast.notify(
+    const toastAlert = toast.notify(
         {
             title: 'Hi, Rahul!',
             message: 'Thank you for subscribing our service. For any help feel free to write us.',
@@ -223,6 +226,7 @@ function createAnimatingToast({
                 {
                     iconUrl: '../assets/icons/close.svg',
                     label: 'Close',
+                    classes: ['sm-tick-icon'],
                     onClick: () => {
                         console.log('Closing  the item');
                     },
@@ -245,8 +249,10 @@ function createAnimatingToast({
             theme: theme as ToastOptions['theme'],
             design: design as ToastOptions['design'],
             animation: animationType as Animation,
+            isCloseable: true,
         },
     );
+    ALL_ALERTS.push(toastAlert);
 }
 
 const getProperties = () => {
@@ -262,4 +268,10 @@ document.querySelector('.show-toast').addEventListener('click', e => {
     const options = getProperties();
     console.log("OPTIONS:", options)
     createAnimatingToast(options);
+});
+
+document.querySelector('.close').addEventListener('click', e => {
+    ALL_ALERTS.forEach(alert => {
+        alert.close();
+    });
 });
