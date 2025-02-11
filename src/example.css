@@ -43,8 +43,8 @@ body {
 }
 
 .btn {
-    padding: 8px 12px;
-    border-radius: 5px;
+    padding: 10px 15px;
+    border-radius: 6px;
     margin-right: 15px;
     cursor: pointer;
     font-size: 15px;
@@ -59,24 +59,13 @@ body {
 
 .btn-info {
     color: white;
-    background-color: rgb(78, 78, 243);
+    background-color: rgb(79 85 193);
     border: 1px solid blue;
 }
 
 .btn-success {
     color: #fff;
     background-color:rgb(177, 249, 184);
-}
-
-
-label.checkbox {
-    display: inline-block;
-    padding: 8px;
-    margin-right: 15px;
-    margin-bottom: 25px;
-    border: 1px solid #d8d7d7;
-    width: auto;
-    border-radius: 4px;
 }
 
 
@@ -121,4 +110,39 @@ form {
 
 .sm-tick-icon img{
     filter: invert(1);
+}
+
+
+label.checkbox {
+    display: inline-block;
+    padding: 8px 12px;
+    margin-right: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #d8d7d7;
+    width: auto;
+    border-radius: 4px;
+}
+
+label:has(input[type="radio"]:checked){
+    /* background: rgb(16, 205, 16); */
+     background-image: linear-gradient(to top right, RGB(106,17,203) 0%, RGB(37,117,252) 100%);;
+    color:#fff;
+}
+
+input[type="radio"] {
+    display:none;
+}
+
+label:has(input[type="radio"]){
+    cursor: pointer;
+}
+
+strong {
+    font-weight: bold;
+    color:#666;
+}
+
+
+.mt-20{
+    margin-top: 20px;
 }

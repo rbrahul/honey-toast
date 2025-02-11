@@ -42,7 +42,7 @@ export type ToastOptions = {
     classNames?: string[];
     type?: 'default' | 'success' | 'info' | 'warning' | 'error';
     theme?: 'light' | 'dark' | 'system';
-    design?: 'minimal' | 'standard' | 'colorful';
+    design?: 'minimal' | 'standard' | 'colorful' | 'gradient';
     animation?: Animation | CustomAnimation;
     position?: 'top-left' | 'top-right' | 'top-center' | 'center' | 'bottom-left' | 'bottom-right',
     cordinates?: { // ignores the stack position

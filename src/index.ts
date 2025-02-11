@@ -47,7 +47,12 @@ interface ToastEntry {
 
 interface ActionDelegator {
     close(ToastEntry): void;
+    closeAll(): void;
     update(ToastEntry, Content, Options): void;
+}
+
+interface DomRemover {
+    remove(): void;
 }
 
 class Toast implements ToastEntry {
@@ -57,6 +62,7 @@ class Toast implements ToastEntry {
     mountedIn: HTMLElement;
     appearedAt: number;
     element: HTMLElement;
+    domManager: DomRemover;
     constructor(content: ToastContent, options: ToastOptions, actionDelegator: ActionDelegator) {
         this.options = options;
         this.content = content;
@@ -66,9 +72,15 @@ class Toast implements ToastEntry {
             content,
         });
     }
+
     close() {
         this.delegator.close(this);
     }
+
+    closeAll() {
+        this.delegator.closeAll();
+    }
+
     update(content: Content, options: Options) {
         this.delegator.update(this, content, options);
     }
@@ -82,7 +94,7 @@ const getAnimationClass = (animationName:Animation = 'slide') => {
             zoom: prefix('zoom'),
             bounce: prefix('bounce'),
         }[animationName] ?? animationName
-    ); // slide is default if
+    );
 };
 
 class ToastBaker {
@@ -96,8 +108,8 @@ class ToastBaker {
         };
         const toastContainer = this.#mountToastContainer(toastOptions?.position);
         const toast = new Toast(content, toastOptions, this);
-        this.mountToastIntoDom(toastContainer, toast.element, toastOptions);
-        // toastContainer.appendChild(toast.element);
+        //@ts-ignore add typescript type later
+        toast.domManager = this.mountToastIntoDom(toastContainer, toast.element, toastOptions);
         toast.mountedIn = toastContainer;
         toast.appearedAt = Date.now();
         this.toasts.push(toast);
@@ -114,16 +126,60 @@ class ToastBaker {
                 console.log('Toast has entered');
             },
             onExit: () => {
-                console.log('Toast has exited');
+                console.log('Toast started to exit');
             },
             onEntered: () => {
-                console.log('Toast has entered');
+                if (typeof options.onShow === 'function') {
+                    options.onShow();
+                }
+                if (options.duration) {
+                    let autoCloseAfter = options.duration;
+                    if (options.duration < 1000) {
+                        console.warn('Duration should be greater than 1000ms');
+                        autoCloseAfter = 1000;
+                    }
+                    setTimeout(() => {
+                      try {
+                        animator?.remove?.();
+                        this.toasts = this.toasts.filter(t => t.element !== toastNode);
+                      } catch (error) {
+                        console.log("Failed to auto close toast", error)
+                      }
+                    },autoCloseAfter)
+                }
             },
             onExited: () => {
-                console.log('Toast has exited');
+                if (typeof options.onClose === 'function') {
+                    options.onClose();
+                }
             },
             animationTimeout: 300,
         });
+        this.#initialiseCloseBtnEventListener(animator, toastNode, options);
+        if (['bottom-right', 'bottom-left', 'center'].includes(options?.position)) {
+            animator.append(container);
+        } else {
+            animator.prepend(container);
+        }
+        return animator;
+    }
+
+    close(toast: Toast) {
+        this.toasts = this.toasts.filter(t => t !== toast);
+        toast.domManager?.remove?.();
+    }
+
+    update(toast: Toast, _: Content, __: Partial<Options>) {
+        console.log('Updating toast:', toast);
+    }
+
+    closeAll() {
+        this.toasts.forEach(toast => {
+            this.close(toast);
+        });
+    }
+
+    #initialiseCloseBtnEventListener(animator: DomRemover, toastNode: HTMLElement, options: ToastOptions) {
         const closeBtn = toastNode.querySelector(`.${prefix('close-btn')}`);
         if (closeBtn) {
             if (!options?.isCloseable) {
@@ -137,26 +193,7 @@ class ToastBaker {
                 });
             }
         }
-
-        if (options?.isCloseable !== undefined && !options?.isCloseable) {
-            closeBtn?.remove();
-        }
-        if (['bottom-right', 'bottom-left', 'center'].includes(options?.position)) {
-            animator.append(container);
-        } else {
-            animator.prepend(container);
-        }
     }
-
-    close(toast: Toast) {
-        console.log('closing toast:', toast);
-    }
-
-    update(toast: Toast, _: Content, __: Partial<Options>) {
-        console.log('Updating toast:', toast);
-    }
-
-    closeAll() {}
 
     #mountToastContainer(position: string, container = document.body): HTMLElement {
         let toastContainer = container.querySelector<HTMLElement>(

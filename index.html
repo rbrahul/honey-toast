@@ -24,7 +24,7 @@
     <div class="row toast-editor">
         <form>
         <div class="col action-panel">
-            <div class="row pt-0">Position:</div>
+            <div class="row pt-0"><strong>Position:</strong></div>
             <div class="row pt-0 pb-20">
                 <select name="position" class="position">
                     <option value="top-left">Top Left</option>
@@ -37,7 +37,7 @@
 
             </div>
     
-            <div class="row pt-0">Animations:</div>
+            <div class="row pt-0"><strong>Animations:</strong></div>
     
             <div class="row pt-0">
                 <label class="checkbox">
@@ -58,7 +58,7 @@
                 </label>
             </div>
     
-            <div class="row pt-0">Type:</div>
+            <div class="row pt-0"><strong>Type:</strong></div>
             <div class="row pt-0">
                 <label class="checkbox">
                     <input type="radio" class="type" name="type" value="default" checked/>
@@ -82,7 +82,7 @@
                 </label>
             </div>
         
-            <div class="row pt-0">Design:</div>
+            <div class="row pt-0"><strong>Design:</strong></div>
             <div class="row pt-0">
                 <label class="checkbox">
                     <input type="radio" class="design" name="design" value="minimal" checked/>
@@ -101,7 +101,7 @@
                     <span>Gradient</span>
                 </label>
             </div>
-            <div class="row pt-0">Theme:</div>
+            <div class="row pt-0"><strong>Theme:</strong></div>
             <div class="row pt-0">
                 <label class="checkbox">
                     <input type="radio" class="theme" name="theme" value="light" checked/>
@@ -117,10 +117,10 @@
                 </label>
             </div>
     
-            <div class="row">
+            <div class="row mt-20">
                 <button data-animation="slide" type="button" class="btn btn-info show-toast">Show Toast</button>
-                <button data-animation="bounce" type="button" class="btn btn-info show-all-toast">Show All Toasts</button>
-                <button data-animation="bounce" type="button" class="btn btn-info close-all-toast">Close All</button>
+                <button data-animation="bounce" type="button" class="btn btn-info show-all-toast">Show Demo Toasts</button>
+                <button data-animation="bounce" type="button" class="btn btn-default close-all-toast">Close All</button>
                 <button type="reset" data-animation="bounce" class="btn btn-default show-all-toast">Reset</button>
             </div>
         </div>
@@ -129,5 +129,4 @@
     <script type="module" src="./src/index.ts"></script>
     <script type="module" src="./src/example.ts"></script>
 </body>
-
 </html>

@@ -63,7 +63,7 @@ const defaultAnimationOptions = {
     // event is dispatched once *-exit class already added and animationKindend event was triggered
     onExited: noop,
     // if there is no transtionend or animationend event is triggered after this timeout, it will go to the next phase -entered or -exited
-    animationTimeout: 5000 
+    animationTimeout: 500 
 }
 
 const isObject = () => typeof value === 'object';
@@ -153,34 +153,43 @@ class Animator {
 
     _setToEntered = () => {
         if(this.node?.classList?.contains(`${this.options.animationClassPrefix}-enter`)) {
-            console.log("setting to entered:")
             this.node.classList.remove(`${this.options.animationClassPrefix}-enter`);
             this.node.classList.add(`${this.options.animationClassPrefix}-entered`);
             this.cleanupAnimationEventListners('enter');
+            if (typeof this.options.onEntered === 'function') {
+                this.options.onEntered();
+            }
         }
     }
 
     _setToExited = () => {
-        console.log("setting to exited:")
         if (this.node?.classList?.contains(`${this.options.animationClassPrefix}-exit`)) {
             this.node.classList.remove(`${this.options.animationClassPrefix}-exit`);
             this.node.classList.add(`${this.options.animationClassPrefix}-exited`);
             this.cleanupAnimationEventListners('exit');
             this.node?.remove();
+            if (typeof this.options.onExited === 'function') {
+                this.options.onExited();
+            }
         }
     }
 
 
     startEnteringAnimation() {
         this.node.classList.add(`${this.options.animationClassPrefix}-enter`);
+        if (typeof this.options.onEnter === 'function') {
+            this.options.onEnter();
+        }
         this.handleAnimationTimeout('entered');
         console.log(`${this.options.animationKind}end`);
-        console.log("Node:", this.node);
         this.node.addEventListener(`${this.options.animationKind}end`, this._setToEntered);
     }
 
     startExitingAnimation() {
         this.node.classList.remove(`${this.options.animationClassPrefix}-entered`);
+        if (typeof this.options.onExit === 'function') {
+            this.options.onExit();
+        }
         this.node.classList.add(`${this.options.animationClassPrefix}-exit`);
         this.handleAnimationTimeout('exited');
         this.node.addEventListener(`${this.options.animationKind}end`, this._setToExited);
