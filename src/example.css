@@ -41,7 +41,7 @@ body {
 }
 
 .navbar{
-    width: 700px;
+    width: 860px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -101,9 +101,9 @@ ul.menu-list > li > a.menu-item:hover {
     background-color: #fff;
     box-shadow:4px 4px 7px rgba(0,0,0,0.1);
     position: fixed;
-    bottom: 30px;
-    left: 40%;
-    transform: translate(-50%, 0);
+    bottom: 50px;
+    left: 50%;
+    transform: translate(calc(-50% - 140px), 0);
     padding-bottom: 30px;
 }
 
@@ -148,20 +148,6 @@ ul.menu-list > li > a.menu-item:hover {
 .btn-success {
     color: #fff;
     background-color:rgb(177, 249, 184);
-}
-
-
-.code-editor{
-    position: absolute;
-    width: 360px;
-    height: 400px;
-    top: 80px;
-    right:-120px;
-    background-color: #202020;
-    width: 280px;
-    padding: 20px;
-    border-radius: 10px;
-    overflow-y: scroll;
 }
 
 .pb-20{
@@ -288,4 +274,8 @@ input[type="number"]{
 .action-area{
     border-top: 1px solid rgb(221, 221, 221);
     padding-top:30px;
+}
+
+.border-left-5 {
+    border-left: 6px solid rgb(77, 176, 80);
 }

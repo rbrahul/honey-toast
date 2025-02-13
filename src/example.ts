@@ -1,4 +1,4 @@
-import { toast } from './index';
+import { toast, ActionDelegator, ToastEntry } from './index';
 import { ToastOptions, Animation, Button } from './type';
 
 const DEMO_ALERT_GROUP = [];
@@ -382,28 +382,6 @@ function showAllDemoAlerts() {
 
 const ALL_ALERTS = [];
 
-function createButtons(): Button[] {
-    return [
-        {
-            iconUrl: '../assets/icons/close.svg',
-            label: 'Close',
-            classes: ['sm-tick-icon'],
-            onClick: () => {
-                console.log('Closing  the item');
-            },
-            type: 'default',
-        },
-        {
-            label: 'Confirm',
-            classes: [],
-            onClick: () => {
-                console.log('Confirming the item');
-            },
-            type: 'success',
-        },
-    ];
-}
-
 function createAnimatingToast({
     animation,
     duration = 3000,
@@ -415,11 +393,32 @@ function createAnimatingToast({
     hasButtons = false,
     offset = { x: 30, y: 30 },
 }) {
-    const toastAlert = toast.notify(
+    let toastAlert:ToastEntry;
+     toastAlert = toast.notify(
         {
             title: 'Hi, There!',
             message: 'Thank you for subscribing our service. For any help feel free to write us.',
-            buttons: hasButtons ? createButtons() : [],
+            buttons: hasButtons ?[
+                {
+                    iconUrl: '../assets/icons/close.svg',
+                    label: 'Close',
+                    classes: ['sm-tick-icon'],
+                    onClick: () => {
+                        toastAlert.close();
+                        console.log('Closing  the item');
+                    },
+                    type: 'default',
+                },
+                {
+                    label: 'Confirm',
+                    classes: [],
+                    onClick: () => {
+                        toastAlert.close();
+                        console.log('Confirming the item');
+                    },
+                    type: 'success',
+                },
+            ] : [],
         },
         {
             duration,
@@ -526,7 +525,6 @@ document.querySelector('.show-all-toast').addEventListener('click', e => {
 document.querySelectorAll(`input[name="autoclose"]`).forEach(input => {
     input.addEventListener('change', e => {
         const selectedAutoClose = (e.target as HTMLInputElement).value;
-        console.log('selectedAutoClose', selectedAutoClose);
         if (Boolean(Number(selectedAutoClose))) {
             document.querySelector('#duration-input-area').classList.remove('hidden');
         } else {

@@ -4,14 +4,17 @@ import { DomAnimator } from './utils/dom-animator.js';
 
 const containerSelector: string = 'container';
 
-interface ToastEntry {
+export interface ToastEntry {
     mountedIn: HTMLElement;
     element: HTMLElement;
     options: Partial<ToastOptions>;
     appearedAt: number;
+    close():void
+    closeAll():void
+    update(content: ToastContent, options: ToastOptions):void
 }
 
-interface ActionDelegator {
+export interface ActionDelegator {
     close(ToastEntry): void;
     closeAll(): void;
     update(ToastEntry, Content, ToastOptions): void;
@@ -72,6 +75,8 @@ class ToastBaker {
             ...DEFAULT_TOAST_OPTIONS,
             ...(options ?? {}),
         };
+        console.log("ToastBaker options:", this.options);
+
         const toastContainer = this.#mountToastContainer(this.options?.position);
         const toast = new Toast(content, this.options, this);
         //@ts-ignore add typescript type later
@@ -94,7 +99,7 @@ class ToastBaker {
                 if (typeof this.options.onShow === 'function') {
                     this.options.onShow();
                 }
-                if (this.options.duration) {
+                if (this.options.duration && this.options.autoClose) {
                     let autoCloseAfter = this.options.duration;
                     if (this.options.duration < 1000) {
                         console.warn('Duration should be greater than 1000ms');

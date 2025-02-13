@@ -21,7 +21,7 @@
 
 .rb-toast-dark {
     --toast-btn-border-color: #fefefe;
-    --toast-bg-default: #111;
+    --toast-bg-default: #141B30;
     --toast-text-color: #fff;
     --toast-default-color: #ddd;
 }
@@ -55,6 +55,7 @@
     /* border: 1px solid red;  */
     min-height: 100px;
     transition: height 0.2s ease-in;
+    overflow-y: auto;
 }
 
 .rb-toast-content-wrapper{
@@ -112,7 +113,7 @@
     width: 100%;
     padding: 20px;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: var(--toast-bg-default);
     color: var(--toast-text-color);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
@@ -393,4 +394,30 @@
 
 .rb-toast-error img.rb-toast-alert-icon {
     background-color: var(--toast-primary-error);
+}
+
+.rb-toast-dark {
+    --toast-btn-border-color: #fefefe;
+    --toast-text-color: #fff;
+    --toast-default-color: #303a53;
+    --toast-primary-default:var(--toast-bg-default);
+    --toast-bg-default: #141B30;
+    --toast-bg-success: #05310d;
+    --toast-bg-info: #0a326a;
+    --toast-bg-warning: #433a05;
+    --toast-bg-error: rgb(54, 6, 6);
+}
+
+.rb-toast-dark .rb-toast-btn-default img, .rb-toast-dark.rb-toast-default img.rb-toast-alert-icon {
+    filter: none;
+}
+
+.rb-toast-dark .rb-toast-close-btn {
+    opacity: 1;
+    color: #ddd;
+}
+
+
+.rb-toast-dark.rb-toast-default.rb-toast-gradient {
+    background-image: linear-gradient(to right, rgb(20, 27, 48) 0%, rgb(82, 82, 82) 100%);
 }
