@@ -45,7 +45,7 @@ export type ToastOptions = {
     design?: 'minimal' | 'standard' | 'colorful' | 'gradient';
     animation?: Animation | CustomAnimation;
     position?: 'top-left' | 'top-right' | 'top-center' | 'center' | 'bottom-left' | 'bottom-right',
-    cordinates?: { // ignores the stack position
+    offset?: { // ignores the stack position
         x: number,
         y: number
     }
@@ -54,7 +54,8 @@ export type ToastOptions = {
         size: 'small' | 'medium' | 'large';
         classes: string[];
     };
-    duration?: number,
+    duration?: number;
+    autoClose?: boolean;
     container?: HTMLElement,
     onClose?: () => void;
     onShow?: () => void;

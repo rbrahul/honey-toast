@@ -18,113 +18,192 @@
             border-left: 6px solid rgb(77, 176, 80);
         }
     </style>
+    <script type="module">
+        // be sure to specify the exact version
+        import { codeToHtml } from 'https://esm.sh/shiki@1.0.0'
+        window.codeToHtml = codeToHtml
+    </script>
 </head>
 
 <body>
-    <div class="row toast-editor">
-        <form>
-        <div class="col action-panel">
-            <div class="row pt-0"><strong>Position:</strong></div>
-            <div class="row pt-0 pb-20">
-                <select name="position" class="position">
-                    <option value="top-left">Top Left</option>
-                    <option value="top-right" selected>Top Right</option>
-                    <option value="top-center">Top Center</option>
-                    <option value="bottom-left">Bottom Left</option>
-                    <option value="bottom-right">Bottom Right</option>
-                    <option value="center">Center</option>
-                </select>
+    <div class="container">
+        <header class="align-center">
+            <nav class="navbar">
+                <div class="brand">
+                    <a href="#" class="logo"><img src="./assets/icons/logo.svg" alt="Honey Toast Logo" /> <span>Honey
+                            Toast</span></a>
+                </div>
+                <div class="menu">
+                    <ul class="menu-list">
+                        <li><a href="https://rbrahul.github.io/honey-toast-doc" class="menu-item">Home</a></li>
+                        <li><a href="https://rbrahul.github.io/honey-toast-doc/api-references"
+                                class="menu-item">Documentation</a></li>
+                        <li><a href="https://github.com/rbrahul/toast" class="menu-item">Github</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="row toast-editor">
+            <form>
+                <div class="col action-panel">
+                    <div class="input-area">
+                        <div class="row pt-0"><strong>Position:</strong></div>
+                        <div class="row pt-0 pb-20">
+                            <select name="position" class="position-input">
+                                <option value="top-left">Top Left</option>
+                                <option value="top-right" selected>Top Right</option>
+                                <option value="top-center">Top Center</option>
+                                <option value="bottom-left">Bottom Left</option>
+                                <option value="bottom-right">Bottom Right</option>
+                                <option value="center">Center</option>
+                            </select>
+                        </div>
+                        <div class="row pt-0"><strong>Animations:</strong></div>
+                        <div class="row pt-0">
+                            <label class="checkbox">
+                                <input type="radio" class="position" name="animation" value="slide"  checked/>
+                                <span>Slide</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="position" name="animation" value="bounce" />
+                                <span>Bounce</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="position" name="animation" value="fade" />
+                                <span>Fade</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="position" name="animation" value="zoom" />
+                                <span>Zoom</span>
+                            </label>
+                        </div>
+                        <div class="row pt-0"><strong>Type:</strong></div>
+                        <div class="row pt-0">
+                            <label class="checkbox">
+                                <input type="radio" class="type" name="type" value="default"  />
+                                <span>Default</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="type" name="type" value="success" checked/>
+                                <span>Success</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="type" name="type" value="info" />
+                                <span>Info</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="type" name="type" value="warning" />
+                                <span>Warning</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="type" name="type" value="error" />
+                                <span>Error</span>
+                            </label>
+                        </div>
 
-            </div>
-    
-            <div class="row pt-0"><strong>Animations:</strong></div>
-    
-            <div class="row pt-0">
-                <label class="checkbox">
-                    <input type="radio" class="position" name="animation" value="slide" checked/>
-                    <span>Slide</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="position" name="animation" value="bounce"  />
-                    <span>Bounce</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="position" name="animation" value="fade" />
-                    <span>Fade</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="position" name="animation" value="zoom" />
-                    <span>Zoom</span>
-                </label>
-            </div>
-    
-            <div class="row pt-0"><strong>Type:</strong></div>
-            <div class="row pt-0">
-                <label class="checkbox">
-                    <input type="radio" class="type" name="type" value="default" checked/>
-                    <span>Default</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="type" name="type" value="success" />
-                    <span>Success</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="type" name="type" value="info"  />
-                    <span>Info</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="type" name="type" value="warning" />
-                    <span>Warning</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="type" name="type" value="error" />
-                    <span>Error</span>
-                </label>
-            </div>
-        
-            <div class="row pt-0"><strong>Design:</strong></div>
-            <div class="row pt-0">
-                <label class="checkbox">
-                    <input type="radio" class="design" name="design" value="minimal" checked/>
-                    <span>Minimal</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="design" name="design" value="standard"  />
-                    <span>Standard</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="design" name="design" value="colorful" />
-                    <span>Colorful</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="design" name="design" value="gradient" />
-                    <span>Gradient</span>
-                </label>
-            </div>
-            <div class="row pt-0"><strong>Theme:</strong></div>
-            <div class="row pt-0">
-                <label class="checkbox">
-                    <input type="radio" class="theme" name="theme" value="light" checked/>
-                    <span>Light</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="theme" name="theme" value="dark"  />
-                    <span>Dark</span>
-                </label>
-                <label class="checkbox">
-                    <input type="radio" class="theme" name="theme" value="system" />
-                    <span>System</span>
-                </label>
-            </div>
-    
-            <div class="row mt-20">
-                <button data-animation="slide" type="button" class="btn btn-info show-toast">Show Toast</button>
-                <button data-animation="bounce" type="button" class="btn btn-info show-all-toast">Show Demo Toasts</button>
-                <button data-animation="bounce" type="button" class="btn btn-default close-all-toast">Close All</button>
-                <button type="reset" data-animation="bounce" class="btn btn-default show-all-toast">Reset</button>
-            </div>
+                        <div class="row pt-0"><strong>Design:</strong></div>
+                        <div class="row pt-0">
+                            <label class="checkbox">
+                                <input type="radio" class="design" name="design" value="minimal" checked />
+                                <span>Minimal</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="design" name="design" value="standard" />
+                                <span>Standard</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="design" name="design" value="colorful" />
+                                <span>Colorful</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="design" name="design" value="gradient" />
+                                <span>Gradient</span>
+                            </label>
+                        </div>
+                        <div class="row pt-0"><strong>Theme:</strong></div>
+                        <div class="row pt-0">
+                            <label class="checkbox">
+                                <input type="radio" class="theme" name="theme" value="light" checked />
+                                <span>Light</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="theme" name="theme" value="dark" />
+                                <span>Dark</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="theme" name="theme" value="system" />
+                                <span>System</span>
+                            </label>
+                        </div>
+                        <div class="row pt-0"><strong>Auto Close?</strong></div>
+                        <div class="row pt-0">
+                            <label class="checkbox">
+                                <input type="radio" name="autoclose" value="1" checked />
+                                <span>Yes</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" name="autoclose" value="0" />
+                                <span>No</span>
+                            </label>
+                            <div class="inline ml-30" id="duration-input-area">
+                                <strong class="mr-20">Duration:</strong>
+                                <input type="number" name="duration" class="duration" value="3000" />
+                                <span>ms</span>
+                            </div>
+                        </div>
+
+                        <div class="row pt-0"><strong>Has Buttons?</strong></div>
+                        <div class="row pt-0">
+                            <label class="checkbox">
+                                <input type="radio" class="theme" name="hasbuttons" value="1"  checked/>
+                                <span>Yes</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="theme" name="hasbuttons" value="0" />
+                                <span>No</span>
+                            </label>
+                        </div>
+                        <div class="row pt-0"><strong>Has Progressbar?</strong></div>
+                        <div class="row pt-0">
+                            <label class="checkbox">
+                                <input type="radio" class="theme" name="progressbar" value="1"  />
+                                <span>Yes</span>
+                            </label>
+                            <label class="checkbox">
+                                <input type="radio" class="theme" name="progressbar" value="0" checked />
+                                <span>No</span>
+                            </label>
+                        </div>
+
+                        <div class="row pt-0"><strong>Offset (Gap from the closest Edge or Container)</strong></div>
+                        <div class="row pt-0 mb-20 inline">
+                            <div class="input-group mr-50">
+                                <strong>X:</strong>
+                                <input type="number" name="offset-x" value="30" />
+                                <span>px</span>
+                            </div>
+                            <div class="input-group">
+                                <strong>Y</strong>
+                                <input type="number" name="offset-y"  value="30" />
+                                <span>px</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row action-area">
+                        <button data-animation="slide" type="button" class="btn btn-info show-toast">Show Toast</button>
+                        <button data-animation="bounce" type="button" class="btn btn-info show-all-toast">Show Demo
+                            Toasts</button>
+                        <button data-animation="bounce" type="button" class="btn btn-default close-all-toast">Close
+                            All</button>
+                        <button type="reset" data-animation="bounce"
+                            class="btn btn-default show-all-toast">Reset</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="code-view"><span>Code</span></div>
         </div>
-    </form>
     </div>
     <script type="module" src="./src/index.ts"></script>
     <script type="module" src="./src/example.ts"></script>

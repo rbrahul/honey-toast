@@ -309,7 +309,7 @@ class ToastAlert {
 const isValidContent = (content: ToastContent) => (content && (typeof content === 'string' || (content as StructuredContent).title !== undefined || (content as StructuredContent)?.message !== undefined || isHTMLElement(content)))
 
 export const createToast = (options: ToastBuilderProps): HTMLElement => {
-    console.log("OPTIONS:", options)
+    console.log("ToastBuilderProps OPTIONS:", options)
     if(!isValidContent(options?.content)) {
         throw new Error(
             'Only string, HTMLElement or an object having keys title, message, buttons is supported as content',
