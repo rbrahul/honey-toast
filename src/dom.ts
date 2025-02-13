@@ -56,6 +56,53 @@ const allowedTagNames = [
     'button'
 ];
 
+const allowedAttrs = [
+    'id',
+    'style',
+    'class',
+    'alt',
+    'target',
+    'title',
+    'href',
+    'focus',
+    'src',
+    'srcset',
+    'type',
+    'action',
+    'rows',
+    'cols',
+    'selected',
+    'value',
+    'checked',
+    'placeholder',
+    'disabled',
+    'readonly',
+    'min',
+    'max',
+    'step',
+    'name',
+    'for',
+    'tabindex',
+    'autocomplete',
+    'autofocus',
+    'required',
+    'multiple',
+    'pattern',
+    'download',
+    'method',
+    'enctype',
+    'novalidate',
+    'formaction',
+    'disabled',
+    'dirname',
+    'dir',
+    'colspan',
+    'rowspan',
+    'allow',
+    'accept',
+    'charset',
+];
+
 const pick = <T>(record: object, keys: string[]): Record<string, T> => {
     const recordsWithPickedEntries: Record<string, T> = {};
     keys.forEach(key => {
@@ -72,8 +119,12 @@ const addAttrs = (element: HTMLElement, atributes: Record<string, string>) => {
     }
 };
 
+const isObject = (value: unknown): value is Record<string, unknown> => {
+    return typeof value === 'object' && value !== null;
+}
+
 const bindEvents = (element: HTMLElement, eventMap: Record<string, EventHanlder>) => {
-    if (!eventMap) return;
+    if (!isObject(eventMap)) return;
 
     for (const [name, handlerFn] of Object.entries(eventMap)) {
         element.addEventListener(name, handlerFn);
@@ -109,24 +160,14 @@ const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement):HTMLElement =
             if (spec.attrs && typeof spec.attrs === 'object') {
                 addAttrs(element, spec.attrs);
             }
+
+           const extractAdditionalAttrs = pick<string>(spec, allowedAttrs);
+           addAttrs(element, extractAdditionalAttrs);
+
             if (spec.classes && Array.isArray(spec.classes)) {
                 element.classList.add(...spec.classes);
             }
-
-            const extractAdditionalAttrs = pick<string>(spec, [
-                'id',
-                'style',
-                'alt',
-                'target',
-                'title',
-                'href',
-                'focus',
-                'src',
-                'srcset',
-                'type',
-                'action',
-            ]);
-            addAttrs(element, extractAdditionalAttrs);
+    
             bindEvents(element, spec?.events);
 
             if (spec.children) {
@@ -145,7 +186,6 @@ const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement):HTMLElement =
 };
 
 export const toDom = (specs: DomSpec | DomSpec[]):HTMLElement => {
-    console.log("Specs:", specs)
     return buildDom(specs)?.childNodes?.[0] as HTMLElement;// excluding temporary root
 };
 

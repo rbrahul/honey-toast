@@ -31,7 +31,7 @@ export const prefix = (name: string) => {
 
 export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
     content: {
-        title: 'Hi, John',
+        title: 'Hi, there!',
         message: 'I hope you are having a great day!',
         buttons: [],
     },
@@ -47,6 +47,10 @@ export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
         url: undefined,
         size: 'small',
         classes: [],
+    },
+    offset: {
+        x: 30,
+        y: 30,
     },
     duration: 3_000
 };
@@ -146,11 +150,6 @@ class ToastAlert {
             });
         }
 
-        // if ((this.#alertHtmlSpec.children as DomSpec[]).length === 0) {
-        //     this.#alertHtmlSpec.children = [element];
-        // } else {
-        //     this.#alertHtmlSpec.children.unshift(element);
-        // }
         return element;
     }
 
@@ -192,15 +191,12 @@ class ToastAlert {
             if (this.#options?.icon?.classes) {
                 iconElement.classes.push(...this.#options?.icon?.classes);
             }
-            //toastBody.children.push(iconElement);
             contentContainer.children.push(iconElement);
         }
         if (
             typeof this.#options.content === 'object' &&
             (this.#options.content as StructuredContent)?.message
         ) {
-            console.log("Message:",this.#options.content, 'is Objectk:', 'message:', this.#options.content?.message)
-
             toastBody.children.push({
                 tag: 'div',
                 html: (this.#options.content as StructuredContent)?.message as string,
@@ -224,7 +220,6 @@ class ToastAlert {
 
         contentContainer.children.push(toastBody);
         this.#alertHtmlSpec.children.push(contentContainer);
-        console.log("this.#alertHtmlSpec.children:", this.#alertHtmlSpec.children)
         return this;
     }
 
@@ -294,14 +289,13 @@ class ToastAlert {
         this.#alertHtmlSpec.children.push({
             tag: 'div',
             text: '',
-            classes: ['alert-progress-bar'],
+            classes: [prefix('alert-progress-bar')],
         });
 
         return this;
     }
 
     toHtml() {
-        console.log('building spec:', this.#alertHtmlSpec);
         return toDom(this.#alertHtmlSpec);
     }
 }
@@ -309,7 +303,7 @@ class ToastAlert {
 const isValidContent = (content: ToastContent) => (content && (typeof content === 'string' || (content as StructuredContent).title !== undefined || (content as StructuredContent)?.message !== undefined || isHTMLElement(content)))
 
 export const createToast = (options: ToastBuilderProps): HTMLElement => {
-    console.log("ToastBuilderProps OPTIONS:", options)
+    console.log("ToastBuilderProps OPTIONS:", options);
     if(!isValidContent(options?.content)) {
         throw new Error(
             'Only string, HTMLElement or an object having keys title, message, buttons is supported as content',
@@ -319,24 +313,3 @@ export const createToast = (options: ToastBuilderProps): HTMLElement => {
     const toast = new ToastAlert(options);
     return toast.addClasses().addBody().addActionButtons().addCloseBtn().addProgressBar().toHtml();
 };
-
-/*
-// Example use cases:
-console.log('Default Toast', createToast(DEFAULT_TOAST_OPTIONS));
-const element = document.createElement('form');
-element.id = 'form';
-element.action = '/send-mail.php';
-element.enctype = 'multipart-form-data';
-
-console.log(
-    'Toast with Dom Element',
-    createToast({
-        ...DEFAULT_TOAST_OPTIONS,
-        content: element,
-    }),
-);
-console.log(isHTMLElement(element))
-console.log("Success Toast", createToast({...DEFAULT_TOAST_OPTIONS, type: 'success'}))
-console.log("Info Toast", createToast({...DEFAULT_TOAST_OPTIONS, type: 'info'}))
-console.log("Warning Toast", createToast({...DEFAULT_TOAST_OPTIONS, type: 'warning'}))
-console.log("error Toast", createToast({...DEFAULT_TOAST_OPTIONS, type: 'error'}))*/

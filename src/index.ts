@@ -1,54 +1,20 @@
-import TickIcon from '../assets/icons/close.svg';
 import { createToast, DEFAULT_TOAST_OPTIONS, isHTMLElement, prefix } from './toastBuilder';
 import { Animation, ToastBuilderProps, ToastOptions, ToastContent } from './type';
 import { DomAnimator } from './utils/dom-animator.js';
 
 const containerSelector: string = 'container';
 
-type Options = {
-    classNames: string[];
-    container: HTMLElement;
-    autoCloseAfter: number;
-    showProgress: boolean;
-    position: string;
-    closeable: boolean;
-    type: 'default' | 'success' | 'info' | 'warning' | 'error';
-    progressbarClasses: string[];
-    onShow: () => void;
-    onClose: () => void;
-};
-
-type MessageAndSubject = {
-    message: string;
-    title: string;
-};
-
-type Content = string | MessageAndSubject | HTMLDivElement;
-
-const defaultOptions: Options = {
-    classNames: [],
-    container: document.body,
-    autoCloseAfter: 3_000,
-    showProgress: false,
-    position: 'top-right',
-    closeable: true,
-    type: 'success',
-    progressbarClasses: [],
-    onClose: () => {},
-    onShow: () => {},
-};
-
 interface ToastEntry {
     mountedIn: HTMLElement;
     element: HTMLElement;
-    options: Partial<Options>;
+    options: Partial<ToastOptions>;
     appearedAt: number;
 }
 
 interface ActionDelegator {
     close(ToastEntry): void;
     closeAll(): void;
-    update(ToastEntry, Content, Options): void;
+    update(ToastEntry, Content, ToastOptions): void;
 }
 
 interface DomRemover {
@@ -81,7 +47,7 @@ class Toast implements ToastEntry {
         this.delegator.closeAll();
     }
 
-    update(content: Content, options: Options) {
+    update(content: ToastContent, options: ToastOptions) {
         this.delegator.update(this, content, options);
     }
 }
@@ -98,45 +64,41 @@ const getAnimationClass = (animationName:Animation = 'slide') => {
 };
 
 class ToastBaker {
-    options = defaultOptions;
+    options: ToastOptions = {};
     toasts: Toast[] = [];
 
     notify(content: ToastContent, options: ToastOptions) {
-        const toastOptions = {
+        this.options = {
             ...DEFAULT_TOAST_OPTIONS,
             ...(options ?? {}),
         };
-        const toastContainer = this.#mountToastContainer(toastOptions?.position);
-        const toast = new Toast(content, toastOptions, this);
+        const toastContainer = this.#mountToastContainer(this.options?.position);
+        const toast = new Toast(content, this.options, this);
         //@ts-ignore add typescript type later
-        toast.domManager = this.mountToastIntoDom(toastContainer, toast.element, toastOptions);
+        toast.domManager = this.#mountToastIntoDom(toastContainer, toast.element);
         toast.mountedIn = toastContainer;
         toast.appearedAt = Date.now();
         this.toasts.push(toast);
         return toast;
     }
 
-    mountToastIntoDom(container: HTMLElement, toastNode: HTMLElement, options: ToastOptions) {
+    #mountToastIntoDom(container: HTMLElement, toastNode: HTMLElement) {
         // TODO: Add option to create custom transtion classes {enter:CUSTOM_CLASS_Enter, exit: CUSTOM_CLASS_Exit}
-        const animationType = options?.animation ? getAnimationClass(options?.animation as Animation) : 'rb-toast-slide';
+        const animationType = this.options?.animation ? getAnimationClass(this.options?.animation as Animation) : 'rb-toast-slide';
         const animator = new DomAnimator(toastNode, {
             animationClassPrefix: animationType as string,
             animationKind: ['rb-toast-slide'].includes(animationType) ? 'transition' : 'animation',
-            onEnter: () => {
-                console.log('Toast has entered');
-            },
-            onExit: () => {
-                console.log('Toast started to exit');
-            },
+            onEnter: () => {},
+            onExit: () => {},
             onEntered: () => {
-                if (typeof options.onShow === 'function') {
-                    options.onShow();
+                if (typeof this.options.onShow === 'function') {
+                    this.options.onShow();
                 }
-                if (options.duration) {
-                    let autoCloseAfter = options.duration;
-                    if (options.duration < 1000) {
+                if (this.options.duration) {
+                    let autoCloseAfter = this.options.duration;
+                    if (this.options.duration < 1000) {
                         console.warn('Duration should be greater than 1000ms');
-                        autoCloseAfter = 1000;
+                        autoCloseAfter = 3_000;
                     }
                     setTimeout(() => {
                       try {
@@ -149,14 +111,15 @@ class ToastBaker {
                 }
             },
             onExited: () => {
-                if (typeof options.onClose === 'function') {
-                    options.onClose();
+                if (typeof this.options.onClose === 'function') {
+                    this.options.onClose();
                 }
             },
             animationTimeout: 300,
         });
-        this.#initialiseCloseBtnEventListener(animator, toastNode, options);
-        if (['bottom-right', 'bottom-left', 'center'].includes(options?.position)) {
+
+        this.#initialiseCloseBtnEventListener(animator, toastNode);
+        if (['bottom-right', 'bottom-left', 'center'].includes(this.options?.position)) {
             animator.append(container);
         } else {
             animator.prepend(container);
@@ -169,7 +132,8 @@ class ToastBaker {
         toast.domManager?.remove?.();
     }
 
-    update(toast: Toast, _: Content, __: Partial<Options>) {
+    // TODO: Implement update method
+    update(toast: Toast, _: ToastContent, __: Partial<ToastOptions>) {
         console.log('Updating toast:', toast);
     }
 
@@ -179,16 +143,16 @@ class ToastBaker {
         });
     }
 
-    #initialiseCloseBtnEventListener(animator: DomRemover, toastNode: HTMLElement, options: ToastOptions) {
+    #initialiseCloseBtnEventListener(animator: DomRemover, toastNode: HTMLElement) {
         const closeBtn = toastNode.querySelector(`.${prefix('close-btn')}`);
         if (closeBtn) {
-            if (!options?.isCloseable) {
+            if (!this.options?.isCloseable) {
                 closeBtn.remove();
             } else {
                 closeBtn.addEventListener('click', () => {
                     animator?.remove?.();
-                    if (typeof options.onClose === 'function') {
-                        options.onClose();
+                    if (typeof this.options.onClose === 'function') {
+                        this.options.onClose();
                     }
                 });
             }

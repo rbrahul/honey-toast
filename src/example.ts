@@ -10,7 +10,7 @@ const generateCode = async ({
     type = 'success',
     animation = 'slide',
     hasButtons = true,
-    hasProgressbar = false,
+    hasProgressBar = false,
     offset = { x: 30, y: 30 },
 }) => {
     let butttons = '';
@@ -42,7 +42,7 @@ const generateCode = async ({
             position: '${position}',
             type: '${type}',
             animation: '${animation}',
-            hasProgressbar: ${hasProgressbar},
+            hasProgressBar: ${hasProgressBar},
             offset: {x: ${offset.x}, y: ${offset.y}},
             classNames: []${butttons},
         });
@@ -50,6 +50,7 @@ const generateCode = async ({
 
     if ('codeToHtml' in window && window.codeToHtml) {
         const codeView = document.querySelector('.code-view');
+        //@ts-ignore
         codeView.innerHTML = await window.codeToHtml(code, {
             lang: 'js',
             theme: 'rose-pine',
@@ -455,7 +456,7 @@ const getProperties = () => {
     const hasButtons = Boolean(
         Number(document.querySelector<HTMLInputElement>(`input[name="hasbuttons"]:checked`)?.value),
     );
-    const hasProgressbar = Boolean(
+    const hasProgressBar = Boolean(
         Number(
             document.querySelector<HTMLInputElement>(`input[name="progressbar"]:checked`)?.value,
         ),
@@ -475,7 +476,7 @@ const getProperties = () => {
         autoClose,
         duration,
         hasButtons,
-        hasProgressbar,
+        hasProgressBar,
         offset,
     };
 };

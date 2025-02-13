@@ -19,10 +19,11 @@
     --toast-position-offset-y: 30px;
 }
 
-
-
 .rb-toast-dark {
     --toast-btn-border-color: #fefefe;
+    --toast-bg-default: #111;
+    --toast-text-color: #fff;
+    --toast-default-color: #ddd;
 }
 
 .rb-toast-default{
@@ -153,7 +154,7 @@
 }
 
 .rb-toast-btn-error{
-    background-color: #fefefe;
+    background-color: white;
 }
 
 .rb-toast-btn-icon-small {
