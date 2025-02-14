@@ -1,6 +1,6 @@
 import { createToast, DEFAULT_TOAST_OPTIONS, prefix } from './toastBuilder';
 import  Animator  from './animator';
-import { Animation, ToastOptions, ToastContent } from './type';
+import { AnimationType, ToastOptions, ToastContent } from './type';
 
 
 import './styles/toast.css';
@@ -59,7 +59,7 @@ class Toast implements ToastEntry {
     }
 }
 
-const getAnimationClass = (animationName:Animation = 'slide') => {
+const getAnimationClass = (animationName:AnimationType = 'slide') => {
     return (
         {
             slide: prefix('slide'),
@@ -92,7 +92,7 @@ class ToastBaker {
 
     #mountToastIntoDom(container: HTMLElement, toastNode: HTMLElement) {
         // TODO: Add option to create custom transtion classes {enter:CUSTOM_CLASS_Enter, exit: CUSTOM_CLASS_Exit}
-        const animationType = this.options?.animation ? getAnimationClass(this.options?.animation as Animation) : 'rb-toast-slide';
+        const animationType = this.options?.animation ? getAnimationClass(this.options?.animation as AnimationType) : 'rb-toast-slide';
         const animator = new Animator(toastNode, {
             animationClassPrefix: animationType as string,
             animationKind: ['rb-toast-slide'].includes(animationType) ? 'transition' : 'animation',

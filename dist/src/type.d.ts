@@ -8,7 +8,7 @@ export type CustomAnimation = {
     enter: string;
     exit: string;
 };
-export type Animation = 'slide' | 'fade' | 'zoom' | 'bounce';
+export type AnimationType = 'slide' | 'fade' | 'zoom' | 'bounce';
 export type Button = {
     iconUrl?: string;
     label?: string;
@@ -30,7 +30,7 @@ export type ToastOptions = {
     type?: 'default' | 'success' | 'info' | 'warning' | 'error';
     theme?: 'light' | 'dark' | 'system';
     design?: 'minimal' | 'standard' | 'colorful' | 'gradient';
-    animation?: Animation | CustomAnimation;
+    animation?: AnimationType | CustomAnimation;
     position?: 'top-left' | 'top-right' | 'top-center' | 'center' | 'bottom-left' | 'bottom-right';
     offset?: {
         x: number;

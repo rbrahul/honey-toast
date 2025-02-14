@@ -17,7 +17,7 @@ export type CustomAnimation = {
     exit: string;  // css class that will be applied to the toast when it exists
 }
 
-export type Animation = 'slide' | 'fade' | 'zoom' | 'bounce';
+export type AnimationType = 'slide' | 'fade' | 'zoom' | 'bounce';
 
 export type Button = {
     iconUrl?: string;
@@ -43,7 +43,7 @@ export type ToastOptions = {
     type?: 'default' | 'success' | 'info' | 'warning' | 'error';
     theme?: 'light' | 'dark' | 'system';
     design?: 'minimal' | 'standard' | 'colorful' | 'gradient';
-    animation?: Animation | CustomAnimation;
+    animation?: AnimationType | CustomAnimation;
     position?: 'top-left' | 'top-right' | 'top-center' | 'center' | 'bottom-left' | 'bottom-right',
     offset?: { // ignores the stack position
         x: number,

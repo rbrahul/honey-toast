@@ -11,7 +11,7 @@ import {
     StructuredContent,
     ToastContent,
     ToastBuilderProps,
-    Animation
+    AnimationType
 } from './type';
 
 const ICON_TYPE = {
@@ -44,7 +44,7 @@ export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
     hasProgressBar: false,
     classNames: [],
     theme: 'light',
-    animation: prefix('slide') as Animation,
+    animation: prefix('slide') as AnimationType,
     icon: {
         url: undefined,
         size: 'small',
