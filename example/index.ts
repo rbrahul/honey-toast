@@ -447,6 +447,16 @@ function createAnimatingToast({
             },
         },
     );
+    setTimeout((myToast:unknown) => {
+        //@ts-ignore
+        myToast?.update({
+            title: 'Hi, Rahul!',
+            message: 'I have been updated',
+        }, {
+            type: 'success',
+        });
+    }, 4_000, toastAlert);
+    console.log("toastAlert:", toastAlert);
     ALL_ALERTS.push(toastAlert);
 }
 
