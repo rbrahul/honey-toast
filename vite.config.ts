@@ -9,9 +9,12 @@ export default defineConfig({
             name: 'toast',
             fileName: (format) => `toast.${format}.js`,
           },
+         minify: true,
     },
     plugins: [
-        dts(),
+        dts({
+            exclude: ['example/**'],
+        }),
         svgr()
       ]
   })

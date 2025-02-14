@@ -1,7 +1,7 @@
 /*
-    * DOM Builder
-    * Create HTML elements from Javascript object literal
-*/
+ * DOM Builder
+ * Create HTML elements from Javascript object literal
+ */
 export type EventHanlder = (e: Event | KeyboardEvent | MouseEvent | InputEvent) => void;
 
 export type DomSpec = {
@@ -39,16 +39,21 @@ const allowedTagNames = [
     'figure',
     'table',
     'thead',
+    'tfoot',
     'tbody',
+    'col',
+    'colgroup',
     'tr',
     'th',
     'td',
     'b',
     'i',
+    'ol',
     'ul',
     'li',
     'span',
     'p',
+    'pre',
     'h1',
     'h2',
     'h3',
@@ -57,7 +62,75 @@ const allowedTagNames = [
     'h6',
     'a',
     'input',
-    'button'
+    'button',
+    'select',
+    'option',
+    'optgroup',
+    'svg',
+    'path',
+    'polygon',
+    'circle',
+    'rect',
+    'ellipse',
+    'line',
+    'polyline',
+    'g',
+    'defs',
+    'symbol',
+    'use',
+    'form',
+    'blockquote',
+    'label',
+    'textarea',
+    'fieldset',
+    'hr',
+    'menu',
+    'video',
+    'audio',
+    'code',
+    'sub',
+    'sup',
+    'u',
+    'em',
+    's',
+    'small',
+    'slot',
+    'template',
+    'progress',
+    'meter',
+    'time',
+    'abbr',
+    'address',
+    'area',
+    'html',
+    'head',
+    'body',
+    'title',
+    'meta',
+    'link',
+    'style',
+    'script',
+    'noscript',
+    'base',
+    'details',
+    'dialog',
+    'summary',
+    'fieldset',
+    'legend',
+    'datalist',
+    'caption',
+    'br',
+    'output',
+    'object',
+    'wbr',
+    'q',
+    'dl',
+    'dt',
+    'dd',
+    'del',
+    'ins',
+    'bdi',
+    'bdo'
 ];
 
 const allowedAttrs = [
@@ -105,6 +178,17 @@ const allowedAttrs = [
     'allow',
     'accept',
     'charset',
+    'scope',
+    'async',
+    'data',
+    'defer',
+    'crossorigin',
+    'integrity',
+    'referrerpolicy',
+    'sandbox',
+    'sizes',
+    'width',
+    'height',
 ];
 
 const pick = <T>(record: object, keys: string[]): Record<string, T> => {
@@ -125,7 +209,7 @@ const addAttrs = (element: HTMLElement, atributes: Record<string, string>) => {
 
 const isObject = (value: unknown): value is Record<string, unknown> => {
     return typeof value === 'object' && value !== null;
-}
+};
 
 const bindEvents = (element: HTMLElement, eventMap: Record<string, EventHanlder>) => {
     if (!isObject(eventMap)) return;
@@ -135,12 +219,12 @@ const bindEvents = (element: HTMLElement, eventMap: Record<string, EventHanlder>
     }
 };
 
-const createFragment = ():HTMLElement => {
-    const fragment:unknown = new DocumentFragment();
+const createFragment = (): HTMLElement => {
+    const fragment: unknown = new DocumentFragment();
     return fragment as HTMLElement;
 };
 
-const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement):HTMLElement => {
+const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement): HTMLElement => {
     parent = parent ?? createFragment();
 
     if (Array.isArray(spec)) {
@@ -153,7 +237,7 @@ const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement):HTMLElement =
     }
 
     if (spec.domElement) {
-        parent.appendChild(spec.domElement)
+        parent.appendChild(spec.domElement);
         return parent;
     }
 
@@ -165,17 +249,17 @@ const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement):HTMLElement =
                 addAttrs(element, spec.attrs);
             }
 
-           const extractAdditionalAttrs = pick<string>(spec, allowedAttrs);
-           addAttrs(element, extractAdditionalAttrs);
+            const extractAdditionalAttrs = pick<string>(spec, allowedAttrs);
+            addAttrs(element, extractAdditionalAttrs);
 
             if (spec.classes && Array.isArray(spec.classes)) {
                 element.classList.add(...spec.classes);
             }
-    
+
             bindEvents(element, spec?.events);
 
             if (spec.children) {
-                 buildDom(spec.children, element);
+                buildDom(spec.children, element);
             } else {
                 if (spec.html !== undefined) {
                     element.innerHTML = spec.html;
@@ -189,8 +273,8 @@ const buildDom = (spec: DomSpec | DomSpec[], parent?: HTMLElement):HTMLElement =
     return parent;
 };
 
-export const toDom = (specs: DomSpec | DomSpec[]):HTMLElement => {
-    return buildDom(specs)?.childNodes?.[0] as HTMLElement;// excluding temporary root
+export const toDom = (specs: DomSpec | DomSpec[]): HTMLElement => {
+    return buildDom(specs)?.childNodes?.[0] as HTMLElement; // excluding temporary root
 };
 
 /*

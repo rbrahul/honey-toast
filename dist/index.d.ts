@@ -9,9 +9,9 @@ export interface ToastEntry {
     update(content: ToastContent, options: ToastOptions): void;
 }
 export interface ActionDelegator {
-    close(ToastEntry: any): void;
+    close(Toast: any): void;
     closeAll(): void;
-    update(ToastEntry: any, Content: any, ToastOptions: any): void;
+    update(Toast: any, Content: any, ToastOptions: any): void;
 }
 interface DomRemover {
     remove(): void;

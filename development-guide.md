@@ -7,5 +7,5 @@ npm run build
 # Build For Example Page:
 
 ```
-npm run example-build 
+npm run build:example
 ```

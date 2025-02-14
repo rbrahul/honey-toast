@@ -17,10 +17,12 @@
   "main": "./dist/toast.umd.js",
   "module": "./dist/toast.es.js",
   "source": "src/index.ts",
-  "typings": "dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": [
+        "./dist/*.d.ts"
+      ],
       "import": "./dist/toast.es.js",
       "require": "./dist/toast.umd.js"
     },
@@ -32,7 +34,7 @@
     "dev": "npx vite .",
     "lint": "npx eslint --fix",
     "build": "vite build",
-    "example-build": "vite build --outDir ./example/dist --emptyOutDir true -c example-page.vite.config.ts && rm -rf ./example/dist/src",
+    "build:example": "npm run build && vite build --outDir ./example/dist --emptyOutDir true -c example-page.vite.config.ts",
     "prepare": "husky"
   },
   "author": "Rahul Baruri<rahulbarui1@gmail.com>",

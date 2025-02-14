@@ -1,7 +1,6 @@
 import { createToast, DEFAULT_TOAST_OPTIONS, prefix } from './toastBuilder';
-import  Animator  from './animator';
+import Animator from './animator';
 import { AnimationType, ToastOptions, ToastContent } from './type';
-
 
 import './styles/toast.css';
 import './styles/animation.css';
@@ -13,20 +12,48 @@ export interface ToastEntry {
     element: HTMLElement;
     options: Partial<ToastOptions>;
     appearedAt: number;
-    close():void
-    closeAll():void
-    update(content: ToastContent, options: ToastOptions):void
+    close(): void;
+    closeAll(): void;
+    update(content: ToastContent, options: ToastOptions): void;
 }
 
 export interface ActionDelegator {
-    close(ToastEntry): void;
+    close(Toast): void;
     closeAll(): void;
-    update(ToastEntry, Content, ToastOptions): void;
+    update(Toast, Content, ToastOptions): void;
 }
 
 interface DomRemover {
     remove(): void;
 }
+
+const getAnimationClass = (animationName: AnimationType = 'slide') => {
+    return (
+        {
+            slide: prefix('slide'),
+            fade: prefix('fade'),
+            zoom: prefix('zoom'),
+            bounce: prefix('bounce'),
+        }[animationName] ?? animationName
+    );
+};
+
+const extractAnimationClass = (element: HTMLElement): string[] => {
+    const animationClassPrefixes = [
+        prefix('slide'),
+        prefix('fade'),
+        prefix('zoom'),
+        prefix('bounce'),
+    ];
+    const classList = Array.from(element.classList).filter(className => {
+        return animationClassPrefixes.some(prefix => {
+            if (className.startsWith(prefix)) {
+                return className;
+            }
+        });
+    });
+    return classList;
+};
 
 class Toast implements ToastEntry {
     options: ToastOptions;
@@ -55,25 +82,21 @@ class Toast implements ToastEntry {
     }
 
     update(content: ToastContent, options: ToastOptions) {
+        const updatedElement = createToast({
+            ...this.options,
+            ...options,
+            content,
+        });
+        const existingAnimationClass = extractAnimationClass(this.element);
+        updatedElement.classList.add(...existingAnimationClass);
+        this.element.innerHTML = updatedElement.innerHTML;
         this.delegator.update(this, content, options);
     }
 }
 
-const getAnimationClass = (animationName:AnimationType = 'slide') => {
-    return (
-        {
-            slide: prefix('slide'),
-            fade: prefix('fade'),
-            zoom: prefix('zoom'),
-            bounce: prefix('bounce'),
-        }[animationName] ?? animationName
-    );
-};
-
 class ToastBaker {
     options: ToastOptions = {};
     toasts: Toast[] = [];
-
     notify(content: ToastContent, options: ToastOptions) {
         this.options = {
             ...DEFAULT_TOAST_OPTIONS,
@@ -92,7 +115,9 @@ class ToastBaker {
 
     #mountToastIntoDom(container: HTMLElement, toastNode: HTMLElement) {
         // TODO: Add option to create custom transtion classes {enter:CUSTOM_CLASS_Enter, exit: CUSTOM_CLASS_Exit}
-        const animationType = this.options?.animation ? getAnimationClass(this.options?.animation as AnimationType) : 'rb-toast-slide';
+        const animationType = this.options?.animation
+            ? getAnimationClass(this.options?.animation as AnimationType)
+            : 'rb-toast-slide';
         const animator = new Animator(toastNode, {
             animationClassPrefix: animationType as string,
             animationKind: ['rb-toast-slide'].includes(animationType) ? 'transition' : 'animation',
@@ -109,13 +134,13 @@ class ToastBaker {
                         autoCloseAfter = 3_000;
                     }
                     setTimeout(() => {
-                      try {
-                        animator?.remove?.();
-                        this.toasts = this.toasts.filter(t => t.element !== toastNode);
-                      } catch (error) {
-                        console.error("Failed to auto close toast", error)
-                      }
-                    },autoCloseAfter)
+                        try {
+                            animator?.remove?.();
+                            this.toasts = this.toasts.filter(t => t.element !== toastNode);
+                        } catch (error) {
+                            console.error('Failed to auto close toast', error);
+                        }
+                    }, autoCloseAfter);
                 }
             },
             onExited: () => {
@@ -140,9 +165,15 @@ class ToastBaker {
         toast.domManager?.remove?.();
     }
 
-    // TODO: Implement update method
     update(toast: Toast, _: ToastContent, __: Partial<ToastOptions>) {
-        console.log('Updating toast:', toast);
+        const currentToast = this.toasts.find(toastItem => {
+            return toastItem.element === toast.element;
+        });
+        if (!currentToast) {
+            console.error('Failed to update toast');
+            return;
+        }
+        this.#initialiseCloseBtnEventListener(currentToast.domManager, toast.element);
     }
 
     closeAll() {
