@@ -1,11 +1,10 @@
 /*
 1. Add 'enter' class once appendChild or append is called
 2. Then a transition animation will be applied based on the *-enter 
-3. Once the transtionEnd event has been dispatched for the targetted node 'entered'
-4. Once the Element is about to be deleted 'exit' class will be added and transition animation will be applied based on the *-exit cass class.
+3. Once the transtionEnd event has been dispatched for the targetted node, the '*-entered' class will be added
+4. Once the Element is about to be deleted '*-exit' class will be added and transition animation will be applied based on the *-exit class.
 5. Once the transitionend event will be dispatched only then the Element will be removed from the DOM
 */
-
 
 
 /*
@@ -16,7 +15,7 @@
 
 .myclass-enter {
     opacity: 1;
-    transform: transition opacity 0.5s;
+    transform: opacity 0.5s;
 }
 
 // this class will be added once transitionend is dispached on the node and has a class named .myclass-enter
@@ -27,7 +26,7 @@
 // style will be added once the remove() is called on the Node.myclass
 .myclass-exiting {
      opacity: 0;
-    transform: transition opacity 0.5s;
+    transform: opacity 0.5s;
 }
 
 // once the transitionend is dispatched on the node and has .*-exiting  the following class will be added
@@ -36,22 +35,32 @@
 
 
 Example:
-
 Let's say we have an NodeElementX to be inserted to the Page.
 
 After parentX.appendChild(NodeElementX) is called then NodeElementX.classlist contains 'enter' css class.
-Let's say *-enter class has the css transtion delay of 500ms. Once it's over the transitionend evennt will be dispatched on the NodeElementX.
-Once the 'transitionend' was dispatched 'entered' class will be added to the NodeElementX. At this phase the node is already in the view and active.
+Let's say *-enter class has the css transtion delay of 500ms. Once it's over the transitionend event will be dispatched on the NodeElementX.
+Once the 'transitionend' was dispatched the 'entered' class will be added to the NodeElementX.
+
+At this phase the node is already in the view and active.
 After sometime time if the NodeElementX.remove() is called then 'entered' class will be removed and 'exiting' class will be added instead.
-Now css transition based on the -exiting class will be applied. Once the transition ends the 'transitionend' will be dispatched.
+Now css transition based on the *-exiting class will be applied.
 
 Once the 'transitionend' is dispatched the NodeElementX will be finally removed.
-
 */
 
 const noop = () => {}
 
-const defaultAnimationOptions = {
+export type AnimationOptions = {
+    animationClassPrefix: string;
+    animationKind: 'animation' | 'transition';
+    onEnter: () => void;
+    onEntered: () => void;
+    onExit: () => void;
+    onExited: () => void;
+    animationTimeout: number;
+}
+
+const defaultAnimationOptions:AnimationOptions = {
     animationClassPrefix: '', 
     animationKind: 'animation',
     // event is dispatched once *-enter class is added and dom is staring to appear
@@ -66,15 +75,16 @@ const defaultAnimationOptions = {
     animationTimeout: 500 
 }
 
-const isObject = () => typeof value === 'object';
+const isObject = (value:any) => typeof value === 'object';
 
 const isHTMLElement = (value) => {
     return typeof value === 'object' && ((value || {}).tagName || value?.nodeName)
 }
 
-class Animator {
-    constructor(node, options=defaultAnimationOptions) {
-        console.log('NODE:', node)
+export default class Animator {
+    options:AnimationOptions;
+    node:HTMLElement;
+    constructor(node:HTMLElement, options:AnimationOptions) {
         this.options = {
             ...defaultAnimationOptions,
             ...(options || {})
@@ -119,9 +129,9 @@ class Animator {
     cleanupAnimationEventListners(animatingClassName) {
         let eventHandler;
         if (animatingClassName === 'enter') {
-            eventHandler = this._setToEntered;
+            eventHandler = this.#setToEntered;
         } else if(animatingClassName === 'exit'){
-            eventHandler = this._setToExited;
+            eventHandler = this.#setToExited;
         }
         if (eventHandler && this.node) {
             this.node.removeEventListener(`${this.options.animationKind}end`, eventHandler);
@@ -138,7 +148,7 @@ class Animator {
             // TODO: Fix the 50 time execution issue even if class has been added
             if (Date.now() - startedAt > this.options.animationTimeout) {
                 if (!this.node.classList.contains(`${this.options.animationClassPrefix}-${targetClass}`)){
-                    targetClass === 'entered' ? this._setToEntered() : this._setToExited();
+                    targetClass === 'entered' ? this.#setToEntered() : this.#setToExited();
                     clearInterval(intervalId);
                     return;
                 } else {
@@ -151,7 +161,7 @@ class Animator {
     }
 
 
-    _setToEntered = () => {
+    #setToEntered = () => {
         if(this.node?.classList?.contains(`${this.options.animationClassPrefix}-enter`)) {
             this.node.classList.remove(`${this.options.animationClassPrefix}-enter`);
             this.node.classList.add(`${this.options.animationClassPrefix}-entered`);
@@ -162,7 +172,7 @@ class Animator {
         }
     }
 
-    _setToExited = () => {
+    #setToExited = () => {
         if (this.node?.classList?.contains(`${this.options.animationClassPrefix}-exit`)) {
             this.node.classList.remove(`${this.options.animationClassPrefix}-exit`);
             this.node.classList.add(`${this.options.animationClassPrefix}-exited`);
@@ -182,7 +192,7 @@ class Animator {
         }
         this.handleAnimationTimeout('entered');
         console.log(`${this.options.animationKind}end`);
-        this.node.addEventListener(`${this.options.animationKind}end`, this._setToEntered);
+        this.node.addEventListener(`${this.options.animationKind}end`, this.#setToEntered);
     }
 
     startExitingAnimation() {
@@ -192,7 +202,7 @@ class Animator {
         }
         this.node.classList.add(`${this.options.animationClassPrefix}-exit`);
         this.handleAnimationTimeout('exited');
-        this.node.addEventListener(`${this.options.animationKind}end`, this._setToExited);
+        this.node.addEventListener(`${this.options.animationKind}end`, this.#setToExited);
     }
 
     mount(direction='append', parent) {
@@ -228,7 +238,3 @@ class Animator {
         this.startExitingAnimation();
     }
 }
-
-window.DomAnimator = Animator;
-
-export const DomAnimator = Animator;

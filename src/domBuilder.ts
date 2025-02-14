@@ -1,3 +1,7 @@
+/*
+    * DOM Builder
+    * Create HTML elements from Javascript object literal
+*/
 export type EventHanlder = (e: Event | KeyboardEvent | MouseEvent | InputEvent) => void;
 
 export type DomSpec = {
@@ -191,7 +195,7 @@ export const toDom = (specs: DomSpec | DomSpec[]):HTMLElement => {
 
 /*
 // Create Html Element from Javascript Oject Literal 
-//Example usage:
+// Usage Example:
 const myDomSpec: DomSpec = {
     tag: 'div',
     id: 'first',

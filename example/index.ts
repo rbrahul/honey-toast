@@ -1,8 +1,16 @@
-import { toast, ActionDelegator, ToastEntry } from './index';
-import { ToastOptions, Animation, Button } from './type';
+// THis will be replaced by 'honey-toast' package
 
-const DEMO_ALERT_GROUP = [];
-const TIMEOUT_IDs = [];
+type ToastOptions = {
+    position: 'top-left' | 'top-right' | 'top-center' | 'bottom-left' | 'bottom-right' | 'bottom-center';
+    type: 'default' | 'success' | 'info' | 'warning' | 'error';
+    theme: 'light' | 'dark';
+    design: 'standard' | 'minimal' | 'colorful' | 'gradient';
+};
+
+import './style.css';
+
+const DEMO_ALERT_GROUP:unknown[] = [];
+const TIMEOUT_IDs:ReturnType<typeof setTimeout>[]= [];
 
 const generateCode = async ({
     duration = 3000,
@@ -16,40 +24,42 @@ const generateCode = async ({
     let butttons = '';
     if (hasButtons) {
         butttons = `,
-            buttons: [
-                {
-                    iconUrl: 'YOUR_ICON_DIR/close.svg',
-                    label: 'Cancel',
-                    classes: [],
-                    onClick: () => {
-                        console.log('Canceling...');
-                    },
-                },
-                {
-                    iconUrl: 'YOUR_ICON_DIR/tick.svg',
-                    classes: [],
-                    label: 'Confirm',
-                    onClick: () => {
-                        console.log('Confirming...');
-                    },
-                },
-            ]`;
+    buttons: [
+        {
+            iconUrl: 'YOUR_ICON_DIR/close.svg',
+            label: 'Cancel',
+            classes: [],
+            onClick: () => {
+                console.log('Canceling...');
+            },
+        },
+        {
+            iconUrl: 'YOUR_ICON_DIR/tick.svg',
+            classes: [],
+            label: 'Confirm',
+            onClick: () => {
+                console.log('Confirming...');
+            },
+        },
+    ]`;
     }
-    let code = `toast.notify({
-            title: 'Hi, there!',
-            message: 'Thank you for subscribing our service.',
-            duration: ${duration},
-            position: '${position}',
-            type: '${type}',
-            animation: '${animation}',
-            hasProgressBar: ${hasProgressBar},
-            offset: {x: ${offset.x}, y: ${offset.y}},
-            classNames: []${butttons},
-        });
+    let code = `import toast from 'honey-toast';
+
+toast.notify({
+    title: 'Hi, there!',
+    message: 'Thank you for subscribing our service.',
+    duration: ${duration},
+    position: '${position}',
+    type: '${type}',
+    animation: '${animation}',
+    hasProgressBar: ${hasProgressBar},
+    offset: {x: ${offset.x}, y: ${offset.y}},
+    classNames: []${butttons},
+});
     `;
 
     if ('codeToHtml' in window && window.codeToHtml) {
-        const codeView = document.querySelector('.code-view');
+        const codeView = document.querySelector('.toast-code');
         //@ts-ignore
         codeView.innerHTML = await window.codeToHtml(code, {
             lang: 'js',
@@ -380,7 +390,7 @@ function showAllDemoAlerts() {
     standardTestToastAlerts();
 }
 
-const ALL_ALERTS = [];
+const ALL_ALERTS:unknown[] = [];
 
 function createAnimatingToast({
     animation,
@@ -393,8 +403,7 @@ function createAnimatingToast({
     hasButtons = false,
     offset = { x: 30, y: 30 },
 }) {
-    let toastAlert:ToastEntry;
-     toastAlert = toast.notify(
+     const toastAlert = toast.notify(
         {
             title: 'Hi, There!',
             message: 'Thank you for subscribing our service. For any help feel free to write us.',
@@ -426,7 +435,7 @@ function createAnimatingToast({
             type: type as ToastOptions['type'],
             theme: theme as ToastOptions['theme'],
             design: design as ToastOptions['design'],
-            animation: animation as Animation,
+            animation: animation as string,
             isCloseable: true,
             autoClose,
             offset,
@@ -480,9 +489,11 @@ const getProperties = () => {
     };
 };
 
-document.querySelector('.show-toast').addEventListener('click', e => {
+// @ts-ignore
+var toast = window?.toast ?? {};
+
+document.querySelector('.show-toast')?.addEventListener('click', e => {
     const options = getProperties();
-    console.log('OPTIONS:', options);
     if (!(Number.isFinite(options.duration) && options.duration > 0)) {
         toast.notify('Duration must be a number and greater than 0', {
             type: 'error',
@@ -506,18 +517,20 @@ document.querySelector('.show-toast').addEventListener('click', e => {
 
 function closeAllAlerts() {
     if (ALL_ALERTS.length) {
+        //@ts-ignore
         ALL_ALERTS[0].closeAll();
     }
     if (DEMO_ALERT_GROUP.length) {
-        DEMO_ALERT_GROUP[0].closeAll();
+        //@ts-ignore
+        DEMO_ALERT_GROUP[0].closeAll?.();
     }
 }
 
-document.querySelector('.close-all-toast').addEventListener('click', e => {
+document.querySelector('.close-all-toast')?.addEventListener('click', e => {
     closeAllAlerts();
 });
 
-document.querySelector('.show-all-toast').addEventListener('click', e => {
+document.querySelector('.show-all-toast')?.addEventListener('click', e => {
     closeAllAlerts();
     showAllDemoAlerts();
 });
@@ -526,18 +539,30 @@ document.querySelectorAll(`input[name="autoclose"]`).forEach(input => {
     input.addEventListener('change', e => {
         const selectedAutoClose = (e.target as HTMLInputElement).value;
         if (Boolean(Number(selectedAutoClose))) {
-            document.querySelector('#duration-input-area').classList.remove('hidden');
+            document.querySelector('#duration-input-area')?.classList.remove('hidden');
         } else {
-            document.querySelector('#duration-input-area').classList.add('hidden');
+            document.querySelector('#duration-input-area')?.classList.add('hidden');
         }
     });
 });
 
+document.querySelector(".copy-btn")?.addEventListener("click", () => {
+    const code = document.querySelector(".toast-code pre")?.textContent;
+    navigator.clipboard.writeText(code as string).then(() => {
+        toast.notify("Code copied to clipboard", {
+            type: "success",
+            position: "top-center",
+            duration: 2000,
+        });
+    });
+})
+
+window.onload = () => {
 generateCode({});
+};
 /*
 setTimeout(() => {
     minimalTestToastAlerts();
     standardTestToastAlerts();
 }, 2000);
 */
-

@@ -3,7 +3,7 @@ import CloseIcon from '../assets/icons/close.svg';
 import TickIcon from '../assets/icons/tick.svg';
 import WarningIcon from '../assets/icons/warning.svg';
 import InfoIcon from '../assets/icons/info.svg';
-import { DomSpec, toDom } from './dom';
+import { DomSpec, toDom } from './domBuilder';
 import {
     Title,
     Button,
@@ -36,8 +36,10 @@ export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
         buttons: [],
     },
     isCloseable: true,
+    autoClose: true,
     type: 'default',
     design: 'minimal',
+    position: 'top-right',
     hasIcon: true,
     hasProgressBar: false,
     classNames: [],
@@ -52,7 +54,7 @@ export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
         x: 30,
         y: 30,
     },
-    duration: 3_000
+    duration: 3_000,
 };
 
 

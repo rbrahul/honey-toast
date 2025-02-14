@@ -31,7 +31,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npx vite .",
     "lint": "npx eslint --fix",
-    "build": "vite build && cp ./src/style.css ./dist/",
+    "build": "vite build",
+    "example-build": "vite build --outDir ./example/dist --emptyOutDir true -c example-page.vite.config.ts && rm -rf ./example/dist/src",
     "prepare": "husky"
   },
   "author": "Rahul Baruri<rahulbarui1@gmail.com>",

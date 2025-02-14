@@ -1,8 +1,12 @@
-import { createToast, DEFAULT_TOAST_OPTIONS, isHTMLElement, prefix } from './toastBuilder';
-import { Animation, ToastBuilderProps, ToastOptions, ToastContent } from './type';
-import { DomAnimator } from './utils/dom-animator.js';
+import { createToast, DEFAULT_TOAST_OPTIONS, prefix } from './toastBuilder';
+import  Animator  from './animator';
+import { Animation, ToastOptions, ToastContent } from './type';
 
-const containerSelector: string = 'container';
+
+import './styles/toast.css';
+import './styles/animation.css';
+
+const containerSelector: string = prefix('container');
 
 export interface ToastEntry {
     mountedIn: HTMLElement;
@@ -75,7 +79,6 @@ class ToastBaker {
             ...DEFAULT_TOAST_OPTIONS,
             ...(options ?? {}),
         };
-        console.log("ToastBaker options:", this.options);
 
         const toastContainer = this.#mountToastContainer(this.options?.position);
         const toast = new Toast(content, this.options, this);
@@ -90,7 +93,7 @@ class ToastBaker {
     #mountToastIntoDom(container: HTMLElement, toastNode: HTMLElement) {
         // TODO: Add option to create custom transtion classes {enter:CUSTOM_CLASS_Enter, exit: CUSTOM_CLASS_Exit}
         const animationType = this.options?.animation ? getAnimationClass(this.options?.animation as Animation) : 'rb-toast-slide';
-        const animator = new DomAnimator(toastNode, {
+        const animator = new Animator(toastNode, {
             animationClassPrefix: animationType as string,
             animationKind: ['rb-toast-slide'].includes(animationType) ? 'transition' : 'animation',
             onEnter: () => {},
@@ -110,7 +113,7 @@ class ToastBaker {
                         animator?.remove?.();
                         this.toasts = this.toasts.filter(t => t.element !== toastNode);
                       } catch (error) {
-                        console.log("Failed to auto close toast", error)
+                        console.error("Failed to auto close toast", error)
                       }
                     },autoCloseAfter)
                 }
@@ -166,17 +169,15 @@ class ToastBaker {
 
     #mountToastContainer(position: string, container = document.body): HTMLElement {
         let toastContainer = container.querySelector<HTMLElement>(
-            `.${prefix(containerSelector)}.${prefix(position)}`,
+            `.${containerSelector}.${prefix(position)}`,
         );
         if (!toastContainer) {
             toastContainer = document.createElement('div');
-            toastContainer.classList.add(prefix(containerSelector), prefix(position));
+            toastContainer.classList.add(containerSelector, prefix(position));
             container.appendChild(toastContainer);
         }
         return toastContainer;
     }
 }
 
-const toast = new ToastBaker();
-
-export { toast };
+export default new ToastBaker();

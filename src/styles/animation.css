@@ -198,7 +198,6 @@
 
 .rb-toast-center > .rb-toast-slide-exit {
     top: -100%;
-    /* transform: translateX(-50%); */
     transition: top 0.3s ease-out;
 }
 
@@ -492,18 +491,5 @@
     to {
         top: 0px;
         transform: translate(-50%, -100%);
-    }
-}
-
-/*Flip */
-
-@keyframes flipAnim {
-    from {
-        transform: rotateY(90deg);
-        transform-style: preserve-3d;
-    }
-    to {
-        transform: rotateY(0deg);
-        transform-style: preserve-3d;
     }
 }

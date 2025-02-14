@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toast Baker</title>
-    <link rel="stylesheet" href="src/style.css">
-    <link rel="stylesheet" href="src/animation.css">
-    <link rel="stylesheet" href="src/example.css">
+    <link rel="stylesheet" href="../dist/style.css"><!-- CSS file for Honey-Toast library -->
+    <link rel="stylesheet" href="dist/style.css"> <!-- Own Example CSS file is using from the dist dir-->
     <script type="module">
         // be sure to specify the exact version
         import { codeToHtml } from 'https://esm.sh/shiki@1.0.0'
@@ -20,7 +19,7 @@
         <header class="align-center">
             <nav class="navbar">
                 <div class="brand">
-                    <a href="#" class="logo"><img src="./assets/icons/logo.svg" alt="Honey Toast Logo" /> <span>Honey
+                    <a href="#" class="logo"><img src="../assets/icons/logo.svg" alt="Honey Toast Logo" /> <span>Honey
                             Toast</span></a>
                 </div>
                 <div class="menu">
@@ -191,10 +190,15 @@
                 </div>
             </form>
 
-            <div class="code-view"><span>Code</span></div>
+            <div class="code-view">
+                <div class="copy-btn" title="Copy to Clipboard">
+                    <img src="../assets/icons/copy.svg" alt="">
+                </div>
+                <div class="toast-code"><code>console.log("Hello world!")</code></div>
+            </div>
         </div>
     </div>
-    <script type="module" src="./src/index.ts"></script>
-    <script type="module" src="./src/example.ts"></script>
+    <script  src="../dist/toast.umd.js"></script>
+    <script  src="dist/example.js"></script>
 </body>
 </html>

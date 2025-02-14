@@ -55,7 +55,6 @@
     /* border: 1px solid red;  */
     min-height: 100px;
     transition: height 0.2s ease-in;
-    overflow-y: auto;
 }
 
 .rb-toast-content-wrapper{

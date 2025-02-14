@@ -279,3 +279,21 @@ input[type="number"]{
 .border-left-5 {
     border-left: 6px solid rgb(77, 176, 80);
 }
+
+.copy-btn{
+    position: fixed;
+    cursor: pointer;
+    right:10px;
+    top:10px;
+    padding:3px;
+    border: 1px solid #d8d7d7;
+    border-radius: 5px;
+}
+
+.copy-btn img {
+    width: 26px;
+    height: 26px;
+    opacity: 0.8;
+    user-select: none;
+    cursor: pointer;
+}
