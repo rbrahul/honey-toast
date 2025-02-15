@@ -145,7 +145,6 @@ export default class Animator {
                 clearInterval(intervalId);
                 return;
             }
-            // TODO: Fix the 50 time execution issue even if class has been added
             if (Date.now() - startedAt > this.options.animationTimeout) {
                 if (!this.node.classList.contains(`${this.options.animationClassPrefix}-${targetClass}`)){
                     targetClass === 'entered' ? this.#setToEntered() : this.#setToExited();
@@ -156,10 +155,8 @@ export default class Animator {
                     return;
                 }
             }
-            console.log("Looking for animation to finish for :", targetClass)
         }, 100);
     }
-
 
     #setToEntered = () => {
         if(this.node?.classList?.contains(`${this.options.animationClassPrefix}-enter`)) {
@@ -184,14 +181,12 @@ export default class Animator {
         }
     }
 
-
     startEnteringAnimation() {
         this.node.classList.add(`${this.options.animationClassPrefix}-enter`);
         if (typeof this.options.onEnter === 'function') {
             this.options.onEnter();
         }
         this.handleAnimationTimeout('entered');
-        console.log(`${this.options.animationKind}end`);
         this.node.addEventListener(`${this.options.animationKind}end`, this.#setToEntered);
     }
 

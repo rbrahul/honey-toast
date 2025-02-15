@@ -82,22 +82,27 @@ class Toast implements ToastEntry {
     }
 
     update(content: ToastContent, options: ToastOptions) {
-        const updatedElement = createToast({
+        const newOptionsAndContent = {
             ...this.options,
             ...options,
             content,
-        });
-        const existingAnimationClass = extractAnimationClass(this.element);
-        updatedElement.classList.add(...existingAnimationClass);
-        this.element.innerHTML = updatedElement.innerHTML;
-        this.delegator.update(this, content, options);
+        };
+
+        try {
+            const updatedElement = createToast(newOptionsAndContent);
+            const existingAnimationClass = extractAnimationClass(this.element);
+            updatedElement.classList.add(...existingAnimationClass);
+            this.element.innerHTML = updatedElement.innerHTML;
+            this.element.setAttribute('class', updatedElement.getAttribute('class'));
+            this.delegator.update(this, content, options);
+        } catch (error) {}
     }
 }
 
 class ToastBaker {
     options: ToastOptions = {};
     toasts: Toast[] = [];
-    notify(content: ToastContent, options: ToastOptions) {
+    notify(content: ToastContent, options: ToastOptions): Toast {
         this.options = {
             ...DEFAULT_TOAST_OPTIONS,
             ...(options ?? {}),
@@ -124,6 +129,7 @@ class ToastBaker {
             onEnter: () => {},
             onExit: () => {},
             onEntered: () => {
+                this.#animateProgressbarIfExists(toastNode);
                 if (typeof this.options.onShow === 'function') {
                     this.options.onShow();
                 }
@@ -169,11 +175,9 @@ class ToastBaker {
         const currentToast = this.toasts.find(toastItem => {
             return toastItem.element === toast.element;
         });
-        if (!currentToast) {
-            console.error('Failed to update toast');
-            return;
+        if (currentToast) {
+            this.#initialiseCloseBtnEventListener(currentToast.domManager, toast.element);
         }
-        this.#initialiseCloseBtnEventListener(currentToast.domManager, toast.element);
     }
 
     closeAll() {
@@ -198,6 +202,27 @@ class ToastBaker {
         }
     }
 
+    #animateProgressbarIfExists(toastNode: HTMLElement) {
+        const progressBarFillElement = toastNode.querySelector(
+            `.${prefix('alert-progress-bar-fill')}`,
+        );
+        if (progressBarFillElement) {
+            if (this.options?.hasProgressBar) {
+                let startingProgress = this.options?.progress ?? 0;
+                if (startingProgress > 100) {
+                    startingProgress = 100;
+                } else if (startingProgress < 0) {
+                    startingProgress = 0;
+                }
+                progressBarFillElement.animate(
+                // @ts-ignore
+                    [{ width: CSS.percent(startingProgress) }, { width: '100%' }],
+                    { duration: this.options.duration },
+                );
+            }
+        }
+    }
+
     #mountToastContainer(position: string, container = document.body): HTMLElement {
         let toastContainer = container.querySelector<HTMLElement>(
             `.${containerSelector}.${prefix(position)}`,
@@ -208,6 +233,18 @@ class ToastBaker {
             container.appendChild(toastContainer);
         }
         return toastContainer;
+    }
+    success(content: ToastContent, options: ToastOptions): Toast {
+        return this.notify(content, { ...options, type: 'success' });
+    }
+    info(content: ToastContent, options: ToastOptions): Toast {
+        return this.notify(content, { ...options, type: 'info' });
+    }
+    warn(content: ToastContent, options: ToastOptions): Toast {
+        return this.notify(content, { ...options, type: 'warning' });
+    }
+    error(content: ToastContent, options: ToastOptions): Toast {
+        return this.notify(content, { ...options, type: 'error' });
     }
 }
 

@@ -11,7 +11,7 @@ import {
     StructuredContent,
     ToastContent,
     ToastBuilderProps,
-    AnimationType
+    AnimationType,
 } from './type';
 
 const ICON_TYPE = {
@@ -28,7 +28,6 @@ export const prefix = (name: string) => {
     return `${classPrefix}-${name}`;
 };
 
-
 export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
     content: {
         title: 'Hi, there!',
@@ -42,6 +41,7 @@ export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
     position: 'top-right',
     hasIcon: true,
     hasProgressBar: false,
+    progress: 0,
     classNames: [],
     theme: 'light',
     animation: prefix('slide') as AnimationType,
@@ -56,7 +56,6 @@ export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
     },
     duration: 3_000,
 };
-
 
 export const isHTMLElement = (value: unknown) =>
     typeof value === 'object' && 'tagName' in value && value instanceof HTMLElement;
@@ -99,24 +98,16 @@ class ToastAlert {
             ? prefix(this.#options?.design)
             : prefix('standard');
         const themeClass = this.#options?.theme ? prefix(this.#options?.theme) : prefix('light');
-        this.#alertHtmlSpec.classes = [
-            toastContainerClass,
-                    typeClass,
-                    designClass,
-                    themeClass
-        ];
+        this.#alertHtmlSpec.classes = [toastContainerClass, typeClass, designClass, themeClass];
         if (this.#options.classNames) {
             this.#alertHtmlSpec.classes = [
-                ...new Set([
-                    ...this.#alertHtmlSpec.classes,
-                    ...this.#options.classNames,
-                ]),
+                ...new Set([...this.#alertHtmlSpec.classes, ...this.#options.classNames]),
             ];
         }
         return this;
     }
 
-    createTitle():DomSpec {
+    createTitle(): DomSpec {
         const title: Title = (this.#options?.content as StructuredContent)?.title;
         if (!title) {
             return;
@@ -156,10 +147,10 @@ class ToastAlert {
     }
 
     addBody() {
-        const contentContainer:DomSpec = {
+        const contentContainer: DomSpec = {
             tag: 'div',
             classes: [prefix('content-wrapper')],
-            children: []
+            children: [],
         };
         const toastBody: DomSpec = {
             tag: 'div',
@@ -211,12 +202,11 @@ class ToastAlert {
                 classes: [prefix('message')],
             });
         }
-        
 
         const title = this.createTitle();
         if (title) {
             if (toastBody.children) {
-                toastBody.children.unshift(title)
+                toastBody.children.unshift(title);
             }
         }
 
@@ -231,11 +221,15 @@ class ToastAlert {
             children: [],
             classes: [],
             events: {
-                click: btn.onClick ?? (() => {})
-            }
+                click: btn.onClick ?? (() => {}),
+            },
         };
 
-        btnElement.classes = [prefix('btn'), prefix(`btn-${btn?.type ?? 'default'}`), ...(btn.classes ?? [])];
+        btnElement.classes = [
+            prefix('btn'),
+            prefix(`btn-${btn?.type ?? 'default'}`),
+            ...(btn.classes ?? []),
+        ];
         if (btn.iconUrl) {
             const btnIcon: DomSpec = {
                 tag: 'img',
@@ -275,24 +269,33 @@ class ToastAlert {
         return this;
     }
 
-    addCloseBtn(){
+    addCloseBtn() {
         if (this.#options.isCloseable) {
-           const closeBtn:DomSpec = {
+            const closeBtn: DomSpec = {
                 tag: 'span',
                 html: '&#10005;',
-               classes: [prefix('close-btn')]
-           }
-           this.#alertHtmlSpec.children.push(closeBtn);
+                classes: [prefix('close-btn')],
+            };
+            this.#alertHtmlSpec.children.push(closeBtn);
         }
         return this;
     }
 
     addProgressBar() {
-        this.#alertHtmlSpec.children.push({
-            tag: 'div',
-            text: '',
-            classes: [prefix('alert-progress-bar')],
-        });
+        if (this.#options.hasProgressBar) {
+            this.#alertHtmlSpec.children.push({
+                tag: 'div',
+                text: '',
+                classes: [prefix('alert-progress-bar')],
+                children: [
+                    {
+                        tag: 'div',
+                        text: '',
+                        classes: [prefix('alert-progress-bar-fill')],
+                    },
+                ],
+            });
+        }
 
         return this;
     }
@@ -302,11 +305,15 @@ class ToastAlert {
     }
 }
 
-const isValidContent = (content: ToastContent) => (content && (typeof content === 'string' || (content as StructuredContent).title !== undefined || (content as StructuredContent)?.message !== undefined || isHTMLElement(content)))
+const isValidContent = (content: ToastContent) =>
+    content &&
+    (typeof content === 'string' ||
+        (content as StructuredContent).title !== undefined ||
+        (content as StructuredContent)?.message !== undefined ||
+        isHTMLElement(content));
 
 export const createToast = (options: ToastBuilderProps): HTMLElement => {
-    console.log("ToastBuilderProps OPTIONS:", options);
-    if(!isValidContent(options?.content)) {
+    if (!isValidContent(options?.content)) {
         throw new Error(
             'Only string, HTMLElement or an object having keys title, message, buttons is supported as content',
         );

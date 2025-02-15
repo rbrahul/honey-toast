@@ -25,6 +25,7 @@ export type ToastContent = string | StructuredContent | HTMLElement;
 export type ToastOptions = {
     isCloseable?: boolean;
     hasProgressBar?: boolean;
+    progress?: number;
     hasIcon?: boolean;
     classNames?: string[];
     type?: 'default' | 'success' | 'info' | 'warning' | 'error';

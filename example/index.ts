@@ -87,6 +87,8 @@ function minimalTestToastAlerts() {
                 type: 'success',
                 position: 'top-right',
                 animation: 'zoom',
+                hasProgressBar: true,
+                progress: 0,
             },
         );
         DEMO_ALERT_GROUP.push(t2);
@@ -132,7 +134,6 @@ function minimalTestToastAlerts() {
             position: 'top-right',
             type: 'success',
             animation: 'bounce',
-            classNames: ['border-left-5'],
         });
         DEMO_ALERT_GROUP.push(t6);
     }, 4500);
@@ -260,7 +261,6 @@ function standardTestToastAlerts() {
             design: 'standard',
             type: 'success',
             animation: 'slide',
-            classNames: ['border-left-5'],
         });
         DEMO_ALERT_GROUP.push(t4);
     }, 3500);
@@ -268,7 +268,7 @@ function standardTestToastAlerts() {
         const t5 = toast.notify('Hi There!', {
             duration: 5000,
             position: 'top-left',
-            design: 'standard',
+            design: 'colorful',
             type: 'error',
             animation: 'bounce',
         });
@@ -305,6 +305,8 @@ function standardTestToastAlerts() {
                 type: 'info',
                 design: 'gradient',
                 animation: 'fade',
+                hasProgressBar: true,
+                progress: 0,
             },
         );
         DEMO_ALERT_GROUP.push(t6);
@@ -402,6 +404,8 @@ function createAnimatingToast({
     autoClose = true,
     hasButtons = false,
     offset = { x: 30, y: 30 },
+    hasProgressBar = false,
+    progress=0,
 }) {
      const toastAlert = toast.notify(
         {
@@ -439,6 +443,8 @@ function createAnimatingToast({
             isCloseable: true,
             autoClose,
             offset,
+            hasProgressBar,
+            progress,
             onClose: () => {
                 console.log('I have been closed!');
             },
@@ -447,16 +453,6 @@ function createAnimatingToast({
             },
         },
     );
-    setTimeout((myToast:unknown) => {
-        //@ts-ignore
-        myToast?.update({
-            title: 'Hi, Rahul!',
-            message: 'I have been updated',
-        }, {
-            type: 'success',
-        });
-    }, 4_000, toastAlert);
-    console.log("toastAlert:", toastAlert);
     ALL_ALERTS.push(toastAlert);
 }
 

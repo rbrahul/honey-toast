@@ -37,6 +37,10 @@ declare class ToastBaker {
     close(toast: Toast): void;
     update(toast: Toast, _: ToastContent, __: Partial<ToastOptions>): void;
     closeAll(): void;
+    success(content: ToastContent, options: ToastOptions): Toast;
+    info(content: ToastContent, options: ToastOptions): Toast;
+    warn(content: ToastContent, options: ToastOptions): Toast;
+    error(content: ToastContent, options: ToastOptions): Toast;
 }
 declare const _default: ToastBaker;
 export default _default;
