@@ -86,26 +86,27 @@
     transition: transform 0.3s ease-in;
 }
 
-.rb-toast-center > .rb-toast-zoom-enter {
-    transform: translate(-50%, -50%) scale(1);
+.rb-toast-zoom-entered {
+    transform: scale(1);
 }
 
 .rb-toast-top-center > .rb-toast-zoom-enter {
     transform: translateX(-50%) scale(1);
 }
 
-.rb-toast-zoom-entered {
-    transform: scale(1);
+.rb-toast-top-center > .rb-toast-zoom-entered {
+    transform: translateX(-50%) scale(1);
+}
+
+
+.rb-toast-center > .rb-toast-zoom-enter {
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .rb-toast-center > .rb-toast-zoom-entered {
     transform: translate(-50%, -50%) scale(1);
 }
 
-
-.rb-toast-top-center > .rb-toast-zoom-entered {
-    transform: translateX(-50%) scale(1);
-}
 
 .rb-toast-zoom-exit {
     transform: scale(0);

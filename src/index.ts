@@ -159,7 +159,6 @@ class ToastBaker {
                 }
             },
             onExited: () => {
-                // remove empty containers
                 if (this.toasts.length === 0 || container?.children?.length === 0) {
                     container.remove();
                 }
