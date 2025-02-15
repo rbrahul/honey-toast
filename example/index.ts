@@ -566,8 +566,9 @@ document.querySelector(".copy-btn")?.addEventListener("click", () => {
 window.onload = () => {
 generateCode({});
 };
-
+/*
 setTimeout(() => {
     minimalTestToastAlerts();
     standardTestToastAlerts();
 }, 2000);
+*/

@@ -1,7 +1,7 @@
 :root {
-    --rb-toast-self-height: calc(var(--toast-position-offset-y) - 100%);
+    --rb-toast-self-height: calc(var(--toast-position-offset-y) + 100%);
     --rb-toast-self-height-negative: calc(-1 * var(--toast-position-offset-y) - 100%);
-    --rb-toast-self-width: calc(var(--toast-position-offset-y) - 100%);
+    --rb-toast-self-width: calc(var(--toast-position-offset-x) + 100%);
     --rb-toast-self-width-negative: calc(-1 * var(--toast-position-offset-x) - 100%);
 }
 
@@ -121,7 +121,7 @@
 }
 
 .rb-toast-top-left > .rb-toast-slide {
-    transform: translateX(-100%);
+    transform: translateX(var(--rb-toast-self-width-negative));
 }
 
 .rb-toast-top-left > .rb-toast-slide-enter {
@@ -134,13 +134,13 @@
 }
 
 .rb-toast-top-left > .rb-toast-slide-exit {
-    transform: translateX(-100%);
+    transform: translateX(var(--rb-toast-self-width-negative));
     transition: transform 0.3s ease-out;
 }
 
 /*Top Right Slide In Out*/
 .rb-toast-top-right > .rb-toast-slide {
-    transform: translateX(100%);
+    transform: translateX(var(--rb-toast-self-width));
     z-index: 9999;
 }
 
@@ -154,7 +154,7 @@
 }
 
 .rb-toast-top-right > .rb-toast-slide-exit {
-    transform: translateX(100%);
+    transform: translateX(var(--rb-toast-self-width));
     transition: transform 0.3s ease-out;
 }
 
@@ -180,25 +180,23 @@
 
 /*Center Slide In Out*/
 .rb-toast-center > .rb-toast-slide {
-    position: absolute;
-    top: -50%;
+    top: 0px;
     left: 0px;
+    transform: translateY(-100%);
 }
 
 .rb-toast-center > .rb-toast-slide-enter {
-    top: 0px;
     transform: translateY(0%);
-    transition: top 0.3s ease-in;
+    transition: transform 0.3s ease-in;
 }
 
 .rb-toast-center > .rb-toast-slide-entered {
-    top: 0px;
     transform: translateY(0%);
 }
 
 .rb-toast-center > .rb-toast-slide-exit {
-    top: -100%;
-    transition: top 0.3s ease-out;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-out;
 }
 
 /*Bottom Left Slide In Out*/
@@ -222,7 +220,7 @@
 
 /*Bottom Right Slide In Out*/
 .rb-toast-bottom-right > .rb-toast-slide {
-    transform: translateX(calc(var(--toast-position-offset-x) + 100%))
+    transform: translateX(var(--rb-toast-self-width))
 }
 
 .rb-toast-bottom-right > .rb-toast-slide-enter {
@@ -235,13 +233,13 @@
 }
 
 .rb-toast-bottom-right > .rb-toast-slide-exit {
-    transform: translateX(calc(var(--toast-position-offset-x) + 100%));
+    transform: translateX(var(--rb-toast-self-width));
     transition: transform 0.3s ease-out;
 }
 
 /*Top Left Bounce In Out*/
 .rb-toast-top-left > .rb-toast-bounce {
-    left: calc(-1 * (var(--toast-position-offset-x) + 100%));
+    left: var(--rb-toast-self-width-negative);
 }
 
 .rb-toast-top-left > .rb-toast-bounce-enter {
@@ -253,7 +251,7 @@
 }
 
 .rb-toast-top-left > .rb-toast-bounce-exit {
-    animation: slideOutToLeft 0.3s ease-in forwards;
+    animation: slideOutToTopLeft 0.3s ease-in forwards;
 }
 
 @keyframes bounceInFromLeft {
@@ -271,7 +269,7 @@
     }
 }
 
-@keyframes slideOutToLeft {
+@keyframes slideOutToTopLeft {
     from {
         left: 0px;
     }
@@ -286,7 +284,7 @@
 }
 
 .rb-toast-top-right > .rb-toast-bounce-enter {
-    animation: bounceInFromRight 0.3s ease;
+    animation: bounceInFromTopRight 0.3s ease;
 }
 
 .rb-toast-top-right > .rb-toast-bounce-entered {
@@ -294,10 +292,10 @@
 }
 
 .rb-toast-top-right > .rb-toast-bounce-exit {
-    animation: slideOutToRight 0.3s ease-in forwards;
+    animation: slideOutToTopRight 0.3s ease-in forwards;
 }
 
-@keyframes bounceInFromRight {
+@keyframes bounceInFromTopRight {
     60% {
         right: 30px;
     }
@@ -311,18 +309,18 @@
     }
 }
 
-@keyframes slideOutToRight {
+@keyframes slideOutToTopRight {
     from {
         right: 0px;
     }
     to {
-        right: calc(-1 * (var(--toast-position-offset-x) + 100%));
+        right: var(--rb-toast-self-width-negative);
     }
 }
 
 /*Bottom Left Bounce In Out*/
 .rb-toast-bottom-left > .rb-toast-bounce {
-    left: calc(-1 * (var(--toast-position-offset-x) + 100%));
+    left: var(--rb-toast-self-width-negative);
     bottom:0px
 }
 
@@ -335,7 +333,7 @@
 }
 
 .rb-toast-bottom-left > .rb-toast-bounce-exit {
-    animation: slideOutToLeft 0.3s ease-in forwards;
+    animation: slideOutToBottomLeft 0.3s ease-in forwards;
 }
 
 @keyframes bounceInFromLeft {
@@ -352,12 +350,12 @@
     }
 }
 
-@keyframes slideOutToLeft {
+@keyframes slideOutToBottomLeft {
     from {
         left: 0px;
     }
     to {
-        left: calc(-1 * (var(--toast-position-offset-x) + 100%));
+        left: var(--rb-toast-self-width-negative);
         bottom:0px
     }
 }
@@ -365,10 +363,11 @@
 /*Bottom Right Bounce In Out*/
 .rb-toast-bottom-right > .rb-toast-bounce {
     bottom: 0px;
-    right: calc(-1 * (var(--toast-position-offset-x) + 100%));
+    right: var(--rb-toast-self-width-negative);
 }
+
 .rb-toast-bottom-right > .rb-toast-bounce-enter {
-    animation: bounceInFromRight 0.3s ease;
+    animation: bounceInFromBottomRight 0.3s ease;
 }
 
 .rb-toast-bottom-right > .rb-toast-bounce-entered {
@@ -376,10 +375,10 @@
 }
 
 .rb-toast-bottom-right > .rb-toast-bounce-exit {
-    animation: slideOutToRight 0.3s ease-in forwards;
+    animation: slideOutToBottomRight 0.3s ease-in forwards;
 }
 
-@keyframes bounceInFromRight {
+@keyframes bounceInFromBottomRight {
     60% {
         right: 30px;
     }
@@ -393,57 +392,52 @@
     }
 }
 
-@keyframes slideOutToRight {
+@keyframes slideOutToBottomRight {
     from {
         right: 50px;
     }
     to {
-        right: calc(-1 * (var(--toast-position-offset-x) + 100%));
+        right: var(--rb-toast-self-width-negative);
     }
 }
 
 /*Top Center Bounce In Out*/
 .rb-toast-top-center > .rb-toast-bounce {
     top: 0px;
-    left: 50%;
-    transform: translate(-50%, -100%);
+    transform: translateY(calc(-1 * (var(--toast-position-offset-y) + 100%)));
 }
 
 .rb-toast-top-center > .rb-toast-bounce-enter {
-    transform: translateX(-50%);
-    animation: bounceInFromTop 0.3s ease;
+    animation: bounceInFromTopForTopCenter 0.3s ease forwards;
 }
 
 .rb-toast-top-center > .rb-toast-bounce-entered {
-    transform: translateX(-50%);
     top: 0px;
+    transform: translateY(0%);
 }
 
 .rb-toast-top-center > .rb-toast-bounce-exit {
-    animation: slideOutToTop 0.3s ease-in forwards;
+    animation: slideOutToTopFromTopCenter 0.3s ease-in-out forwards;
 }
 
-@keyframes bounceInFromTop {
+@keyframes bounceInFromTopForTopCenter {
     60% {
-        top: 20px;
+        transform: translateY(20px);
     }
-
     80% {
-        top: -10px;
+        transform: translateY(-10px);
     }
-
     100% {
-        top: 0px;
+        transform: translateY(0px);
     }
 }
 
-@keyframes slideOutToTop {
+@keyframes slideOutToTopFromTopCenter {
     from {
-        transform: translateX(-50%);
-        top: 0px;
+        transform: translateY(0%);
     }
     to {
-        transform: translate(-50%, -100%);
+        transform: translateY(calc(-1 * (var(--toast-position-offset-y) + 100%)));
     }
 }
 

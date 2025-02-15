@@ -102,11 +102,20 @@ class Toast implements ToastEntry {
 class ToastBaker {
     options: ToastOptions = {};
     toasts: Toast[] = [];
-    notify(content: ToastContent, options: ToastOptions): Toast {
+    notify(content: ToastContent, options: ToastOptions = DEFAULT_TOAST_OPTIONS): Toast {
         this.options = {
             ...DEFAULT_TOAST_OPTIONS,
             ...(options ?? {}),
+            offset: {
+                ...DEFAULT_TOAST_OPTIONS.offset,
+                ...(options ?? {}).offset,
+            },
         };
+
+        this.#setCssVariables({
+            '--toast-position-offset-x': CSS.px(this.options.offset?.x ?? 30),
+            '--toast-position-offset-y': CSS.px(this.options.offset?.y ?? 30),
+        });
 
         const toastContainer = this.#mountToastContainer(this.options?.position);
         const toast = new Toast(content, this.options, this);
@@ -150,6 +159,10 @@ class ToastBaker {
                 }
             },
             onExited: () => {
+                // remove empty containers
+                if (this.toasts.length === 0 || container?.children?.length === 0) {
+                    container.remove();
+                }
                 if (typeof this.options.onClose === 'function') {
                     this.options.onClose();
                 }
@@ -177,6 +190,7 @@ class ToastBaker {
         });
         if (currentToast) {
             this.#initialiseCloseBtnEventListener(currentToast.domManager, toast.element);
+            this.#animateProgressbarIfExists(toast.element);
         }
     }
 
@@ -215,10 +229,19 @@ class ToastBaker {
                     startingProgress = 0;
                 }
                 progressBarFillElement.animate(
-                // @ts-ignore
+                    // @ts-ignore
                     [{ width: CSS.percent(startingProgress) }, { width: '100%' }],
-                    { duration: this.options.duration },
+                    { duration: this.options.duration, fill: 'forwards' },
                 );
+            }
+        }
+    }
+
+    #setCssVariables(properties: Record<string, string | number | CSSUnitValue>) {
+        const root = document.documentElement
+        if (properties && Object.keys(properties)?.length > 0) {
+            for (const [property, value] of Object.entries(properties)) {
+                root.style.setProperty(property, value.toString());
             }
         }
     }

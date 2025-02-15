@@ -13,13 +13,7 @@ export default defineConfig({
           outDir: 'example/dist',
           minify: true,
     },
-    optimizeDeps: {
-        exclude: ['src/**']
-    },
     plugins: [
-        dts({
-            exclude: ['src/**', 'example/**'],
-        }),
         svgr()
       ]
   })

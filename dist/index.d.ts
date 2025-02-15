@@ -33,7 +33,7 @@ declare class ToastBaker {
     #private;
     options: ToastOptions;
     toasts: Toast[];
-    notify(content: ToastContent, options: ToastOptions): Toast;
+    notify(content: ToastContent, options?: ToastOptions): Toast;
     close(toast: Toast): void;
     update(toast: Toast, _: ToastContent, __: Partial<ToastOptions>): void;
     closeAll(): void;
