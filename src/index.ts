@@ -4,6 +4,7 @@ import { AnimationType, ToastOptions, ToastContent } from './type';
 
 import './styles/toast.css';
 import './styles/animation.css';
+import { validateOptions } from './validator';
 
 const containerSelector: string = prefix('container');
 
@@ -82,10 +83,22 @@ class Toast implements ToastEntry {
     }
 
     update(content: ToastContent, options: ToastOptions) {
+        validateOptions({
+            content,
+            ...options,
+        });
         const newOptionsAndContent = {
             ...this.options,
             ...options,
             content,
+            offset: {
+                ...this.options.offset,
+                ...options?.offset
+            },
+            icon: {
+                ...this.options.icon,
+                ...options?.icon,
+            },
         };
 
         try {
@@ -103,12 +116,20 @@ class ToastBaker {
     options: ToastOptions = {};
     toasts: Toast[] = [];
     notify(content: ToastContent, options: ToastOptions = DEFAULT_TOAST_OPTIONS): Toast {
+        validateOptions({
+            content,
+            ...options,
+        });
         this.options = {
             ...DEFAULT_TOAST_OPTIONS,
-            ...(options ?? {}),
+            ...options,
             offset: {
                 ...DEFAULT_TOAST_OPTIONS.offset,
-                ...(options ?? {}).offset,
+                ...options?.offset
+            },
+            icon: {
+                ...DEFAULT_TOAST_OPTIONS.icon,
+                ...options?.icon,
             },
         };
 
@@ -153,6 +174,7 @@ class ToastBaker {
                             animator?.remove?.();
                             this.toasts = this.toasts.filter(t => t.element !== toastNode);
                         } catch (error) {
+
                             console.error('Failed to auto close toast', error);
                         }
                     }, autoCloseAfter);
