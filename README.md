@@ -1,11 +1,23 @@
 # Honey-Toast
 A framework agnostic notification UI library that offers tons of customization, designs and animations.
 
+## Demo and Playground:
+You can play with different animations and designs [View Demo with Playground.](https://rbrahul.github.io/honey-toast). You can just copy the generated code and start using inside your project.
 
-[View Demo with Playground.](https://rbrahul.github.io/honey-toast)
+## Documentation
+Here is the complete API [Documentation.](https://github.com/rbrahul/honey-toast-doc).
 
-Here is the [Documentation.](https://github.com/rbrahul/honey-toast-doc)
 
+## Main Features:
+
+- Easier installation and integrations
+- Use with any Javascript framework as it has zero dependencies.
+- Huge collections of beautiful designs and categories
+- Lot of built in animations to create interactive toast alert
+- Control over the states of notifications
+- Light, Dark and Sytem Default themes are supported
+- Creating custom designs is way easier
+- Playground to create Notifications and copy the generated code.
 
 ## Installation:
 
@@ -13,7 +25,6 @@ Install via npm package manager:
 ```sh
 npm i honey-toast --save
 ```
-
 
 ### Usage Example:
 Create notification with default configurations.
