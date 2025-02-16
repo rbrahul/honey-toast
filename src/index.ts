@@ -13,7 +13,6 @@ export interface ToastEntry {
     mountedIn: HTMLElement;
     element: HTMLElement;
     options: Partial<ToastOptions>;
-    appearedAt: number;
     close(): void;
     closeAll(): void;
     update(content: ToastContent, options: ToastOptions): void;
@@ -62,7 +61,6 @@ class Toast implements ToastEntry {
     content: ToastContent;
     delegator: ActionDelegator;
     mountedIn: HTMLElement;
-    appearedAt: number;
     element: HTMLElement;
     domManager: DomRemover;
     constructor(content: ToastContent, options: ToastOptions, actionDelegator: ActionDelegator) {
@@ -88,10 +86,10 @@ class Toast implements ToastEntry {
             content,
             ...options,
         });
-        const newOptionsAndContent = {
+
+        const newOptions = {
             ...this.options,
             ...options,
-            content,
             offset: {
                 ...this.options.offset,
                 ...options?.offset
@@ -101,6 +99,10 @@ class Toast implements ToastEntry {
                 ...options?.icon,
             },
         };
+        const newOptionsAndContent = {
+           ...newOptions,
+            content,
+        };
 
         try {
             const updatedElement = createToast(newOptionsAndContent);
@@ -109,6 +111,7 @@ class Toast implements ToastEntry {
             this.element.innerHTML = updatedElement.innerHTML;
             this.element.setAttribute('class', updatedElement.getAttribute('class'));
             this.delegator.update(this, content, options);
+            this.options = newOptions;
         } catch (error) {}
     }
 }
@@ -144,7 +147,6 @@ class ToastBaker {
         //@ts-ignore add typescript type later
         toast.domManager = this.#mountToastIntoDom(toastContainer, toast.element);
         toast.mountedIn = toastContainer;
-        toast.appearedAt = Date.now();
         this.toasts.push(toast);
         return toast;
     }
