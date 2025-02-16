@@ -7,6 +7,8 @@ Play with different animations and designs [View Demo with Playground.](https://
 ## Documentation
 Here is the complete API [Documentation.](https://github.com/rbrahul/honey-toast-doc).
 
+![Honey Toast](https://raw.githubusercontent.com/rbrahul/honey-toast/master/screenshot.gif)
+
 
 ## Main Features:
 
