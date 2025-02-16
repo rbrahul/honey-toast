@@ -52,7 +52,7 @@ const generateCode = async ({
             },
         ]`;
     }
-    let code = `import toast from 'honey-toast';
+    const code = `import toast from 'honey-toast';
 import 'honey-toast/dist/style.css';
 
 toast.notify({
@@ -75,7 +75,7 @@ toast.notify({
 
     if ('codeToHtml' in window && window.codeToHtml) {
         const codeView = document.querySelector('.toast-code');
-        //@ts-ignore
+        //@ts-expect-error codeToHtml is a global function
         codeView.innerHTML = await window.codeToHtml(code, {
             lang: 'js',
             theme: 'rose-pine',
@@ -512,10 +512,10 @@ const getProperties = () => {
     };
 };
 
-// @ts-ignore
-var toast = window?.toast ?? {};
+// @ts-expect-error toast is a global object
+const toast = window?.toast ?? {};
 
-document.querySelector('.show-toast')?.addEventListener('click', e => {
+document.querySelector('.show-toast')?.addEventListener('click', () => {
     const options = getProperties();
     if (!(Number.isFinite(options.duration) && options.duration > 0)) {
         toast.notify('Duration must be a number and greater than 0', {
@@ -525,7 +525,6 @@ document.querySelector('.show-toast')?.addEventListener('click', e => {
         });
         return;
     }
-    //@ts-ignore
     if (options?.offset?.x < 0 || options?.offset?.y < 0) {
         toast.notify('Offset values must be a valid positive number', {
             type: 'error',
@@ -540,11 +539,11 @@ document.querySelector('.show-toast')?.addEventListener('click', e => {
 
 function closeAllAlerts() {
     if (ALL_ALERTS.length) {
-        //@ts-ignore
+        //@ts-expect-error closeAll is a method
         ALL_ALERTS[0].closeAll();
     }
     if (DEMO_ALERT_GROUP.length) {
-        //@ts-ignore
+        //@ts-expect-error closeAll is a method
         DEMO_ALERT_GROUP[0].closeAll?.();
     }
 }
@@ -561,7 +560,7 @@ document.querySelector('.show-all-toast')?.addEventListener('click', e => {
 document.querySelectorAll(`input[name="autoclose"]`).forEach(input => {
     input.addEventListener('change', e => {
         const selectedAutoClose = (e.target as HTMLInputElement).value;
-        if (Boolean(Number(selectedAutoClose))) {
+        if (Number(selectedAutoClose)) {
             document.querySelector('#duration-input-area')?.classList.remove('hidden');
         } else {
             document.querySelector('#duration-input-area')?.classList.add('hidden');

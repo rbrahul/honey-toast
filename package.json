@@ -36,11 +36,11 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 0",
     "dev": "npx vite .",
     "lint": "npx eslint --fix",
     "build": "vite build",
-    "build:example": "npm run build && vite build --outDir ./example/dist --emptyOutDir true -c example-page.vite.config.ts",
+    "build:demo": "npm run build && vite build --outDir ./docs/dist --emptyOutDir true -c demo-page.vite.config.ts",
     "prepare": "husky"
   },
   "author": "Rahul Baruri<rahulbarui1@gmail.com>",

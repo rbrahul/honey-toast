@@ -13,7 +13,7 @@ export default defineConfig({
     },
     plugins: [
         dts({
-            exclude: ['example/**'],
+            exclude: ['docs/**'],
         }),
         svgr()
       ]

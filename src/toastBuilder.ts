@@ -182,7 +182,7 @@ class ToastAlert {
                 iconElement.classes.push(prefix(`alert-icon-small`));
             }
             if (this.#options?.icon?.classes) {
-                iconElement.classes.push(...this.#options?.icon?.classes);
+                iconElement.classes.push(...(this.#options?.icon?.classes ?? []));
             }
             contentContainer.children.push(iconElement);
         }

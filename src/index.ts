@@ -112,7 +112,9 @@ class Toast implements ToastEntry {
             this.element.setAttribute('class', updatedElement.getAttribute('class'));
             this.delegator.update(this, content, options);
             this.options = newOptions;
-        } catch (error) {}
+        } catch (error) {
+            console.error('Failed to update toast', error);
+        }
     }
 }
 
@@ -144,7 +146,6 @@ class ToastBaker {
 
         const toastContainer = this.#mountToastContainer(this.options?.position);
         const toast = new Toast(content, this.options, this);
-        //@ts-ignore add typescript type later
         toast.domManager = this.#mountToastIntoDom(toastContainer, toast.element);
         toast.mountedIn = toastContainer;
         this.toasts.push(toast);
@@ -253,8 +254,10 @@ class ToastBaker {
                     startingProgress = 0;
                 }
                 progressBarFillElement.animate(
-                    // @ts-ignore
-                    [{ width: CSS.percent(startingProgress) }, { width: '100%' }],
+                    [
+                        { "width": CSS.percent(startingProgress).toString() },
+                        { "width": '100%' }
+                    ],
                     { duration: this.options.duration, fill: 'forwards' },
                 );
             }

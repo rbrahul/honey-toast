@@ -1,16 +1,15 @@
 import { resolve } from 'path'
 import {defineConfig} from 'vite';
-import dts from 'vite-plugin-dts'
 import svgr from "vite-plugin-svgr";
 export default defineConfig({
     build: {
         lib: {
-            entry: [resolve(__dirname, './example/index.ts')],
+            entry: [resolve(__dirname, './docs/index.ts')],
             name: 'toast',
-            fileName: (format) => `example.js`,
+            fileName: (_) => `demo.js`,
             formats: ['iife'],
           },
-          outDir: 'example/dist',
+          outDir: 'docs/dist',
           minify: true,
     },
     plugins: [

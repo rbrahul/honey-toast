@@ -75,8 +75,6 @@ const defaultAnimationOptions:AnimationOptions = {
     animationTimeout: 500 
 }
 
-const isObject = (value:any) => typeof value === 'object';
-
 const isHTMLElement = (value) => {
     return typeof value === 'object' && ((value || {}).tagName || value?.nodeName)
 }
@@ -147,12 +145,14 @@ export default class Animator {
             }
             if (Date.now() - startedAt > this.options.animationTimeout) {
                 if (!this.node.classList.contains(`${this.options.animationClassPrefix}-${targetClass}`)){
-                    targetClass === 'entered' ? this.#setToEntered() : this.#setToExited();
+                    if(targetClass === 'entered') {
+                        this.#setToEntered()
+                    } else {
+                        this.#setToExited()
+                    }
                     clearInterval(intervalId);
-                    return;
                 } else {
                     clearInterval(intervalId);
-                    return;
                 }
             }
         }, 100);
