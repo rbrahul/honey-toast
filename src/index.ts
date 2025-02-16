@@ -1,6 +1,7 @@
 import { createToast, DEFAULT_TOAST_OPTIONS, prefix } from './toastBuilder';
 import Animator from './animator';
 import { AnimationType, ToastOptions, ToastContent } from './type';
+export type { AnimationType, ToastOptions, ToastContent, StructuredContent, CustomAnimation, Title, ToastMessage } from './type';
 
 import './styles/toast.css';
 import './styles/animation.css';
@@ -82,7 +83,7 @@ class Toast implements ToastEntry {
         this.delegator.closeAll();
     }
 
-    update(content: ToastContent, options: ToastOptions) {
+    update(content: ToastContent, options?: ToastOptions) {
         validateOptions({
             content,
             ...options,
@@ -115,7 +116,7 @@ class Toast implements ToastEntry {
 class ToastBaker {
     options: ToastOptions = {};
     toasts: Toast[] = [];
-    notify(content: ToastContent, options: ToastOptions = DEFAULT_TOAST_OPTIONS): Toast {
+    notify(content: ToastContent, options?: ToastOptions): Toast {
         validateOptions({
             content,
             ...options,
@@ -278,18 +279,17 @@ class ToastBaker {
         }
         return toastContainer;
     }
-    success(content: ToastContent, options: ToastOptions): Toast {
+    success(content: ToastContent, options?: ToastOptions): Toast {
         return this.notify(content, { ...options, type: 'success' });
     }
-    info(content: ToastContent, options: ToastOptions): Toast {
+    info(content: ToastContent, options?: ToastOptions): Toast {
         return this.notify(content, { ...options, type: 'info' });
     }
-    warn(content: ToastContent, options: ToastOptions): Toast {
+    warn(content: ToastContent, options?: ToastOptions): Toast {
         return this.notify(content, { ...options, type: 'warning' });
     }
-    error(content: ToastContent, options: ToastOptions): Toast {
+    error(content: ToastContent, options?: ToastOptions): Toast {
         return this.notify(content, { ...options, type: 'error' });
     }
 }
-
 export default new ToastBaker();

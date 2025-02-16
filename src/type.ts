@@ -47,8 +47,8 @@ export type ToastOptions = {
     animation?: AnimationType | CustomAnimation;
     position?: 'top-left' | 'top-right' | 'top-center' | 'center' | 'bottom-left' | 'bottom-right',
     offset?: { // ignores the stack position
-        x: number,
-        y: number
+        x: number;
+        y: number;
     }
     icon?: {
         url: string;

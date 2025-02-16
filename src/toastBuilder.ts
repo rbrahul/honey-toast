@@ -44,7 +44,7 @@ export const DEFAULT_TOAST_OPTIONS: ToastBuilderProps = {
     progress: 0,
     classNames: [],
     theme: 'light',
-    animation: prefix('slide') as AnimationType,
+    animation: 'slide' as AnimationType,
     icon: {
         url: undefined,
         size: 'small',

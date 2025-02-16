@@ -1,18 +1,24 @@
 {
-  "name": "@rbrahul/toast",
-  "description": "A framework agonstic notification or Toast alert library",
+  "name": "honey-toast",
+  "description": "A framework agonstic Toast alert or notification UI library with tons of customization options",
   "version": "1.0.0",
+  "license": "MIT",
+  "private": false,
   "type": "module",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "keywords": [
     "notification",
     "toast",
     "push",
     "alert",
-    "message"
+    "message",
+    "ui",
+    "javascript",
+    "vanilla",
+    "typescript",
+    "dialog"
   ],
   "main": "./dist/toast.umd.js",
   "module": "./dist/toast.es.js",
@@ -26,7 +32,7 @@
       "import": "./dist/toast.es.js",
       "require": "./dist/toast.umd.js"
     },
-    "./style.css": "./dist/style.css",
+    "./dist/style.css": "./dist/style.css",
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -38,7 +44,14 @@
     "prepare": "husky"
   },
   "author": "Rahul Baruri<rahulbarui1@gmail.com>",
-  "license": "MIT",
+  "homepage": "https://rbrahul.github.io/honey-toast",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rbrahul/honey-toast.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rbrahul/honey-toast/issues"
+  },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
     "@types/node": "^22.10.5",

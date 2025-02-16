@@ -207,7 +207,7 @@ const st = "data:image/svg+xml,%3csvg%20width='80'%20height='80'%20viewBox='0%20
   info: ot,
   warining: nt,
   error: it
-}, ut = "rb-toast", r = (s) => `${ut}-${s}`, w = {
+}, ut = "rb-toast", r = (s) => `${ut}-${s}`, y = {
   content: {
     title: "Hi, there!",
     message: "I hope you are having a great day!",
@@ -223,7 +223,7 @@ const st = "data:image/svg+xml,%3csvg%20width='80'%20height='80'%20viewBox='0%20
   progress: 0,
   classNames: [],
   theme: "light",
-  animation: r("slide"),
+  animation: "slide",
   icon: {
     url: void 0,
     size: "small",
@@ -242,14 +242,14 @@ class pt {
     b(this, f);
     b(this, a);
     return B(this, a, {
-      ...w,
+      ...y,
       ...e,
       icon: {
-        ...w.icon,
+        ...y.icon,
         ...(e == null ? void 0 : e.icon) ?? {}
       }
     }), typeof e.content == "object" && !P(e.content) && (o(this, a).content = {
-      ...w.content,
+      ...y.content,
       ...e.content
     }), B(this, f, p(this, v, Y).call(this)), this;
   }
@@ -516,7 +516,7 @@ E = new WeakMap(), x = new WeakMap();
 const T = (s, e) => {
   if (typeof s != "boolean")
     throw new Error(`'${e}' must be boolean`);
-}, y = (s, e, t) => {
+}, w = (s, e, t) => {
   if (!e.includes(s))
     throw new Error(`'${t}' must be either one of these ${e}`);
 }, wt = (s, e, t) => {
@@ -526,6 +526,7 @@ const T = (s, e) => {
   if (typeof s != "function")
     throw new Error(`'${e}' must be a function`);
 }, J = (s) => {
+  console.log("validating options", s);
   const e = {
     content: (t) => {
       if (!t)
@@ -542,13 +543,13 @@ const T = (s, e) => {
       T(t, "autoClose");
     },
     type: (t) => {
-      y(t, ["default", "success", "info", "warning", "error"], "type");
+      w(t, ["default", "success", "info", "warning", "error"], "type");
     },
     design: (t) => {
-      y(t, ["minimal", "standard", "colorful", "gradient"], "design");
+      w(t, ["minimal", "standard", "colorful", "gradient"], "design");
     },
     position: (t) => {
-      y(
+      w(
         t,
         ["top-left", "top-right", "top-center", "bottom-left", "bottom-right", "center"],
         "position"
@@ -569,17 +570,17 @@ const T = (s, e) => {
         throw new Error("classNames must be an array of strings");
     },
     theme: (t) => {
-      y(t, ["light", "dark", "system"], "theme");
+      w(t, ["light", "dark", "system"], "theme");
     },
     animation: (t) => {
-      y(t, ["slide", "bounce", "fade", "zoom"], "animation");
+      w(t, ["slide", "bounce", "fade", "zoom"], "animation");
     },
     icon: (t) => {
       if (t !== void 0 && typeof t != "object")
         throw new Error("icon must be an object");
       if (t != null && t.url && typeof t.url != "string")
         throw new Error("icon.url must be a string");
-      typeof (t == null ? void 0 : t.size) < "u" && y(t.size, ["small", "medium", "large"], "icon.size"), t.classes && wt(t.classes, "string", "icon.classes");
+      typeof (t == null ? void 0 : t.size) < "u" && w(t.size, ["small", "medium", "large"], "icon.size"), t.classes && wt(t.classes, "string", "icon.classes");
     },
     offset: (t) => {
       if (t !== void 0 && typeof t != "object")
@@ -668,20 +669,20 @@ class vt {
     d(this, "options", {});
     d(this, "toasts", []);
   }
-  notify(e, t = w) {
+  notify(e, t) {
     var l, c, m;
     J({
       content: e,
       ...t
     }), this.options = {
-      ...w,
+      ...y,
       ...t,
       offset: {
-        ...w.offset,
+        ...y.offset,
         ...t == null ? void 0 : t.offset
       },
       icon: {
-        ...w.icon,
+        ...y.icon,
         ...t == null ? void 0 : t.icon
       }
     }, p(this, h, R).call(this, {
