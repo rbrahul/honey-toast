@@ -162,7 +162,7 @@ function minimalTestToastAlerts() {
                     'Thank you for subscribing our service. For any help feel free to write us.',
                 buttons: [
                     {
-                        iconUrl: '../assets/icons/close.svg',
+                        iconUrl: 'https://raw.githubusercontent.com/rbrahul/honey-toast/ce0524141ea56a204bdc6fc26d4cb628e3ccef9f/assets/icons/close.svg',
                         label: 'Close',
                         classes: ['sm-tick-icon'],
                         onClick: () => {
@@ -170,7 +170,7 @@ function minimalTestToastAlerts() {
                         },
                     },
                     {
-                        iconUrl: '../assets/icons/tick.svg',
+                        iconUrl: 'https://raw.githubusercontent.com/rbrahul/honey-toast/ce0524141ea56a204bdc6fc26d4cb628e3ccef9f/assets/icons/tick.svg',
                         classes: ['sm-tick-icon'],
                         label: 'Confirm',
                         onClick: () => {
@@ -199,7 +199,7 @@ function minimalTestToastAlerts() {
                     'Thank you for subscribing our service. For any help feel free to write us.',
                 buttons: [
                     {
-                        iconUrl: '../assets/icons/close.svg',
+                        iconUrl: 'https://raw.githubusercontent.com/rbrahul/honey-toast/ce0524141ea56a204bdc6fc26d4cb628e3ccef9f/assets/icons/close.svg',
                         classes: ['sm-tick-icon'],
                         label: 'Close',
                         onClick: () => {
@@ -207,7 +207,7 @@ function minimalTestToastAlerts() {
                         },
                     },
                     {
-                        iconUrl: '../assets/icons/tick.svg',
+                        iconUrl: 'https://raw.githubusercontent.com/rbrahul/honey-toast/ce0524141ea56a204bdc6fc26d4cb628e3ccef9f/assets/icons/tick.svg',
                         classes: ['sm-tick-icon'],
                         label: 'Confirm',
                         onClick: () => {
@@ -297,7 +297,7 @@ function standardTestToastAlerts() {
                     'Thank you for subscribing our service. For any help feel free to write us.',
                 buttons: [
                     {
-                        iconUrl: '../assets/icons/close.svg',
+                        iconUrl: 'https://raw.githubusercontent.com/rbrahul/honey-toast/ce0524141ea56a204bdc6fc26d4cb628e3ccef9f/assets/icons/close.svg',
                         classes: ['sm-tick-icon'],
                         label: 'Close',
                         onClick: () => {
@@ -305,7 +305,7 @@ function standardTestToastAlerts() {
                         },
                     },
                     {
-                        iconUrl: '../assets/icons/tick.svg',
+                        iconUrl: 'https://raw.githubusercontent.com/rbrahul/honey-toast/ce0524141ea56a204bdc6fc26d4cb628e3ccef9f/assets/icons/tick.svg',
                         classes: ['sm-tick-icon'],
                         label: 'Confirm',
                         onClick: () => {
@@ -335,7 +335,7 @@ function standardTestToastAlerts() {
                     'Thank you for subscribing our service. For any help feel free to write us.',
                 buttons: [
                     {
-                        iconUrl: '../assets/icons/close.svg',
+                        iconUrl: 'https://raw.githubusercontent.com/rbrahul/honey-toast/ce0524141ea56a204bdc6fc26d4cb628e3ccef9f/assets/icons/close.svg',
                         classes: ['sm-tick-icon'],
                         label: 'Close',
                         onClick: () => {
@@ -372,7 +372,7 @@ function standardTestToastAlerts() {
                     'Thank you for subscribing our service. For any help feel free to write us.',
                 buttons: [
                     {
-                        iconUrl: '../assets/icons/close.svg',
+                        iconUrl: 'https://raw.githubusercontent.com/rbrahul/honey-toast/ce0524141ea56a204bdc6fc26d4cb628e3ccef9f/assets/icons/close.svg',
                         classes: ['sm-tick-icon'],
                         label: 'Close',
                         onClick: () => {
@@ -429,7 +429,7 @@ function createAnimatingToast({
             buttons: hasButtons
                 ? [
                       {
-                          iconUrl: '../assets/icons/close.svg',
+                          iconUrl: 'https://raw.githubusercontent.com/rbrahul/honey-toast/ce0524141ea56a204bdc6fc26d4cb628e3ccef9f/assets/icons/close.svg',
                           label: 'Close',
                           classes: ['sm-tick-icon'],
                           onClick: () => {

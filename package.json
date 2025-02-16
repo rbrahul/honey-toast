@@ -40,7 +40,7 @@
     "dev": "npx vite .",
     "lint": "npx eslint --fix",
     "build": "vite build",
-    "build:demo": "npm run build && vite build --outDir ./docs/dist --emptyOutDir true -c demo-page.vite.config.ts",
+    "build:demo": "npm run build && vite build --outDir ./docs/public --emptyOutDir true -c demo-page.vite.config.ts",
     "prepare": "husky"
   },
   "author": "Rahul Baruri<rahulbarui1@gmail.com>",
