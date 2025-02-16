@@ -6,7 +6,7 @@ node_modules
 eslint.config.mjs
 .prettierrc
 .globals.d.ts
-example-page.vite.config.ts
+demo-page.vite.config.ts
 development-guide.md
 tsconfig.json
 vite.config.ts
