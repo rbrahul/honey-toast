@@ -3,6 +3,7 @@ A framework agnostic notification UI library that offers tons of customization, 
 
 
 [Playground for Demo](https://rbrahul.github.io/honey-toast)
+[Documentation](https://github.com/rbrahul/honey-toast-doc)
 
 
 ## Installation:
@@ -26,13 +27,15 @@ toast.notify("Hi There!")
 Create different type of notifications:
 
 ```js
+...
 toast.success("Your information have been udpated!")
 toast.info("Email has been delivered!")
 toast.warn("Stock is limited")
 toast.error("Ooops, something went wrong")
+...
 ```
 
-Create more advance toast notification with tons of options. Please have a look into our the [API Documentation](https://github.com/rbrahul/honey-toast-doc) to find the complete list of options.
+Create more advanced toast notification with tons of options. Please have a look into our the [API Documentation](https://github.com/rbrahul/honey-toast-doc) to find the complete list of options.
 
 ```js
 import toast from 'honey-toast';
@@ -69,3 +72,29 @@ toast.notify({
     
 ```
 
+Closing notification:
+
+```js
+...
+const notification = toast.notify("Hi There!");
+// close once you need
+notification.close();
+
+// to close all notifications:
+notification.closeAll();
+...
+```
+
+
+Updating notification for different cases if needed:
+
+```js
+...
+const notification = toast.notify("Your requst is being processed", {hasProgressBar: true});
+// once you need to update the status
+notification.update("Request has been processed", {type: "success"})
+
+// you may want to show error message if request was not handled correctly
+notification.update("Ooops! Something went wrong", {type: "error"});
+...
+```
