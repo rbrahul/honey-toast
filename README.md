@@ -31,6 +31,7 @@ Create notification with default configurations.
 
 ```js
 import toast from 'honey-toast';
+import 'honey-toast/dist/style.css';
 
 toast.notify("Hi There!")
 

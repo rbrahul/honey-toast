@@ -53,6 +53,7 @@ const generateCode = async ({
         ]`;
     }
     let code = `import toast from 'honey-toast';
+import 'honey-toast/dist/style.css';
 
 toast.notify({
         title: 'Hi, there!',
@@ -282,7 +283,7 @@ function standardTestToastAlerts() {
         const t5 = toast.notify('Hi There!', {
             duration: 5000,
             position: 'top-left',
-            design: 'colorful',
+            design: 'gradient',
             type: 'error',
             animation: 'bounce',
         });
