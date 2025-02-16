@@ -13,8 +13,8 @@ Install via npm package manager:
 npm i honey-toast --save
 ```
 
-### Usage Example:
 
+### Usage Example:
 Create notification with default configurations.
 
 ```js
@@ -24,7 +24,7 @@ toast.notify("Hi There!")
 
 ```
 
-Create different type of notifications:
+**Create different type of notifications using simpler api:**
 
 ```js
 ...
@@ -35,7 +35,8 @@ toast.error("Ooops, something went wrong")
 ...
 ```
 
-Create more advanced toast notification with tons of options. Please have a look into our the [API Documentation](https://github.com/rbrahul/honey-toast-doc) to find the complete list of options.
+**Create more advanced toast notification with tons of options.**
+Please have a look into our the [API Documentation](https://github.com/rbrahul/honey-toast-doc) to find the complete list of options.
 
 ```js
 import toast from 'honey-toast';
@@ -72,7 +73,7 @@ toast.notify({
     
 ```
 
-Closing notification:
+**Closing notifications:**
 
 ```js
 ...
@@ -86,7 +87,7 @@ notification.closeAll();
 ```
 
 
-Updating notification for different cases if needed:
+**Updating existing notification in different circumstances:**
 
 ```js
 ...
