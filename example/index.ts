@@ -1,7 +1,13 @@
 // THis will be replaced by 'honey-toast' package
 
 type ToastOptions = {
-    position: 'top-left' | 'top-right' | 'top-center' | 'bottom-left' | 'bottom-right' | 'bottom-center';
+    position:
+        | 'top-left'
+        | 'top-right'
+        | 'top-center'
+        | 'bottom-left'
+        | 'bottom-right'
+        | 'bottom-center';
     type: 'default' | 'success' | 'info' | 'warning' | 'error';
     theme: 'light' | 'dark';
     design: 'standard' | 'minimal' | 'colorful' | 'gradient';
@@ -9,52 +15,60 @@ type ToastOptions = {
 
 import './style.css';
 
-const DEMO_ALERT_GROUP:unknown[] = [];
-const TIMEOUT_IDs:ReturnType<typeof setTimeout>[]= [];
+const DEMO_ALERT_GROUP: unknown[] = [];
+const TIMEOUT_IDs: ReturnType<typeof setTimeout>[] = [];
 
 const generateCode = async ({
     duration = 3000,
     position = 'top-right',
     type = 'success',
+    design = 'minimal',
+    theme = 'light',
     animation = 'slide',
-    hasButtons = true,
+    hasButtons = false,
     hasProgressBar = false,
+    autoClose = true,
     offset = { x: 30, y: 30 },
 }) => {
     let butttons = '';
     if (hasButtons) {
         butttons = `,
-    buttons: [
-        {
-            iconUrl: 'YOUR_ICON_DIR/close.svg',
-            label: 'Cancel',
-            classes: [],
-            onClick: () => {
-                console.log('Canceling...');
+        buttons: [
+            {
+                iconUrl: 'YOUR_ICON_DIR/close.svg',
+                label: 'Cancel',
+                classes: [],
+                onClick: () => {
+                    console.log('Canceling...');
+                },
             },
-        },
-        {
-            iconUrl: 'YOUR_ICON_DIR/tick.svg',
-            classes: [],
-            label: 'Confirm',
-            onClick: () => {
-                console.log('Confirming...');
+            {
+                iconUrl: 'YOUR_ICON_DIR/tick.svg',
+                classes: [],
+                label: 'Confirm',
+                onClick: () => {
+                    console.log('Confirming...');
+                },
             },
-        },
-    ]`;
+        ]`;
     }
     let code = `import toast from 'honey-toast';
 
 toast.notify({
-    title: 'Hi, there!',
-    message: 'Thank you for subscribing our service.',
-    duration: ${duration},
-    position: '${position}',
-    type: '${type}',
-    animation: '${animation}',
-    hasProgressBar: ${hasProgressBar},
-    offset: {x: ${offset.x}, y: ${offset.y}},
-    classNames: []${butttons},
+        title: 'Hi, there!',
+        message: 'Thank you for subscribing our service.'${butttons}
+    },
+    {
+        type: '${type}',
+        design: '${design}',
+        theme: '${theme}',
+        position: '${position}',
+        animation: '${animation}',
+        hasProgressBar: ${hasProgressBar},
+        autoClose: ${autoClose},
+        duration: ${duration},
+        offset: {x: ${offset.x}, y: ${offset.y}},
+        classNames: []
 });
     `;
 
@@ -392,7 +406,7 @@ function showAllDemoAlerts() {
     standardTestToastAlerts();
 }
 
-const ALL_ALERTS:unknown[] = [];
+const ALL_ALERTS: unknown[] = [];
 
 function createAnimatingToast({
     animation,
@@ -405,33 +419,35 @@ function createAnimatingToast({
     hasButtons = false,
     offset = { x: 30, y: 30 },
     hasProgressBar = false,
-    progress=0,
+    progress = 0,
 }) {
-     const toastAlert = toast.notify(
+    const toastAlert = toast.notify(
         {
             title: 'Hi, There!',
             message: 'Thank you for subscribing our service. For any help feel free to write us.',
-            buttons: hasButtons ?[
-                {
-                    iconUrl: '../assets/icons/close.svg',
-                    label: 'Close',
-                    classes: ['sm-tick-icon'],
-                    onClick: () => {
-                        toastAlert.close();
-                        console.log('Closing  the item');
-                    },
-                    type: 'default',
-                },
-                {
-                    label: 'Confirm',
-                    classes: [],
-                    onClick: () => {
-                        toastAlert.close();
-                        console.log('Confirming the item');
-                    },
-                    type: 'success',
-                },
-            ] : [],
+            buttons: hasButtons
+                ? [
+                      {
+                          iconUrl: '../assets/icons/close.svg',
+                          label: 'Close',
+                          classes: ['sm-tick-icon'],
+                          onClick: () => {
+                              toastAlert.close();
+                              console.log('Closing  the item');
+                          },
+                          type: 'default',
+                      },
+                      {
+                          label: 'Confirm',
+                          classes: [],
+                          onClick: () => {
+                              toastAlert.close();
+                              console.log('Confirming the item');
+                          },
+                          type: 'success',
+                      },
+                  ]
+                : [],
         },
         {
             duration,
@@ -552,23 +568,45 @@ document.querySelectorAll(`input[name="autoclose"]`).forEach(input => {
     });
 });
 
-document.querySelector(".copy-btn")?.addEventListener("click", () => {
-    const code = document.querySelector(".toast-code pre")?.textContent;
+document.querySelector('.copy-btn')?.addEventListener('click', () => {
+    const code = document.querySelector('.toast-code pre')?.textContent;
     navigator.clipboard.writeText(code as string).then(() => {
-        toast.notify("Code copied to clipboard", {
-            type: "success",
-            position: "top-center",
+        toast.notify('Code copied to clipboard', {
+            type: 'success',
+            position: 'top-center',
             duration: 2000,
         });
     });
-})
+});
 
 window.onload = () => {
-generateCode({});
+    generateCode({});
 };
-/*
+
+const bindEventListener = (
+    selector: string,
+    event: string,
+    callback: EventListener,
+    options?: boolean | AddEventListenerOptions,
+) => {
+    document.querySelectorAll(selector).forEach(element => {
+        element.addEventListener(event, callback, options);
+    });
+};
+
+const registerEventListenersForParamChanges = () => {
+    bindEventListener(
+        'select[name="position"], input[name="animation"], input[name="duration"], input[name="theme"], input[name="design"], input[name="type"], input[name="hasbuttons"], input[name="progressbar"], input[name="autoclose"], input[name="offset-x"], input[name="offset-y"]',
+        'change',
+        () => {
+            generateCode(getProperties());
+        },
+    );
+};
+
+registerEventListenersForParamChanges();
+
 setTimeout(() => {
     minimalTestToastAlerts();
     standardTestToastAlerts();
 }, 2000);
-*/
