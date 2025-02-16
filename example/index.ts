@@ -611,8 +611,3 @@ setTimeout(() => {
     minimalTestToastAlerts();
     standardTestToastAlerts();
 }, 2000);
-
-setInterval(() => {
-    minimalTestToastAlerts();
-    standardTestToastAlerts();
-}, 20_000);

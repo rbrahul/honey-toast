@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toast Baker</title>
-    <link rel="stylesheet" href="../dist/style.css"><!-- CSS file for Honey-Toast library -->
+    <title>Honey Toast Baker</title>
+    <link href="https://cdn.jsdelivr.net/npm/honey-toast@1.0.0/dist/style.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/honey-toast@1.0.0/dist/toast.umd.min.js"></script>
+
     <link rel="stylesheet" href="dist/style.css"> <!-- Own Example CSS file is using from the dist dir-->
     <script type="module">
         // be sure to specify the exact version
@@ -12,6 +15,7 @@
         window.codeToHtml = codeToHtml
     </script>
 </head>
+
 <body>
     <div class="container">
         <header class="align-center">
@@ -47,7 +51,7 @@
                         <div class="row pt-0"><strong>Animations:</strong></div>
                         <div class="row pt-0">
                             <label class="checkbox">
-                                <input type="radio" class="position" name="animation" value="slide"  checked/>
+                                <input type="radio" class="position" name="animation" value="slide" checked />
                                 <span>Slide</span>
                             </label>
                             <label class="checkbox">
@@ -66,11 +70,11 @@
                         <div class="row pt-0"><strong>Type:</strong></div>
                         <div class="row pt-0">
                             <label class="checkbox">
-                                <input type="radio" class="type" name="type" value="default"  />
+                                <input type="radio" class="type" name="type" value="default" />
                                 <span>Default</span>
                             </label>
                             <label class="checkbox">
-                                <input type="radio" class="type" name="type" value="success" checked/>
+                                <input type="radio" class="type" name="type" value="success" checked />
                                 <span>Success</span>
                             </label>
                             <label class="checkbox">
@@ -141,18 +145,18 @@
                         <div class="row pt-0"><strong>Has Buttons?</strong></div>
                         <div class="row pt-0">
                             <label class="checkbox">
-                                <input type="radio" class="theme" name="hasbuttons" value="1"  />
+                                <input type="radio" class="theme" name="hasbuttons" value="1" />
                                 <span>Yes</span>
                             </label>
                             <label class="checkbox">
-                                <input type="radio" class="theme" name="hasbuttons" value="0" checked/>
+                                <input type="radio" class="theme" name="hasbuttons" value="0" checked />
                                 <span>No</span>
                             </label>
                         </div>
                         <div class="row pt-0"><strong>Has Progressbar?</strong></div>
                         <div class="row pt-0">
                             <label class="checkbox">
-                                <input type="radio" class="theme" name="progressbar" value="1"  />
+                                <input type="radio" class="theme" name="progressbar" value="1" />
                                 <span>Yes</span>
                             </label>
                             <label class="checkbox">
@@ -170,7 +174,7 @@
                             </div>
                             <div class="input-group">
                                 <strong>Y</strong>
-                                <input type="number" name="offset-y"  value="30" />
+                                <input type="number" name="offset-y" value="30" />
                                 <span>px</span>
                             </div>
                         </div>
@@ -196,7 +200,7 @@
             </div>
         </div>
     </div>
-    <script  src="../dist/toast.umd.js"></script>
-    <script  src="dist/example.js"></script>
+    <script src="dist/example.js"></script>
 </body>
+
 </html>
