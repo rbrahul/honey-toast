@@ -29,7 +29,6 @@ const assertIsFunction = (value: unknown, filedName: string) => {
 };
 
 export const validateOptions = (options: ToastBuilderProps) => {
-    console.log('validating options', options);
     const rules = {
         content: (content: ToastContent) => {
             if (!content) {

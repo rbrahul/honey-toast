@@ -526,7 +526,6 @@ const T = (s, e) => {
   if (typeof s != "function")
     throw new Error(`'${e}' must be a function`);
 }, J = (s) => {
-  console.log("validating options", s);
   const e = {
     content: (t) => {
       if (!t)

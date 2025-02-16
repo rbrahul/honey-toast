@@ -2,7 +2,7 @@
 A framework agnostic notification UI library that offers tons of customization, designs and animations.
 
 ## Demo and Playground:
-You can play with different animations and designs [View Demo with Playground.](https://rbrahul.github.io/honey-toast). You can just copy the generated code and start using inside your project.
+Play with different animations and designs [View Demo with Playground.](https://rbrahul.github.io/honey-toast). You can just copy the generated code and start using inside your project.
 
 ## Documentation
 Here is the complete API [Documentation.](https://github.com/rbrahul/honey-toast-doc).
