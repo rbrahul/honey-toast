@@ -7,8 +7,7 @@ Play with different animations and designs [View Demo with Playground.](https://
 ## Documentation
 Here is the complete API [Documentation.](https://github.com/rbrahul/honey-toast-doc).
 
-![Honey Toast](https://raw.githubusercontent.com/rbrahul/honey-toast/master/screenshot.gif)
-
+![Honey Toast](https://raw.githubusercontent.com/rbrahul/honey-toast/master/screenshot.gif "Honey Toast - Notification UI Library")
 
 ## Main Features:
 
@@ -57,34 +56,36 @@ Please have a look into our the [API Documentation](https://github.com/rbrahul/h
 import toast from 'honey-toast';
 
 toast.notify({
-    title: 'Hi, there!',
-    message: 'Thank you for subscribing our service.',
-    duration: 3000,
-    position: 'top-right',
-    type: 'success',
-    animation: 'slide',
-    hasProgressBar: false,
-    offset: {x: 30, y: 30},
-    classNames: [],
-    buttons: [
-        {
-            iconUrl: 'YOUR_ICON_DIR/close.svg',
-            label: 'Cancel',
-            classes: [],
-            onClick: () => {
-                console.log('Canceling...');
+        title: 'Hi, there!',
+        message: 'Thank you for subscribing our service.',
+        buttons: [
+            {
+                iconUrl: 'YOUR_ICON_DIR/close.svg',
+                label: 'Cancel',
+                classes: [],
+                onClick: () => {
+                    console.log('Canceling...');
+                },
             },
+            {
+                iconUrl: 'YOUR_ICON_DIR/tick.svg',
+                classes: [],
+                label: 'Confirm',
+                onClick: () => {
+                    console.log('Confirming...');
+                },
+            },
+        ]
         },
         {
-            iconUrl: 'YOUR_ICON_DIR/tick.svg',
-            classes: [],
-            label: 'Confirm',
-            onClick: () => {
-                console.log('Confirming...');
-            },
-        },
-    ],
-});
+            duration: 3000,
+            position: 'top-right',
+            type: 'success',
+            animation: 'slide',
+            hasProgressBar: false,
+            offset: {x: 30, y: 30},
+            classNames: [],
+        });
     
 ```
 
