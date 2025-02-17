@@ -297,3 +297,52 @@ input[type="number"]{
     user-select: none;
     cursor: pointer;
 }
+
+@media screen and (max-width: 968px) {
+    .container {
+        width: 100%;
+    }
+
+    .navbar {
+        width: 100%;
+    }
+
+    .toast-editor {
+        position: relative;
+        width: 100%;
+        padding: 20px;
+        transform: translate(0, 0);
+        left:0px;
+        bottom:0px;
+    }
+
+    .input-area {
+        width: 100%;
+        height: auto;
+    }
+
+    .btn-group {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .btn {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .code-view {
+        width: 100%;
+        margin-top: 20px;
+        position: relative;
+        transform: translate(0, 0);
+        left: 0px;
+        right: 0px;
+        top:0px;
+    }
+
+    .copy-btn {
+        right: 10px;
+        top: 10px;
+    }
+}

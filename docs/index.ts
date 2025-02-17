@@ -83,7 +83,7 @@ toast.notify({
     }
 };
 
-function minimalTestToastAlerts() {
+function showTopRightToastGroup() {
     const t = toast.notify('Hi There!', {
         duration: 7000,
         type: 'default',
@@ -229,7 +229,10 @@ function minimalTestToastAlerts() {
     TIMEOUT_IDs.push(timeoutId8);
 }
 
-function standardTestToastAlerts() {
+function showTopLeftToastAlerts() {
+    if (window.innerWidth < 680) {
+        return;
+    }
     setTimeout(() => {
         const t = toast.notify('Hi There!', {
             duration: 7000,
@@ -403,8 +406,8 @@ function standardTestToastAlerts() {
 }
 
 function showAllDemoAlerts() {
-    minimalTestToastAlerts();
-    standardTestToastAlerts();
+    showTopRightToastGroup();
+    showTopLeftToastAlerts();
 }
 
 const ALL_ALERTS: unknown[] = [];
@@ -607,6 +610,6 @@ const registerEventListenersForParamChanges = () => {
 registerEventListenersForParamChanges();
 
 setTimeout(() => {
-    minimalTestToastAlerts();
-    standardTestToastAlerts();
+    showTopRightToastGroup();
+    showTopLeftToastAlerts();
 }, 2000);

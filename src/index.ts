@@ -140,8 +140,8 @@ class ToastBaker {
         };
 
         this.#setCssVariables({
-            '--toast-position-offset-x': CSS.px(this.options.offset?.x ?? 30),
-            '--toast-position-offset-y': CSS.px(this.options.offset?.y ?? 30),
+            '--toast-position-offset-x': `${this.options.offset?.x ?? 30}px`,
+            '--toast-position-offset-y': `${this.options.offset?.y ?? 30}px`,
         });
 
         const toastContainer = this.#mountToastContainer(this.options?.position);
@@ -255,7 +255,7 @@ class ToastBaker {
                 }
                 progressBarFillElement.animate(
                     [
-                        { "width": CSS.percent(startingProgress).toString() },
+                        { "width": `${startingProgress}%` },
                         { "width": '100%' }
                     ],
                     { duration: this.options.duration, fill: 'forwards' },
