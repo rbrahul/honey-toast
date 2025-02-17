@@ -1,11 +1,11 @@
 # Honey-Toast
-A framework agnostic notification UI library that offers tons of customization, designs and animations.
+A framework agnostic simple yet powerful Toast Alert or Notification library that offers tons of customization, designs and animations.
 
 ## Demo and Playground:
 [View Demos and Play](https://rbrahul.github.io/honey-toast) with different animations and designs. You can just copy the generated code and start using in your project.
 
 ## Documentation
-Here is the [Documentation.](https://rbrahul.github.io/honey-toast-doc).
+Complete list of APIs only available in the [Documentation.](https://rbrahul.github.io/honey-toast-doc).
 
 ![Honey Toast](https://raw.githubusercontent.com/rbrahul/honey-toast/master/screenshot.gif "Honey Toast - Notification UI Library")
 
@@ -128,7 +128,7 @@ notification.update("Request has been processed", {type: "success"})
 notification.update("Ooops! Something went wrong", {type: "error"});
 ```
 
-# Change Log:
+## Change Log:
 * Initial version released on 16-02-2025
 
 ## Contributors:
