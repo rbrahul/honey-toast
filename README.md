@@ -129,7 +129,9 @@ notification.update("Ooops! Something went wrong", {type: "error"});
 ```
 
 ## Change Log:
-* Initial version released on 16-02-2025
+* V1.0.0: Initial version released on 16-02-2025
+* V1.0.2: Released on 17-02-2025
+    - Fixed `CSS.px` firefox browser support issue
 
 ## Contributors:
 [Rahul Baruri](https://github.com/rbrahul)
