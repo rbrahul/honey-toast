@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
@@ -26,6 +29,7 @@ body {
     align-items: flex-start;
     flex-wrap: wrap;
     padding-bottom: 10px;
+    padding-bottom: 15px;
 }
 
 .col {
@@ -49,6 +53,7 @@ body {
     padding: 10px 20px;
     border-top: none;
     margin:0px;
+    box-sizing: border-box;
 }
 
 
@@ -61,7 +66,6 @@ a.logo {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-
     text-decoration: none;
     color: #333;
     font-size: 24px;
@@ -167,7 +171,7 @@ label.checkbox {
     display: inline-block;
     padding: 8px 12px;
     margin-right: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     border: 1px solid #d8d7d7;
     width: auto;
     border-radius: 4px;
@@ -310,7 +314,7 @@ input[type="number"]{
     .toast-editor {
         position: relative;
         width: 100%;
-        padding: 20px;
+        padding: 30px;
         transform: translate(0, 0);
         left:0px;
         bottom:0px;
@@ -344,5 +348,29 @@ input[type="number"]{
     .copy-btn {
         right: 10px;
         top: 10px;
+    }
+
+
+    .logo img {
+        width: 30px;
+        height: 30px;
+        margin-right: 8px;
+    }
+
+    a.logo {
+        font-size: 16px;
+    }
+
+    action-area .btn {
+        margin-bottom: 20px !important;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .offset-x-input-group {
+        margin-right: 20px;
+    }
+    .duration-input-group{
+        margin-left: 0px;
     }
 }
